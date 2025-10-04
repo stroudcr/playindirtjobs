@@ -21,6 +21,7 @@ model Job {
   // Salary
   salaryMin   Int?
   salaryMax   Int?
+  salaryType  String?  @default("annual") // "annual" or "hourly"
 
   // Job details
   jobType     String[] // ["full-time", "part-time", "seasonal", etc.]

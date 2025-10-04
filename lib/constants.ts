@@ -12,6 +12,8 @@ export const JOB_CATEGORIES = [
   { id: "apiculture", label: "Apiculture", emoji: "🐝" },
   { id: "viticulture", label: "Viticulture", emoji: "🍇" },
   { id: "aquaponics", label: "Aquaponics", emoji: "🐟" },
+  { id: "marketing", label: "Marketing", emoji: "📢" },
+  { id: "other", label: "Other", emoji: "✨" },
 ] as const;
 
 // Job types
@@ -74,7 +76,7 @@ export const SORT_OPTIONS = [
 
 // Pricing (in cents)
 export const PRICING = {
-  BASIC: 9900, // $99
-  FEATURED: 24900, // $249
-  BUNDLE_5: 39900, // $399 (save $96)
+  BASIC: 4500, // $45
+  FEATURED: 9500, // $95
+  BUNDLE_5: 19900, // $199 (save $26)
 } as const;

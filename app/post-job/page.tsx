@@ -17,6 +17,7 @@ export default function PostJobPage() {
     description: "",
     salaryMin: "",
     salaryMax: "",
+    salaryType: "annual" as "annual" | "hourly",
     jobType: [] as string[],
     farmType: [] as string[],
     categories: [] as string[],
@@ -151,31 +152,63 @@ export default function PostJobPage() {
           {/* Salary */}
           <div className="card p-6">
             <h2 className="text-2xl font-bold text-forest mb-6">Compensation</h2>
+
+            {/* Salary Type Toggle */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-forest mb-3">
+                Compensation Type
+              </label>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="salaryType"
+                    value="annual"
+                    checked={formData.salaryType === "annual"}
+                    onChange={(e) => setFormData({ ...formData, salaryType: e.target.value as "annual" | "hourly" })}
+                    className="w-4 h-4 text-primary"
+                  />
+                  <span className="font-medium text-forest">Annual Salary</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="salaryType"
+                    value="hourly"
+                    checked={formData.salaryType === "hourly"}
+                    onChange={(e) => setFormData({ ...formData, salaryType: e.target.value as "annual" | "hourly" })}
+                    className="w-4 h-4 text-primary"
+                  />
+                  <span className="font-medium text-forest">Hourly Rate</span>
+                </label>
+              </div>
+            </div>
+
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="salaryMin" className="block text-sm font-medium text-forest mb-2">
-                  Minimum Salary (Annual)
+                  {formData.salaryType === "annual" ? "Minimum Salary" : "Minimum Hourly Rate"}
                 </label>
                 <input
                   type="number"
                   id="salaryMin"
                   value={formData.salaryMin}
                   onChange={(e) => setFormData({ ...formData, salaryMin: e.target.value })}
-                  placeholder="35000"
+                  placeholder={formData.salaryType === "annual" ? "35000" : "15"}
                   className="input"
                 />
               </div>
 
               <div>
                 <label htmlFor="salaryMax" className="block text-sm font-medium text-forest mb-2">
-                  Maximum Salary (Annual)
+                  {formData.salaryType === "annual" ? "Maximum Salary" : "Maximum Hourly Rate"}
                 </label>
                 <input
                   type="number"
                   id="salaryMax"
                   value={formData.salaryMax}
                   onChange={(e) => setFormData({ ...formData, salaryMax: e.target.value })}
-                  placeholder="45000"
+                  placeholder={formData.salaryType === "annual" ? "45000" : "20"}
                   className="input"
                 />
               </div>

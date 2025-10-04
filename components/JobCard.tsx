@@ -12,6 +12,7 @@ interface JobCardProps {
     location: string;
     salaryMin?: number;
     salaryMax?: number;
+    salaryType?: string;
     categories: string[];
     jobType: string[];
     featured: boolean;
@@ -62,7 +63,7 @@ export function JobCard({ job }: JobCardProps) {
 
           <div className="flex items-center gap-2 text-xs sm:text-sm text-forest-light">
             <DollarSign className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            <span className="truncate">{formatSalary(job.salaryMin, job.salaryMax)}</span>
+            <span className="truncate">{formatSalary(job.salaryMin, job.salaryMax, job.salaryType)}</span>
           </div>
 
           <div className="flex items-center gap-2 text-xs sm:text-sm text-forest-light">

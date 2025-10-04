@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
         location: jobData.location,
         salaryMin: jobData.salaryMin || null,
         salaryMax: jobData.salaryMax || null,
+        salaryType: jobData.salaryType || "annual",
         jobType: jobData.jobType,
         farmType: jobData.farmType,
         categories: jobData.categories,

@@ -109,7 +109,7 @@ export default function PreviewJobPage() {
                 <div className="flex items-center gap-2 text-forest-light">
                   <DollarSign className="w-5 h-5" />
                   <span className="font-semibold text-primary">
-                    {formatSalary(jobData.salaryMin, jobData.salaryMax)}
+                    {formatSalary(jobData.salaryMin, jobData.salaryMax, jobData.salaryType)}
                   </span>
                 </div>
 

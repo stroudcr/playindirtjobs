@@ -139,7 +139,7 @@ export default async function JobPage({ params }: JobPageProps) {
                 <div className="flex items-center gap-2 text-sm sm:text-base text-forest-light">
                   <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                   <span className="font-semibold text-primary truncate">
-                    {formatSalary(job.salaryMin ?? undefined, job.salaryMax ?? undefined)}
+                    {formatSalary(job.salaryMin ?? undefined, job.salaryMax ?? undefined, job.salaryType ?? "annual")}
                   </span>
                 </div>
 

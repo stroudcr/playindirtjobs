@@ -5,11 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatSalary(min?: number, max?: number): string {
+export function formatSalary(min?: number, max?: number, type: string = "annual"): string {
   if (!min && !max) return "Competitive";
-  if (min && max) return `$${min.toLocaleString()} - $${max.toLocaleString()}`;
-  if (min) return `From $${min.toLocaleString()}`;
-  if (max) return `Up to $${max.toLocaleString()}`;
+
+  const suffix = type === "hourly" ? "/hr" : "";
+
+  if (min && max) return `$${min.toLocaleString()}${suffix} - $${max.toLocaleString()}${suffix}`;
+  if (min) return `From $${min.toLocaleString()}${suffix}`;
+  if (max) return `Up to $${max.toLocaleString()}${suffix}`;
   return "Competitive";
 }
 

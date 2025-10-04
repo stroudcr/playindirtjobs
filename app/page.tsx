@@ -85,7 +85,7 @@ export default function Home() {
               <img
                 src="/images/PlayInDirtLogo.PNG"
                 alt="PlayInDirtJobs"
-                className="h-32 sm:h-48 md:h-64 lg:h-96 w-auto max-w-full"
+                className="h-64 sm:h-96 md:h-128 lg:h-192 w-auto max-w-full"
               />
             </div>
             <p className="text-base sm:text-lg md:text-xl text-forest-light mb-6 md:mb-8 px-4">
