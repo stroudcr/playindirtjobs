@@ -5,6 +5,7 @@ import Link from "next/link";
 import { formatSalary, formatDate } from "@/lib/utils";
 import { JOB_CATEGORIES, FARM_TYPES, BENEFITS } from "@/lib/constants";
 import type { Metadata } from "next";
+import { ShareButton } from "./share-button";
 
 interface JobPageProps {
   params: Promise<{
@@ -61,78 +62,111 @@ export default async function JobPage({ params }: JobPageProps) {
 
   return (
     <main className="min-h-screen bg-earth-cream">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-4 sm:py-8">
         {/* Back button */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-forest-light hover:text-primary mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-forest-light hover:text-primary mb-4 sm:mb-6 transition-colors py-2"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to jobs
         </Link>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Apply section - Mobile Only (at top) */}
+          <div className="lg:hidden">
+            <div className="card p-4 sticky top-20 z-10">
+              <h3 className="text-lg font-bold text-forest mb-3">Apply for this job</h3>
+
+              {job.applyUrl && (
+                <a
+                  href={job.applyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary w-full justify-center mb-2 py-3"
+                >
+                  Apply Now
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+
+              {job.applyEmail && !job.applyUrl && (
+                <a
+                  href={`mailto:${job.applyEmail}`}
+                  className="btn btn-primary w-full justify-center mb-2 py-3"
+                >
+                  Email Application
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+
+              <p className="text-xs text-forest-light text-center">
+                You&apos;ll be redirected to the company&apos;s application page
+              </p>
+            </div>
+          </div>
+
           {/* Main content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Header */}
-            <div className="card p-6">
+            <div className="card p-4 sm:p-6">
               {job.featured && (
-                <div className="mb-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-white text-sm font-semibold rounded">
+                <div className="mb-3 sm:mb-4">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-white text-xs sm:text-sm font-semibold rounded">
                     ⭐ Featured Job
                   </span>
                 </div>
               )}
 
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <div className="flex-1">
-                  <h1 className="text-3xl md:text-4xl font-bold text-forest mb-2">
+              <div className="flex items-start justify-between gap-2 sm:gap-4 mb-4">
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-forest mb-2">
                     {job.title}
                   </h1>
-                  <p className="text-xl text-forest-light font-medium">
+                  <p className="text-lg sm:text-xl text-forest-light font-medium">
                     {job.company}
                   </p>
                 </div>
-                <div className="text-5xl">{categoryEmojis}</div>
+                <div className="text-3xl sm:text-4xl md:text-5xl flex-shrink-0">{categoryEmojis}</div>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-border">
-                <div className="flex items-center gap-2 text-forest-light">
-                  <MapPin className="w-5 h-5 flex-shrink-0" />
-                  <span>{job.location}</span>
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 pt-4 border-t border-border">
+                <div className="flex items-center gap-2 text-sm sm:text-base text-forest-light">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="truncate">{job.location}</span>
                 </div>
 
-                <div className="flex items-center gap-2 text-forest-light">
-                  <DollarSign className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-semibold text-primary">
+                <div className="flex items-center gap-2 text-sm sm:text-base text-forest-light">
+                  <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="font-semibold text-primary truncate">
                     {formatSalary(job.salaryMin ?? undefined, job.salaryMax ?? undefined)}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-forest-light">
-                  <Briefcase className="w-5 h-5 flex-shrink-0" />
-                  <span className="capitalize">{job.jobType.join(", ").replace(/-/g, " ")}</span>
+                <div className="flex items-center gap-2 text-sm sm:text-base text-forest-light">
+                  <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="capitalize truncate">{job.jobType.join(", ").replace(/-/g, " ")}</span>
                 </div>
 
-                <div className="flex items-center gap-2 text-forest-light">
-                  <Calendar className="w-5 h-5 flex-shrink-0" />
+                <div className="flex items-center gap-2 text-sm sm:text-base text-forest-light">
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                   <span>Posted {formatDate(job.createdAt)}</span>
                 </div>
               </div>
             </div>
 
             {/* Description */}
-            <div className="card p-6">
-              <h2 className="text-2xl font-bold text-forest mb-4">About this job</h2>
-              <div className="prose prose-green max-w-none text-forest-light whitespace-pre-wrap">
+            <div className="card p-4 sm:p-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-forest mb-3 sm:mb-4">About this job</h2>
+              <div className="prose prose-green max-w-none text-sm sm:text-base text-forest-light whitespace-pre-wrap">
                 {job.description}
               </div>
             </div>
 
             {/* Tags */}
-            <div className="card p-6">
-              <h2 className="text-xl font-bold text-forest mb-4">Tags & Categories</h2>
-              <div className="flex flex-wrap gap-2">
+            <div className="card p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-bold text-forest mb-3 sm:mb-4">Tags & Categories</h2>
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {job.categories.map((cat) => {
                   const category = JOB_CATEGORIES.find(c => c.id === cat);
                   return category ? (
@@ -167,8 +201,8 @@ export default async function JobPage({ params }: JobPageProps) {
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
+          {/* Sidebar - Desktop Only */}
+          <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-20 space-y-6">
               {/* Apply section */}
               <div className="card p-6">
@@ -242,16 +276,56 @@ export default async function JobPage({ params }: JobPageProps) {
               <div className="card p-6">
                 <h3 className="text-xl font-bold text-forest mb-4">Share this job</h3>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(window.location.href);
-                      alert("Link copied to clipboard!");
-                    }}
-                    className="btn btn-secondary flex-1 justify-center text-sm"
-                  >
-                    Copy Link
-                  </button>
+                  <ShareButton />
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits & Company Info - Mobile Only */}
+          <div className="lg:hidden lg:col-span-2 space-y-4">
+            {/* Benefits */}
+            {job.benefits.length > 0 && (
+              <div className="card p-4">
+                <h3 className="text-lg font-bold text-forest mb-3">Benefits</h3>
+                <ul className="space-y-2">
+                  {job.benefits.map((benefitId) => {
+                    const benefit = BENEFITS.find(b => b.id === benefitId);
+                    return benefit ? (
+                      <li key={benefitId} className="flex items-center gap-2 text-sm text-forest-light">
+                        <span className="text-lg">{benefit.emoji}</span>
+                        <span>{benefit.label}</span>
+                      </li>
+                    ) : null;
+                  })}
+                </ul>
+              </div>
+            )}
+
+            {/* Company info */}
+            <div className="card p-4">
+              <h3 className="text-lg font-bold text-forest mb-3">About {job.company}</h3>
+              {job.companyWebsite && (
+                <a
+                  href={job.companyWebsite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline flex items-center gap-1 mb-2 text-sm py-2"
+                >
+                  Visit website
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+              <p className="text-sm text-forest-light">
+                Contact: {job.companyEmail}
+              </p>
+            </div>
+
+            {/* Share */}
+            <div className="card p-4">
+              <h3 className="text-lg font-bold text-forest mb-3">Share this job</h3>
+              <div className="flex gap-2">
+                <ShareButton />
               </div>
             </div>
           </div>

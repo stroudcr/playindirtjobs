@@ -50,22 +50,26 @@
 /* Button base styles */
 .btn {
   @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 inline-flex items-center gap-2;
+  /* Ensure minimum touch target size of 44x44px on mobile */
+  min-height: 44px;
 }
 
 .btn-primary {
-  @apply bg-primary text-white hover:bg-primary-dark shadow-soft hover:shadow-soft-lg;
+  @apply bg-primary text-white hover:bg-primary-dark shadow-soft hover:shadow-soft-lg active:scale-95;
 }
 
 .btn-secondary {
-  @apply bg-secondary text-white hover:bg-secondary-dark shadow-soft hover:shadow-soft-lg;
+  @apply bg-secondary text-white hover:bg-secondary-dark shadow-soft hover:shadow-soft-lg active:scale-95;
 }
 
 /* Card styles */
 .card {
-  @apply bg-white rounded-lg border border-border shadow-soft hover:shadow-soft-lg;
+  @apply bg-white rounded-lg border border-border shadow-soft hover:shadow-soft-lg transition-shadow;
 }
 
 /* Input styles */
 .input {
   @apply w-full px-4 py-2 rounded-lg border border-border bg-white text-forest focus:outline-none focus:ring-2 focus:ring-primary/50;
+  /* Ensure minimum touch target size */
+  min-height: 44px;
 }

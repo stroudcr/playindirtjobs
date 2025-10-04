@@ -38,12 +38,12 @@ export function EmailSubscribe() {
 
   if (success) {
     return (
-      <div className="card p-6 bg-primary/5 border-primary">
-        <div className="flex items-center gap-3 text-primary">
-          <CheckCircle className="w-6 h-6" />
+      <div className="card p-4 sm:p-6 bg-primary/5 border-primary">
+        <div className="flex items-center gap-2 sm:gap-3 text-primary">
+          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
           <div>
-            <p className="font-semibold">Successfully subscribed!</p>
-            <p className="text-sm text-forest-light">
+            <p className="font-semibold text-sm sm:text-base">Successfully subscribed!</p>
+            <p className="text-xs sm:text-sm text-forest-light">
               You&apos;ll receive job alerts in your inbox.
             </p>
           </div>
@@ -53,13 +53,13 @@ export function EmailSubscribe() {
   }
 
   return (
-    <div className="card p-6">
-      <div className="flex items-center gap-3 mb-4">
-        <Mail className="w-6 h-6 text-primary" />
-        <h3 className="text-xl font-bold text-forest">Get Job Alerts</h3>
+    <div className="card p-4 sm:p-6">
+      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+        <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+        <h3 className="text-lg sm:text-xl font-bold text-forest">Get Job Alerts</h3>
       </div>
 
-      <p className="text-forest-light mb-4">
+      <p className="text-sm sm:text-base text-forest-light mb-3 sm:mb-4">
         Subscribe to receive new farming, gardening, and ranching jobs in your inbox.
       </p>
 
@@ -70,13 +70,13 @@ export function EmailSubscribe() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="your@email.com"
           required
-          className="input"
+          className="input text-sm sm:text-base"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="btn btn-primary w-full justify-center"
+          className="btn btn-primary w-full justify-center text-sm sm:text-base"
         >
           {loading ? (
             <>
@@ -88,7 +88,7 @@ export function EmailSubscribe() {
           )}
         </button>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-red-500 text-xs sm:text-sm">{error}</p>}
       </form>
 
       <p className="text-xs text-forest-light mt-3">

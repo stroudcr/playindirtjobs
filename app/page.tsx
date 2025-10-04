@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { JobCard } from "@/components/JobCard";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterSidebar } from "@/components/FilterSidebar";
+import { MobileFilters } from "@/components/MobileFilters";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
 import { Loader2 } from "lucide-react";
 
@@ -78,15 +79,18 @@ export default function Home() {
     <main className="min-h-screen bg-earth-cream">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 via-earth-cream to-accent-yellow/10 border-b border-border">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-3xl mx-auto text-center mb-8">
-            <h1 className="text-5xl md:text-6xl font-bold text-forest mb-4 flex items-center justify-center gap-3">
-              <span className="text-6xl">🌱</span>
-              Play In Dirt Jobs
-            </h1>
-            <p className="text-xl text-forest-light mb-8">
-              Find your perfect farming, gardening, or ranching opportunity.<br />
-              Build a sustainable future, one job at a time.
+        <div className="container mx-auto px-4 py-6 md:py-12">
+          <div className="max-w-3xl mx-auto text-center mb-4 md:mb-8">
+            <div className="flex justify-center mb-4 md:mb-6">
+              <img
+                src="/images/PlayInDirtLogo.PNG"
+                alt="PlayInDirtJobs"
+                className="h-32 sm:h-48 md:h-64 lg:h-96 w-auto max-w-full"
+              />
+            </div>
+            <p className="text-base sm:text-lg md:text-xl text-forest-light mb-6 md:mb-8 px-4">
+              Find your perfect farming, gardening, or ranching opportunity.<br className="hidden sm:inline" />
+              <span className="sm:inline block mt-1 sm:mt-0"> Build a sustainable future, one job at a time.</span>
             </p>
             <SearchBar onSearch={setSearchQuery} />
           </div>
@@ -96,8 +100,8 @@ export default function Home() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar */}
-          <div className="w-full lg:w-64 flex-shrink-0 space-y-6">
+          {/* Filters Sidebar - Desktop Only */}
+          <div className="hidden lg:block w-64 flex-shrink-0 space-y-6">
             <EmailSubscribe />
             <FilterSidebar
               selectedCategories={selectedCategories}
@@ -108,6 +112,16 @@ export default function Home() {
               onFilterChange={handleFilterChange}
             />
           </div>
+
+          {/* Mobile Filters */}
+          <MobileFilters
+            selectedCategories={selectedCategories}
+            selectedJobTypes={selectedJobTypes}
+            selectedFarmTypes={selectedFarmTypes}
+            selectedBenefits={selectedBenefits}
+            sortBy={sortBy}
+            onFilterChange={handleFilterChange}
+          />
 
           {/* Job Listings */}
           <div className="flex-1 min-w-0">
