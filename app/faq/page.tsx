@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     question: "Can I edit my job posting after it's published?",
-    answer: "Yes, contact us with your job posting details and we'll help you make updates. We recommend ensuring all information is accurate before publishing."
+    answer: "Yes, contact us with your job posting details and we&apos;ll help you make updates. We recommend ensuring all information is accurate before publishing."
   },
   {
     question: "What types of jobs can I post?",

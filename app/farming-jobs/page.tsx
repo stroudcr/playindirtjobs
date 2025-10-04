@@ -121,7 +121,7 @@ export default async function FarmingJobsPage() {
             <div className="prose prose-green max-w-none text-forest-light space-y-4">
               <p>
                 Farming jobs offer rewarding careers working with the land, growing food, and contributing to sustainable agriculture.
-                Whether you're looking for seasonal farm work, year-round positions, or farm management roles, PlayInDirtJobs connects
+                Whether you&apos;re looking for seasonal farm work, year-round positions, or farm management roles, PlayInDirtJobs connects
                 you with opportunities across organic farms, conventional agriculture, and regenerative farming operations.
               </p>
               <p>

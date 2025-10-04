@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { JobCard } from "@/components/JobCard";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterSidebar } from "@/components/FilterSidebar";
@@ -82,10 +83,13 @@ export default function Home() {
         <div className="container mx-auto px-4 py-6 md:py-12">
           <div className="max-w-3xl mx-auto text-center mb-4 md:mb-8">
             <div className="flex justify-center mb-4 md:mb-6">
-              <img
+              <Image
                 src="/images/PlayInDirtLogo.PNG"
                 alt="PlayInDirtJobs - Farm, Garden & Ranch Jobs"
+                width={800}
+                height={800}
                 className="h-64 sm:h-96 md:h-128 lg:h-192 w-auto max-w-full"
+                priority
               />
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-forest mb-3 md:mb-4">
@@ -272,7 +276,7 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-bold text-forest mb-4">About PlayInDirtJobs</h3>
               <p className="text-forest-light leading-relaxed">
-                PlayInDirtJobs is the premier job board connecting agriculture professionals with sustainable farming, gardening, and ranching opportunities nationwide. Whether you're seeking organic farm positions, ranch hand work, or agricultural apprenticeships, we help you build a meaningful career in sustainable agriculture.
+                PlayInDirtJobs is the premier job board connecting agriculture professionals with sustainable farming, gardening, and ranching opportunities nationwide. Whether you&apos;re seeking organic farm positions, ranch hand work, or agricultural apprenticeships, we help you build a meaningful career in sustainable agriculture.
               </p>
             </div>
           </div>
