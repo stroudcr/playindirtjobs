@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { JobCard } from "@/components/JobCard";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterSidebar } from "@/components/FilterSidebar";
@@ -18,7 +18,7 @@ interface Job {
   categories: string[];
   jobType: string[];
   featured: boolean;
-  createdAt: string;
+  createdAt: Date;
 }
 
 export default function Home() {
@@ -31,11 +31,7 @@ export default function Home() {
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("latest");
 
-  useEffect(() => {
-    fetchJobs();
-  }, [searchQuery, selectedCategories, selectedJobTypes, selectedFarmTypes, selectedBenefits, sortBy]);
-
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams();
@@ -58,7 +54,11 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchQuery, selectedCategories, selectedJobTypes, selectedFarmTypes, selectedBenefits, sortBy]);
+
+  useEffect(() => {
+    fetchJobs();
+  }, [fetchJobs]);
 
   const handleFilterChange = (filters: {
     categories?: string[];

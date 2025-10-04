@@ -291,7 +291,7 @@ export default function PostJobPage() {
                   className="input"
                 />
                 <p className="text-sm text-forest-light mt-1">
-                  We'll send a magic link to this email to manage your posting
+                  We&apos;ll send a magic link to this email to manage your posting
                 </p>
               </div>
 

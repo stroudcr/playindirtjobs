@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Loader2 } from "lucide-react";
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const [job, setJob] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -64,7 +64,7 @@ export default function SuccessPage() {
         </p>
 
         <div className="card p-8 mb-8 text-left">
-          <h2 className="text-2xl font-bold text-forest mb-4">What's next?</h2>
+          <h2 className="text-2xl font-bold text-forest mb-4">What&apos;s next?</h2>
           <ul className="space-y-3 text-forest-light">
             <li className="flex items-start gap-3">
               <span className="text-primary font-bold">📧</span>
@@ -111,5 +111,17 @@ export default function SuccessPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-earth-cream flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </main>
+    }>
+      <SuccessContent />
+    </Suspense>
   );
 }

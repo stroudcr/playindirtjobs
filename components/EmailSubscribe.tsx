@@ -44,7 +44,7 @@ export function EmailSubscribe() {
           <div>
             <p className="font-semibold">Successfully subscribed!</p>
             <p className="text-sm text-forest-light">
-              You'll receive job alerts in your inbox.
+              You&apos;ll receive job alerts in your inbox.
             </p>
           </div>
         </div>

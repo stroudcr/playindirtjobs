@@ -7,7 +7,7 @@ export default function NotFound() {
         <div className="text-8xl mb-6">🌾</div>
         <h1 className="text-4xl font-bold text-forest mb-4">Job Not Found</h1>
         <p className="text-xl text-forest-light mb-8">
-          This job posting doesn't exist or has expired.
+          This job posting doesn&apos;t exist or has expired.
         </p>
         <Link href="/" className="btn btn-primary">
           Browse All Jobs

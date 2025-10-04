@@ -7,9 +7,9 @@ import { JOB_CATEGORIES, FARM_TYPES, BENEFITS } from "@/lib/constants";
 import type { Metadata } from "next";
 
 interface JobPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getJob(slug: string) {
@@ -31,7 +31,8 @@ async function getJob(slug: string) {
 }
 
 export async function generateMetadata({ params }: JobPageProps): Promise<Metadata> {
-  const job = await getJob(params.slug);
+  const { slug } = await params;
+  const job = await getJob(slug);
 
   if (!job) {
     return {
@@ -46,7 +47,8 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
 }
 
 export default async function JobPage({ params }: JobPageProps) {
-  const job = await getJob(params.slug);
+  const { slug } = await params;
+  const job = await getJob(slug);
 
   if (!job) {
     notFound();
@@ -195,7 +197,7 @@ export default async function JobPage({ params }: JobPageProps) {
                 )}
 
                 <p className="text-xs text-forest-light text-center">
-                  You'll be redirected to the company's application page
+                  You&apos;ll be redirected to the company&apos;s application page
                 </p>
               </div>
 
