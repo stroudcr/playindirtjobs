@@ -1,29 +1,39 @@
 import { MetadataRoute } from 'next'
 import { db } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 3600 // Revalidate every hour
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://playindirtjobs.com'
 
   // Get all active jobs
-  const jobs = await db.job.findMany({
-    where: {
-      active: true,
-      expiresAt: {
-        gte: new Date()
-      }
-    },
-    select: {
-      slug: true,
-      updatedAt: true,
-    },
-  })
+  let jobUrls: MetadataRoute.Sitemap = []
 
-  const jobUrls = jobs.map((job) => ({
-    url: `${baseUrl}/jobs/${job.slug}`,
-    lastModified: job.updatedAt,
-    changeFrequency: 'daily' as const,
-    priority: 0.8,
-  }))
+  try {
+    const jobs = await db.job.findMany({
+      where: {
+        active: true,
+        expiresAt: {
+          gte: new Date()
+        }
+      },
+      select: {
+        slug: true,
+        updatedAt: true,
+      },
+    })
+
+    jobUrls = jobs.map((job) => ({
+      url: `${baseUrl}/jobs/${job.slug}`,
+      lastModified: job.updatedAt,
+      changeFrequency: 'daily' as const,
+      priority: 0.8,
+    }))
+  } catch (error) {
+    console.error('Error fetching jobs for sitemap:', error)
+    // If database is not available, just return static pages
+  }
 
   // Static pages
   const staticPages = [
