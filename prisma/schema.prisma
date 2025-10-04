@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  company     String
+  description String   @db.Text
+  location    String
+
+  // Salary
+  salaryMin   Int?
+  salaryMax   Int?
+
+  // Job details
+  jobType     String[] // ["full-time", "part-time", "seasonal", etc.]
+  farmType    String[] // ["organic", "conventional", "permaculture", etc.]
+  categories  String[] // ["farm-hand", "gardener", "ranch-hand", etc.]
+  tags        String[] // ["sustainable", "animal-care", etc.]
+  benefits    String[] // ["housing", "meals", "equipment", etc.]
+
+  // Company info
+  companyEmail String
+  companyLogo  String?
+  companyWebsite String?
+
+  // Application
+  applyUrl    String?
+  applyEmail  String?
+
+  // Status and metrics
+  featured    Boolean  @default(false)
+  active      Boolean  @default(false)
+  views       Int      @default(0)
+
+  // Payment and management
+  stripePaymentId String?
+  editToken       String  @unique @default(cuid())
+
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expiresAt   DateTime // Jobs expire after 60 days
+
+  @@index([active, createdAt])
+  @@index([slug])
+  @@index([featured])
+}
+
+model Subscriber {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  categories String[] // Subscribe to specific categories
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  @@index([email])
+  @@index([active])
+}
