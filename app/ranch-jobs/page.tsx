@@ -4,6 +4,8 @@ import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Beef } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Ranch Jobs | Ranch Hand & Livestock Positions | PlayInDirtJobs",
   description: "Find ranch jobs and ranch hand positions across America. Browse cattle ranch work, livestock management careers, and ranching opportunities. Apply to top ranches today!",

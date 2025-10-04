@@ -4,6 +4,8 @@ import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Leaf } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Gardening Jobs | Professional Gardener Careers | PlayInDirtJobs",
   description: "Find gardening jobs and professional gardener positions. Browse horticulture careers, landscape gardening, greenhouse work, and nursery jobs. Apply to gardening opportunities nationwide.",

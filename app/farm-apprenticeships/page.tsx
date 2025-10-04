@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Farm Apprenticeships | Agricultural Training Programs | PlayInDirtJobs",
   description: "Find farm apprenticeship programs and agricultural training opportunities. Learn sustainable farming, organic agriculture, and regenerative practices. Start your farming career today!",

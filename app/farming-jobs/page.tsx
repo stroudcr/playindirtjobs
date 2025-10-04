@@ -5,6 +5,8 @@ import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Sprout, ArrowRight } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Farming Jobs | Farm Hand & Agricultural Positions | PlayInDirtJobs",
   description: "Browse farming jobs across America. Find farm hand positions, agricultural careers, and sustainable farming opportunities. From organic farms to large-scale agriculture. Apply today!",
