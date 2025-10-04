@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { JOB_CATEGORIES, JOB_TYPES, FARM_TYPES, BENEFITS, TAGS } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { LiveJobPreview } from "@/components/LiveJobPreview";
+import { PlanSelector } from "@/components/PlanSelector";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
 
 export default function PostJobPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [selectedPlan, setSelectedPlan] = useState<"basic" | "featured">("basic");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -39,26 +45,51 @@ export default function PostJobPage() {
     setFormData({ ...formData, [field]: newValues });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Validation
+  const isFormValid = useMemo(() => {
+    return !!(
+      formData.title &&
+      formData.company &&
+      formData.location &&
+      formData.description.length >= 100 &&
+      formData.categories.length > 0 &&
+      formData.jobType.length > 0 &&
+      formData.farmType.length > 0 &&
+      formData.companyEmail &&
+      (formData.applyUrl || formData.applyEmail)
+    );
+  }, [formData]);
+
+  const handleCheckout = async () => {
+    if (!isFormValid) return;
+
     setLoading(true);
     setErrors({});
 
     try {
-      // Prepare data
       const submitData = {
         ...formData,
         salaryMin: formData.salaryMin ? parseInt(formData.salaryMin) : undefined,
         salaryMax: formData.salaryMax ? parseInt(formData.salaryMax) : undefined,
       };
 
-      // Store in session storage for preview
-      sessionStorage.setItem("jobDraft", JSON.stringify(submitData));
+      const response = await fetch("/api/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          jobData: submitData,
+          plan: selectedPlan,
+        }),
+      });
 
-      // Redirect to preview
-      router.push("/post-job/preview");
+      const { sessionId } = await response.json();
+      const stripe = await stripePromise;
+
+      if (stripe) {
+        await stripe.redirectToCheckout({ sessionId });
+      }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Checkout error:", error);
       setErrors({ submit: "An error occurred. Please try again." });
     } finally {
       setLoading(false);
@@ -66,18 +97,20 @@ export default function PostJobPage() {
   };
 
   return (
-    <main className="min-h-screen bg-earth-cream py-12">
-      <div className="container mx-auto px-4 max-w-3xl">
+    <main className="min-h-screen bg-earth-cream py-6 sm:py-12">
+      <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-forest mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-forest mb-4">
             Post a Job
           </h1>
-          <p className="text-xl text-forest-light">
+          <p className="text-lg sm:text-xl text-forest-light">
             Find the perfect candidate for your farm, garden, or ranch
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
+          {/* Left Column: Form */}
+          <div className="space-y-6">
           {/* Basic Information */}
           <div className="card p-6">
             <h2 className="text-2xl font-bold text-forest mb-6">Basic Information</h2>
@@ -384,35 +417,72 @@ export default function PostJobPage() {
             </div>
           </div>
 
-          {/* Submit */}
-          <div className="flex gap-4 justify-end">
+          </div>
+
+          {/* Right Column: Preview & Pricing - Desktop */}
+          <div className="hidden lg:block lg:sticky lg:top-20 lg:self-start space-y-6">
+            <LiveJobPreview data={formData} featured={selectedPlan === "featured"} />
+            <PlanSelector selected={selectedPlan} onChange={setSelectedPlan} />
+
             <button
-              type="button"
-              onClick={() => router.push("/")}
-              className="btn bg-white border border-border hover:bg-gray-50 text-forest"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn btn-primary"
+              onClick={handleCheckout}
+              disabled={!isFormValid || loading}
+              className="btn btn-primary w-full justify-center text-lg py-3"
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-5 h-5 animate-spin" />
                   Processing...
                 </>
               ) : (
-                "Preview Job →"
+                "Continue to Payment →"
               )}
             </button>
+
+            {!isFormValid && (
+              <p className="text-sm text-forest-light text-center">
+                Please complete all required fields to continue
+              </p>
+            )}
+
+            {errors.submit && (
+              <p className="text-red-500 text-sm text-center">{errors.submit}</p>
+            )}
           </div>
 
-          {errors.submit && (
-            <p className="text-red-500 text-center">{errors.submit}</p>
-          )}
-        </form>
+          {/* Mobile: Preview & Pricing at Bottom */}
+          <div className="lg:hidden space-y-6">
+            <LiveJobPreview data={formData} featured={selectedPlan === "featured"} />
+            <PlanSelector selected={selectedPlan} onChange={setSelectedPlan} />
+
+            <div className="sticky bottom-0 bg-earth-cream pt-4 pb-6 -mx-4 px-4 border-t border-border">
+              <button
+                onClick={handleCheckout}
+                disabled={!isFormValid || loading}
+                className="btn btn-primary w-full justify-center text-lg py-3"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  "Continue to Payment →"
+                )}
+              </button>
+
+              {!isFormValid && (
+                <p className="text-sm text-forest-light text-center mt-2">
+                  Please complete all required fields to continue
+                </p>
+              )}
+
+              {errors.submit && (
+                <p className="text-red-500 text-sm text-center mt-2">{errors.submit}</p>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );

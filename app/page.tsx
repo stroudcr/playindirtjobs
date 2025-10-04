@@ -84,13 +84,16 @@ export default function Home() {
             <div className="flex justify-center mb-4 md:mb-6">
               <img
                 src="/images/PlayInDirtLogo.PNG"
-                alt="PlayInDirtJobs"
+                alt="PlayInDirtJobs - Farm, Garden & Ranch Jobs"
                 className="h-64 sm:h-96 md:h-128 lg:h-192 w-auto max-w-full"
               />
             </div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-forest mb-3 md:mb-4">
+              Find Farming, Gardening & Ranch Jobs
+            </h1>
             <p className="text-base sm:text-lg md:text-xl text-forest-light mb-6 md:mb-8 px-4">
-              Find your perfect farming, gardening, or ranching opportunity.<br className="hidden sm:inline" />
-              <span className="sm:inline block mt-1 sm:mt-0"> Build a sustainable future, one job at a time.</span>
+              Discover sustainable agriculture careers, organic farming positions, and ranch work opportunities across America.
+              <span className="hidden sm:inline"> Build a sustainable future, one job at a time.</span>
             </p>
             <SearchBar onSearch={setSearchQuery} />
           </div>
@@ -207,6 +210,83 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Browse by Category Section */}
+      <section className="bg-forest/5 border-y border-border py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-forest mb-8 text-center">Browse Jobs by Category</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
+            <a href="/farming-jobs" className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow border border-border">
+              <div className="text-4xl mb-3">🌾</div>
+              <h3 className="font-semibold text-forest mb-1">Farming Jobs</h3>
+              <p className="text-sm text-forest-light">General farm work</p>
+            </a>
+            <a href="/gardening-jobs" className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow border border-border">
+              <div className="text-4xl mb-3">🌱</div>
+              <h3 className="font-semibold text-forest mb-1">Gardening Jobs</h3>
+              <p className="text-sm text-forest-light">Horticulture careers</p>
+            </a>
+            <a href="/ranch-jobs" className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow border border-border">
+              <div className="text-4xl mb-3">🐄</div>
+              <h3 className="font-semibold text-forest mb-1">Ranch Jobs</h3>
+              <p className="text-sm text-forest-light">Livestock & cattle</p>
+            </a>
+            <a href="/organic-farm-jobs" className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow border border-border">
+              <div className="text-4xl mb-3">🌿</div>
+              <h3 className="font-semibold text-forest mb-1">Organic Farms</h3>
+              <p className="text-sm text-forest-light">Certified organic</p>
+            </a>
+            <a href="/farm-apprenticeships" className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow border border-border">
+              <div className="text-4xl mb-3">📚</div>
+              <h3 className="font-semibold text-forest mb-1">Apprenticeships</h3>
+              <p className="text-sm text-forest-light">Learn & earn</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Content Footer */}
+      <section className="bg-earth-cream py-12">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div>
+              <h3 className="text-xl font-bold text-forest mb-4">Popular Job Searches</h3>
+              <ul className="space-y-2 text-forest-light">
+                <li><a href="/farming-jobs" className="hover:text-primary">Farming Jobs</a></li>
+                <li><a href="/gardening-jobs" className="hover:text-primary">Gardening Jobs</a></li>
+                <li><a href="/ranch-jobs" className="hover:text-primary">Ranch Hand Jobs</a></li>
+                <li><a href="/organic-farm-jobs" className="hover:text-primary">Organic Farm Jobs</a></li>
+                <li><a href="/farm-apprenticeships" className="hover:text-primary">Farm Apprenticeships</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-forest mb-4">Job Types</h3>
+              <ul className="space-y-2 text-forest-light">
+                <li>Full-time Farm Jobs</li>
+                <li>Part-time Agriculture Work</li>
+                <li>Seasonal Harvest Jobs</li>
+                <li>Farm Internships</li>
+                <li>Remote Agriculture Positions</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-forest mb-4">About PlayInDirtJobs</h3>
+              <p className="text-forest-light leading-relaxed">
+                PlayInDirtJobs is the premier job board connecting agriculture professionals with sustainable farming, gardening, and ranching opportunities nationwide. Whether you're seeking organic farm positions, ranch hand work, or agricultural apprenticeships, we help you build a meaningful career in sustainable agriculture.
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-border pt-8">
+            <h2 className="text-2xl font-bold text-forest mb-4">Find Your Dream Agriculture Career</h2>
+            <p className="text-forest-light leading-relaxed mb-4">
+              The agriculture industry offers diverse career paths from hands-on farming and gardening to ranch management and sustainable agriculture leadership. PlayInDirtJobs features the most comprehensive collection of farming jobs, gardening positions, and ranch work opportunities in the United States.
+            </p>
+            <p className="text-forest-light leading-relaxed">
+              Our platform serves organic farms, regenerative agriculture operations, livestock ranches, nurseries, vineyards, and community gardens. Browse full-time, part-time, seasonal, and apprenticeship positions. Start your sustainable agriculture career today.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,10 +10,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="font-bold text-forest mb-4 flex items-center gap-2">
-              <span className="text-xl">🌱</span>
-              PlayInDirtJobs
-            </h3>
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/images/PlayInDirtWord.PNG"
+                alt="PlayInDirtJobs"
+                width={540}
+                height={144}
+                className="h-24 w-auto"
+              />
+            </Link>
             <p className="text-sm text-forest-light">
               Connecting people with farming, gardening, and ranching opportunities.
               Build a sustainable future.

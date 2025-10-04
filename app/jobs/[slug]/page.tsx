@@ -41,9 +41,36 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
     };
   }
 
+  const salaryRange = job.salaryMin && job.salaryMax
+    ? `$${job.salaryMin.toLocaleString()}-$${job.salaryMax.toLocaleString()}`
+    : "";
+
   return {
-    title: `${job.title} at ${job.company} | PlayInDirtJobs`,
-    description: job.description.slice(0, 155),
+    title: `${job.title} - ${job.company} | ${job.location} ${job.jobType.includes('full-time') ? 'Full-Time' : ''} Jobs`,
+    description: `${job.title} at ${job.company} in ${job.location}. ${salaryRange ? salaryRange + '. ' : ''}${job.description.slice(0, 120)}...`,
+    openGraph: {
+      title: `${job.title} at ${job.company}`,
+      description: job.description.slice(0, 155),
+      url: `https://playindirtjobs.com/jobs/${job.slug}`,
+      type: 'website',
+      images: [
+        {
+          url: job.companyLogo || '/images/PlayInDirtLogo.PNG',
+          width: 1200,
+          height: 630,
+          alt: `${job.company} logo`,
+        }
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${job.title} at ${job.company}`,
+      description: job.description.slice(0, 155),
+      images: [job.companyLogo || '/images/PlayInDirtLogo.PNG'],
+    },
+    alternates: {
+      canonical: `https://playindirtjobs.com/jobs/${job.slug}`,
+    },
   };
 }
 
@@ -60,7 +87,59 @@ export default async function JobPage({ params }: JobPageProps) {
     .filter(Boolean)
     .join(" ");
 
+  // JobPosting Schema for Google Jobs
+  const jobPostingSchema = {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": job.title,
+    "description": job.description,
+    "datePosted": job.createdAt.toISOString(),
+    "validThrough": job.expiresAt.toISOString(),
+    "employmentType": job.jobType.map((type) =>
+      type.toUpperCase().replace(/-/g, '_')
+    ),
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": job.company,
+      "sameAs": job.companyWebsite || undefined,
+      "logo": job.companyLogo || undefined,
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": job.location.split(',')[0]?.trim(),
+        "addressRegion": job.location.split(',')[1]?.trim(),
+        "addressCountry": "US"
+      }
+    },
+    ...(job.salaryMin || job.salaryMax ? {
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": job.salaryMin,
+          "maxValue": job.salaryMax,
+          "unitText": job.salaryType === "hourly" ? "HOUR" : "YEAR"
+        }
+      }
+    } : {}),
+    "applicantLocationRequirements": {
+      "@type": "Country",
+      "name": "US"
+    },
+    "jobLocationType": "TELECOMMUTE" in job.jobType ? "TELECOMMUTE" : undefined,
+    "industry": "Agriculture"
+  };
+
   return (
+    <>
+      {/* JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+      />
     <main className="min-h-screen bg-earth-cream">
       <div className="container mx-auto px-4 py-4 sm:py-8">
         {/* Back button */}
@@ -332,5 +411,6 @@ export default async function JobPage({ params }: JobPageProps) {
         </div>
       </div>
     </main>
+    </>
   );
 }
