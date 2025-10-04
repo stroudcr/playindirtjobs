@@ -46,7 +46,17 @@ export default async function RanchJobsPage() {
       <section className="container mx-auto px-4 py-12">
         <h2 className="text-2xl font-bold text-forest mb-6">{jobs.length} Ranch Jobs Available</h2>
         <div className="grid gap-4 max-w-4xl">
-          {jobs.map((job) => <JobCard key={job.id} job={{ ...job, createdAt: new Date(job.createdAt) }} />)}
+          {jobs.map((job) => (
+            <JobCard
+              key={job.id}
+              job={{
+                ...job,
+                salaryMin: job.salaryMin ?? undefined,
+                salaryMax: job.salaryMax ?? undefined,
+                createdAt: new Date(job.createdAt),
+              }}
+            />
+          ))}
         </div>
       </section>
     </main>

@@ -99,6 +99,8 @@ export default async function FarmingJobsPage() {
                   key={job.id}
                   job={{
                     ...job,
+                    salaryMin: job.salaryMin ?? undefined,
+                    salaryMax: job.salaryMax ?? undefined,
                     createdAt: new Date(job.createdAt),
                   }}
                 />
