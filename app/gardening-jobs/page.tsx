@@ -53,6 +53,7 @@ export default async function GardeningJobsPage() {
                 ...job,
                 salaryMin: job.salaryMin ?? undefined,
                 salaryMax: job.salaryMax ?? undefined,
+                salaryType: job.salaryType ?? undefined,
                 createdAt: new Date(job.createdAt),
               }}
             />
