@@ -17,13 +17,13 @@ export function SearchBar({ onSearch }: SearchBarProps) {
 
   return (
     <form onSubmit={handleSubmit} className="relative">
-      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-forest-light pointer-events-none" />
+      <Search className="hidden sm:block absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-forest-light pointer-events-none" />
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search jobs, companies, locations..."
-        className="input pl-12 pr-3 sm:pr-4 w-full text-sm sm:text-base"
+        className="input pl-3 sm:pl-12 pr-3 sm:pr-4 w-full text-sm sm:text-base"
       />
     </form>
   );
