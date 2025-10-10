@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "permaculture jobs"
   ],
   icons: {
-    icon: "/PlayInDirtFavicon.ico",
+    icon: "/images/PlayInDirtFavicon.ico",
   },
   openGraph: {
     title: "Find Your Dream Farm Job | PlayInDirtJobs",
