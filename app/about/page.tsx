@@ -59,7 +59,7 @@ export default function AboutPage() {
                 Honoring America&apos;s Agricultural Heritage
               </h1>
               <p className="text-xl md:text-2xl text-forest-light leading-relaxed mb-8">
-                We connect passionate workers with farms, gardens, and ranches that need them—helping those who love the work find the right place to grow.
+                We connect passionate workers with farms, gardens, and ranches that need them. We help those who love the work find the right place to grow.
               </p>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function AboutPage() {
                 PlayInDirtJobs was created to bridge that gap. We recognized that across the country, organic farms, permaculture gardens, family ranches, and sustainable agriculture operations were struggling to find dedicated team members. At the same time, thousands of people—from experienced farm hands to eager apprentices—were searching for opportunities to work the land and contribute to a more sustainable food system.
               </p>
               <p>
-                We believe that working in agriculture is more than just a job—it&apos;s a calling. Whether you&apos;re planting seedlings in a nursery, managing livestock on a ranch, harvesting vegetables for a CSA, or tending vines in a vineyard, you&apos;re participating in something essential and timeless. Our platform celebrates this work and the people who do it.
+                We believe that working in agriculture is more than just a job. Whether you&apos;re planting seedlings in a nursery, managing livestock on a ranch, harvesting vegetables for a CSA, or tending vines in a vineyard, you&apos;re participating in something essential and timeless. Our platform celebrates this work and the people who do it.
               </p>
             </div>
           </div>
