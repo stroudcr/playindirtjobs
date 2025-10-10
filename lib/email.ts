@@ -26,7 +26,7 @@ export async function sendJobConfirmationEmail(
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #10b981 0%, #22c55e 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h1 style="color: white; margin: 0; font-size: 32px;">🌱 PlayInDirtJobs</h1>
+            <img src="${process.env.NEXT_PUBLIC_APP_URL}/images/PlayInDirtWord.PNG" alt="PlayInDirtJobs" style="max-width: 300px; width: 100%; height: auto;" />
           </div>
 
           <div style="background: #ffffff; padding: 40px 30px; border: 1px solid #e5e7eb; border-top: none;">
@@ -66,7 +66,7 @@ export async function sendJobConfirmationEmail(
             </ul>
 
             <p style="color: #78716c; font-size: 14px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-              Your job will be live for 60 days. If you have any questions, just reply to this email.
+              Your job will be live for 60 days.
             </p>
 
             <p style="color: #78716c; font-size: 14px; margin-top: 20px;">
@@ -122,7 +122,7 @@ export async function sendReceiptEmail(
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #10b981 0%, #22c55e 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h1 style="color: white; margin: 0; font-size: 32px;">🌱 PlayInDirtJobs</h1>
+            <img src="${process.env.NEXT_PUBLIC_APP_URL}/images/PlayInDirtWord.PNG" alt="PlayInDirtJobs" style="max-width: 300px; width: 100%; height: auto;" />
             <p style="color: white; margin: 10px 0 0 0; font-size: 18px;">Payment Receipt</p>
           </div>
 
@@ -193,11 +193,6 @@ export async function sendReceiptEmail(
               <li>Email support</li>
             </ul>
 
-            <p style="color: #78716c; font-size: 14px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-              <strong>Questions about your purchase?</strong><br/>
-              Reply to this email and we'll be happy to help.
-            </p>
-
             <p style="color: #78716c; font-size: 14px; margin-top: 20px;">
               Thank you for supporting sustainable agriculture jobs!
             </p>
@@ -255,7 +250,7 @@ export async function sendJobAlertEmail(
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #10b981 0%, #22c55e 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h1 style="color: white; margin: 0; font-size: 32px;">🌱 PlayInDirtJobs</h1>
+            <img src="${process.env.NEXT_PUBLIC_APP_URL}/images/PlayInDirtWord.PNG" alt="PlayInDirtJobs" style="max-width: 300px; width: 100%; height: auto;" />
           </div>
 
           <div style="background: #fef3c7; padding: 30px;">

@@ -82,7 +82,7 @@ export default function RootLayout({
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Customer Service",
-      "email": "hello@playindirtjobs.com"
+      "email": "info@playindirtjobs.com"
     },
     "sameAs": []
   };
