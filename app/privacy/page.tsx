@@ -42,7 +42,7 @@ export default function PrivacyPage() {
                 <li><a href="#state-rights" className="text-primary hover:underline">9. Other State Privacy Rights</a></li>
                 <li><a href="#do-not-sell" className="text-primary hover:underline">10. Do Not Sell or Share My Personal Information</a></li>
                 <li><a href="#international" className="text-primary hover:underline">11. International Users</a></li>
-                <li><a href="#children" className="text-primary hover:underline">12. Children's Privacy</a></li>
+                <li><a href="#children" className="text-primary hover:underline">12. Children&rsquo;s Privacy</a></li>
                 <li><a href="#security" className="text-primary hover:underline">13. Data Security</a></li>
                 <li><a href="#changes" className="text-primary hover:underline">14. Changes to This Privacy Policy</a></li>
                 <li><a href="#contact" className="text-primary hover:underline">15. Contact Us</a></li>
@@ -155,7 +155,7 @@ export default function PrivacyPage() {
                 We share information with third-party service providers who perform services on our behalf:
               </p>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
-                <li><strong>Stripe:</strong> Payment processing (covered by Stripe's privacy policy)</li>
+                <li><strong>Stripe:</strong> Payment processing (covered by Stripe&rsquo;s privacy policy)</li>
                 <li><strong>Resend:</strong> Email delivery services for confirmations and job alerts</li>
                 <li><strong>Hosting Providers:</strong> Website hosting and database management</li>
               </ul>
@@ -313,7 +313,7 @@ export default function PrivacyPage() {
             </section>
 
             <section id="children" className="mb-8">
-              <h2 className="text-2xl font-bold text-forest mb-4">12. Children's Privacy</h2>
+              <h2 className="text-2xl font-bold text-forest mb-4">12. Children&rsquo;s Privacy</h2>
               <p className="text-forest-light mb-4">
                 Our services are not directed to individuals under the age of 18, and we do not knowingly collect personal information from children under 13 (or 16 in certain jurisdictions). If you believe we have collected information from a child, please contact us immediately at info@playindirtjobs.com, and we will delete it.
               </p>

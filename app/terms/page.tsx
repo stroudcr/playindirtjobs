@@ -157,7 +157,7 @@ export default function TermsPage() {
                 <strong>Job Posting Fees:</strong> Certain services, such as posting job listings, require payment. Current pricing is displayed on our website before checkout.
               </p>
               <p className="text-forest-light mb-4">
-                <strong>Payment Processing:</strong> All payments are processed securely through Stripe, a third-party payment processor. We do not store your credit card information. By making a payment, you agree to Stripe's terms and conditions.
+                <strong>Payment Processing:</strong> All payments are processed securely through Stripe, a third-party payment processor. We do not store your credit card information. By making a payment, you agree to Stripe&rsquo;s terms and conditions.
               </p>
               <p className="text-forest-light mb-4">
                 <strong>Refund Policy:</strong> Job posting fees are generally non-refundable once the posting goes live. If you experience technical issues preventing your listing from being published, please contact us at info@playindirtjobs.com within 48 hours.
@@ -221,7 +221,7 @@ export default function TermsPage() {
             <section id="indemnification" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">11. Indemnification</h2>
               <p className="text-forest-light mb-4">
-                You agree to indemnify, defend, and hold harmless WellDiem Company LLC, its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, costs, or expenses (including reasonable attorneys' fees) arising out of or related to:
+                You agree to indemnify, defend, and hold harmless WellDiem Company LLC, its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, costs, or expenses (including reasonable attorneys&rsquo; fees) arising out of or related to:
               </p>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
                 <li>Your use of the Service</li>
@@ -258,7 +258,7 @@ export default function TermsPage() {
             <section id="modifications" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">14. Modifications to Terms</h2>
               <p className="text-forest-light mb-4">
-                We reserve the right to modify these Terms at any time. We will notify users of material changes by posting the updated Terms on our website with a new "Last Updated" date. Your continued use of the Service after changes are posted constitutes your acceptance of the modified Terms.
+                We reserve the right to modify these Terms at any time. We will notify users of material changes by posting the updated Terms on our website with a new &ldquo;Last Updated&rdquo; date. Your continued use of the Service after changes are posted constitutes your acceptance of the modified Terms.
               </p>
               <p className="text-forest-light mb-4">
                 We encourage you to review these Terms periodically.
