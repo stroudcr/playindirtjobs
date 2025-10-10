@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -48,7 +48,6 @@ interface Job {
 
 export default function ManageJobPage() {
   const params = useParams();
-  const router = useRouter();
   const editToken = params.editToken as string;
 
   const [job, setJob] = useState<Job | null>(null);
@@ -418,12 +417,12 @@ export default function ManageJobPage() {
               </label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {JOB_CATEGORIES.map((cat) => (
-                  <label key={cat.value} className="flex items-center gap-2 cursor-pointer">
+                  <label key={cat.id} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={(formData.categories || []).includes(cat.value)}
-                      onChange={() => handleArrayToggle("categories", cat.value)}
-                      disabled={(formData.categories?.length || 0) >= 3 && !(formData.categories || []).includes(cat.value)}
+                      checked={(formData.categories || []).includes(cat.id)}
+                      onChange={() => handleArrayToggle("categories", cat.id)}
+                      disabled={(formData.categories?.length || 0) >= 3 && !(formData.categories || []).includes(cat.id)}
                       className="rounded text-primary"
                     />
                     <span className="text-sm text-forest">
@@ -441,11 +440,11 @@ export default function ManageJobPage() {
               </label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {JOB_TYPES.map((type) => (
-                  <label key={type.value} className="flex items-center gap-2 cursor-pointer">
+                  <label key={type.id} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={(formData.jobType || []).includes(type.value)}
-                      onChange={() => handleArrayToggle("jobType", type.value)}
+                      checked={(formData.jobType || []).includes(type.id)}
+                      onChange={() => handleArrayToggle("jobType", type.id)}
                       className="rounded text-primary"
                     />
                     <span className="text-sm text-forest">{type.label}</span>
@@ -461,11 +460,11 @@ export default function ManageJobPage() {
               </label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {FARM_TYPES.map((type) => (
-                  <label key={type.value} className="flex items-center gap-2 cursor-pointer">
+                  <label key={type.id} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={(formData.farmType || []).includes(type.value)}
-                      onChange={() => handleArrayToggle("farmType", type.value)}
+                      checked={(formData.farmType || []).includes(type.id)}
+                      onChange={() => handleArrayToggle("farmType", type.id)}
                       className="rounded text-primary"
                     />
                     <span className="text-sm text-forest">{type.label}</span>
@@ -481,11 +480,11 @@ export default function ManageJobPage() {
               </label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {BENEFITS.map((benefit) => (
-                  <label key={benefit.value} className="flex items-center gap-2 cursor-pointer">
+                  <label key={benefit.id} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={(formData.benefits || []).includes(benefit.value)}
-                      onChange={() => handleArrayToggle("benefits", benefit.value)}
+                      checked={(formData.benefits || []).includes(benefit.id)}
+                      onChange={() => handleArrayToggle("benefits", benefit.id)}
                       className="rounded text-primary"
                     />
                     <span className="text-sm text-forest">
