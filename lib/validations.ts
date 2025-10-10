@@ -41,3 +41,8 @@ export const jobSchema = z.object({
 );
 
 export type JobFormData = z.infer<typeof jobSchema>;
+
+// Schema for updating existing jobs (same as jobSchema but used for updates)
+export const jobUpdateSchema = jobSchema;
+
+export type JobUpdateData = z.infer<typeof jobUpdateSchema>;
