@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
-import { sendJobConfirmationEmail } from "@/lib/email";
+import { sendJobConfirmationEmail, sendReceiptEmail } from "@/lib/email";
 import { headers } from "next/headers";
 
 export async function POST(request: NextRequest) {
@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as any;
     const jobId = session.metadata.jobId;
+    const plan = session.metadata.plan;
 
     if (jobId) {
       try {
@@ -49,6 +50,16 @@ export async function POST(request: NextRequest) {
         });
 
         console.log(`Job ${jobId} activated successfully`);
+
+        // Send receipt email first
+        await sendReceiptEmail(job.companyEmail, {
+          jobTitle: job.title,
+          company: job.company,
+          plan: plan || "basic",
+          amount: session.amount_total,
+          transactionId: session.payment_intent || session.id,
+          date: new Date(),
+        });
 
         // Send email confirmation with magic link
         await sendJobConfirmationEmail(job.companyEmail, {
