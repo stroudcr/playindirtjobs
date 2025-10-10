@@ -378,7 +378,7 @@ export default function ManageJobPage() {
                 <input
                   type="number"
                   value={formData.salaryMin || ""}
-                  onChange={(e) => handleInputChange("salaryMin", parseInt(e.target.value) || null)}
+                  onChange={(e) => handleInputChange("salaryMin", e.target.value ? parseInt(e.target.value) : undefined)}
                   className="input w-full"
                   placeholder="30000"
                 />
@@ -390,7 +390,7 @@ export default function ManageJobPage() {
                 <input
                   type="number"
                   value={formData.salaryMax || ""}
-                  onChange={(e) => handleInputChange("salaryMax", parseInt(e.target.value) || null)}
+                  onChange={(e) => handleInputChange("salaryMax", e.target.value ? parseInt(e.target.value) : undefined)}
                   className="input w-full"
                   placeholder="50000"
                 />
