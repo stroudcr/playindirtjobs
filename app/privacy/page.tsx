@@ -24,7 +24,7 @@ export default function PrivacyPage() {
             </p>
 
             <p className="text-forest-light mb-6">
-              WellDiem Company LLC ("Company," "we," "us," or "our") operates PlayInDirtJobs, a job board platform for agriculture, farming, gardening, and ranching careers. This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information when you visit our website and use our services.
+              WellDiem Company LLC (&ldquo;Company,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates PlayInDirtJobs, a job board platform for agriculture, farming, gardening, and ranching careers. This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information when you visit our website and use our services.
             </p>
 
             {/* Table of Contents */}
@@ -256,7 +256,7 @@ export default function PrivacyPage() {
               </p>
               <p className="text-forest-light mb-4">
                 <strong>Email:</strong> <a href="mailto:info@playindirtjobs.com" className="text-primary hover:underline">info@playindirtjobs.com</a><br />
-                <strong>Subject Line:</strong> "CCPA Privacy Request"
+                <strong>Subject Line:</strong> &ldquo;CCPA Privacy Request&rdquo;
               </p>
               <p className="text-forest-light mb-4">
                 We will verify your identity before processing your request and respond within 45 days. You may designate an authorized agent to make requests on your behalf.
@@ -301,7 +301,7 @@ export default function PrivacyPage() {
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
                 <li>Right of access to your personal data</li>
                 <li>Right to rectification of inaccurate data</li>
-                <li>Right to erasure ("right to be forgotten")</li>
+                <li>Right to erasure (&ldquo;right to be forgotten&rdquo;)</li>
                 <li>Right to restrict processing</li>
                 <li>Right to data portability</li>
                 <li>Right to object to processing</li>
@@ -339,7 +339,7 @@ export default function PrivacyPage() {
             <section id="changes" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">14. Changes to This Privacy Policy</h2>
               <p className="text-forest-light mb-4">
-                We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will post the updated policy on this page with a new "Last Updated" date.
+                We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will post the updated policy on this page with a new &ldquo;Last Updated&rdquo; date.
               </p>
               <p className="text-forest-light mb-4">
                 For material changes that significantly affect your rights, we will provide additional notice, such as via email to registered users or a prominent notice on our website.
@@ -366,7 +366,7 @@ export default function PrivacyPage() {
                 </p>
                 <p className="text-forest-light mt-4 text-sm">
                   <strong>For Privacy-Specific Requests:</strong><br />
-                  Please include "Privacy Request" or "CCPA Request" in your email subject line to ensure prompt processing.
+                  Please include &ldquo;Privacy Request&rdquo; or &ldquo;CCPA Request&rdquo; in your email subject line to ensure prompt processing.
                 </p>
               </div>
             </section>

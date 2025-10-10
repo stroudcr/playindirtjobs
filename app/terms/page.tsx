@@ -30,7 +30,7 @@ export default function TermsPage() {
                 <li>Job postings are active for 60 days</li>
                 <li>Payment is processed securely through Stripe</li>
                 <li>Users are responsible for their posted content</li>
-                <li>Limited liability - service provided "as is"</li>
+                <li>Limited liability - service provided &ldquo;as is&rdquo;</li>
                 <li>Disputes governed by arbitration and US law</li>
               </ul>
             </div>
@@ -69,7 +69,7 @@ export default function TermsPage() {
             <section id="acceptance" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">1. Acceptance of Terms</h2>
               <p className="text-forest-light mb-4">
-                Welcome to PlayInDirtJobs, a service operated by WellDiem Company LLC ("Company," "we," "us," or "our"). These Terms of Service ("Terms") govern your access to and use of our website, services, and platform (collectively, the "Service").
+                Welcome to PlayInDirtJobs, a service operated by WellDiem Company LLC (&ldquo;Company,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;). These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and use of our website, services, and platform (collectively, the &ldquo;Service&rdquo;).
               </p>
               <p className="text-forest-light mb-4">
                 By accessing or using the Service, you agree to be bound by these Terms. If you do not agree to these Terms, you may not access or use the Service. You must be at least 18 years of age to use this Service.
@@ -147,7 +147,7 @@ export default function TermsPage() {
                 The Service, including its design, text, graphics, logos, and software, is owned by WellDiem Company LLC and is protected by copyright, trademark, and other intellectual property laws. You may not copy, modify, distribute, sell, or reverse engineer any part of the Service without our express written permission.
               </p>
               <p className="text-forest-light mb-4">
-                "PlayInDirtJobs" and associated logos are trademarks of WellDiem Company LLC. Use of these trademarks without permission is strictly prohibited.
+                &ldquo;PlayInDirtJobs&rdquo; and associated logos are trademarks of WellDiem Company LLC. Use of these trademarks without permission is strictly prohibited.
               </p>
             </section>
 
@@ -189,7 +189,7 @@ export default function TermsPage() {
             <section id="disclaimers" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">9. Disclaimers</h2>
               <p className="text-forest-light mb-4 uppercase font-semibold">
-                THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+                THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
               </p>
               <p className="text-forest-light mb-4">
                 We do not warrant that:
@@ -314,7 +314,7 @@ export default function TermsPage() {
 
             <div className="border-t border-border pt-8 mt-12 text-center">
               <p className="text-sm text-forest-light">
-                Thank you for using PlayInDirtJobs. We're committed to connecting people with meaningful work in sustainable agriculture.
+                Thank you for using PlayInDirtJobs. We&rsquo;re committed to connecting people with meaningful work in sustainable agriculture.
               </p>
             </div>
           </div>
