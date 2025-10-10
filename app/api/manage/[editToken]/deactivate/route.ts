@@ -3,10 +3,10 @@ import { db } from "@/lib/db";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { editToken: string } }
+  { params }: { params: Promise<{ editToken: string }> }
 ) {
   try {
-    const { editToken } = params;
+    const { editToken } = await params;
 
     // Find job by editToken first
     const existingJob = await db.job.findUnique({

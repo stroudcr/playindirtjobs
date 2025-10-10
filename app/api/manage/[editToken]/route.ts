@@ -4,10 +4,10 @@ import { jobUpdateSchema } from "@/lib/validations";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { editToken: string } }
+  { params }: { params: Promise<{ editToken: string }> }
 ) {
   try {
-    const { editToken } = params;
+    const { editToken } = await params;
 
     // Find job by editToken
     const job = await db.job.findUnique({
@@ -62,10 +62,10 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { editToken: string } }
+  { params }: { params: Promise<{ editToken: string }> }
 ) {
   try {
-    const { editToken } = params;
+    const { editToken } = await params;
     const updates = await request.json();
 
     // Find job by editToken first
