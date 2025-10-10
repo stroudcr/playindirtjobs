@@ -69,12 +69,15 @@ export default function AboutPage() {
         <section className="container mx-auto px-4 -mt-8">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-soft overflow-hidden">
-              <div className="relative w-full h-64 md:h-96 bg-primary/5 flex items-center justify-center">
-                <div className="text-center text-forest-light">
-                  <Sprout className="w-16 h-16 mx-auto mb-3 text-primary opacity-50" />
-                  <p className="text-sm">Hero image: Diverse farmers working together in field</p>
-                  <p className="text-xs mt-1">(Stock photo to be added)</p>
-                </div>
+              <div className="relative w-full h-64 md:h-96">
+                <Image
+                  src="/images/about1.jpg"
+                  alt="Agricultural workers in the field"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 896px"
+                  priority
+                />
               </div>
             </div>
           </div>
@@ -169,12 +172,14 @@ export default function AboutPage() {
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-soft overflow-hidden">
-              <div className="relative w-full h-64 md:h-96 bg-accent-yellow/5 flex items-center justify-center">
-                <div className="text-center text-forest-light">
-                  <Users className="w-16 h-16 mx-auto mb-3 text-primary opacity-50" />
-                  <p className="text-sm">Inspiring image: Harvest scene or ranch landscape</p>
-                  <p className="text-xs mt-1">(Stock photo to be added)</p>
-                </div>
+              <div className="relative w-full h-64 md:h-96">
+                <Image
+                  src="/images/about2.jpg"
+                  alt="Farm landscape and harvest scene"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 896px"
+                />
               </div>
               <div className="p-6 bg-forest/5 text-center">
                 <p className="text-lg text-forest italic">
