@@ -106,7 +106,7 @@ function SuccessContent() {
 
         <div className="mt-12 p-6 bg-accent-yellow/10 rounded-lg border border-accent-yellow/30">
           <p className="text-sm text-forest-light">
-            💚 Thank you for supporting sustainable agriculture and helping connect people with meaningful farm work!
+            Thank you for supporting agriculture and helping connect people with meaningful farm work!
           </p>
         </div>
       </div>
