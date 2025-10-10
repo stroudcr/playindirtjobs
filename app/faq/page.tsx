@@ -103,7 +103,7 @@ export default function FAQPage() {
         <div className="mt-12 bg-primary/10 border border-primary/20 rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold text-forest mb-4">Still have questions?</h2>
           <p className="text-forest-light mb-6">Contact us and we&apos;ll be happy to help.</p>
-          <a href="mailto:support@playindirtjobs.com" className="btn btn-primary">
+          <a href="mailto:info@playindirtjobs.com" className="btn btn-primary">
             Contact Support
           </a>
         </div>

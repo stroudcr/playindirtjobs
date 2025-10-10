@@ -236,7 +236,7 @@ export default function PricingPage() {
                         Do you offer refunds?
                       </h3>
                       <p className="text-forest-light leading-relaxed">
-                        We offer refunds within the first 7 days of your posting if you haven&apos;t received any applications and your listing meets our quality guidelines. After 7 days or once you&apos;ve received applications, refunds are not available. Please contact our support team if you need assistance.
+                        We do not offer refunds at this time. All sales are final once your job posting is published and payment is processed. Please review your listing carefully before submitting payment.
                       </p>
                     </div>
                   </div>
@@ -319,7 +319,7 @@ export default function PricingPage() {
                 </Link>
               </div>
               <p className="text-sm text-forest-light mt-8">
-                Questions? Contact us at support@playindirtjobs.com
+                Questions? Contact us at info@playindirtjobs.com
               </p>
             </div>
           </div>
