@@ -187,7 +187,7 @@ export default function PrivacyPage() {
                 We use Stripe to process payments. When you make a payment, your credit card information is collected and processed directly by Stripe. We do not store your complete credit card information on our servers.
               </p>
               <p className="text-forest-light mb-4">
-                Stripe's use of your information is governed by their privacy policy: <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://stripe.com/privacy</a>
+                Stripe&rsquo;s use of your information is governed by their privacy policy: <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://stripe.com/privacy</a>
               </p>
 
               <h3 className="text-xl font-semibold text-forest mb-3">Resend Email Services</h3>
