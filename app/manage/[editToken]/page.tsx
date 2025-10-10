@@ -115,7 +115,11 @@ export default function ManageJobPage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to update job");
+        console.error("Validation details:", data.details);
+        const errorMessage = data.details
+          ? `Validation failed: ${data.details.map((d: any) => `${d.path.join('.')}: ${d.message}`).join(', ')}`
+          : data.error || "Failed to update job";
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();

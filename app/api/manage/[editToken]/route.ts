@@ -91,6 +91,8 @@ export async function PUT(
     // Validate the update data
     const validation = jobUpdateSchema.safeParse(updates);
     if (!validation.success) {
+      console.error("Validation failed:", JSON.stringify(validation.error.errors, null, 2));
+      console.error("Updates received:", JSON.stringify(updates, null, 2));
       return NextResponse.json(
         { error: "Validation failed", details: validation.error.errors },
         { status: 400 }
