@@ -70,7 +70,7 @@ export async function sendJobConfirmationEmail(
             </p>
 
             <p style="color: #78716c; font-size: 14px; margin-top: 20px;">
-              💚 Thank you for supporting sustainable agriculture jobs!
+              Thank you for supporting sustainable agriculture jobs!
             </p>
           </div>
 
