@@ -8,8 +8,8 @@ export const jobSchema = z.object({
   description: z.string().min(100, "Description must be at least 100 characters").max(5000),
 
   // Salary
-  salaryMin: z.number().min(0).optional(),
-  salaryMax: z.number().min(0).optional(),
+  salaryMin: z.number().min(0).optional().nullable(),
+  salaryMax: z.number().min(0).optional().nullable(),
 
   // Job details
   jobType: z.array(z.string()).min(1, "Select at least one job type"),
@@ -20,12 +20,12 @@ export const jobSchema = z.object({
 
   // Company info
   companyEmail: z.string().email("Invalid email address"),
-  companyWebsite: z.string().url("Invalid URL").optional().or(z.literal("")),
-  companyLogo: z.string().url("Invalid logo URL").optional().or(z.literal("")),
+  companyWebsite: z.union([z.string().url("Invalid URL"), z.literal(""), z.null()]).optional(),
+  companyLogo: z.union([z.string().url("Invalid logo URL"), z.literal(""), z.null()]).optional(),
 
   // Application
-  applyUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
-  applyEmail: z.string().email("Invalid email").optional().or(z.literal("")),
+  applyUrl: z.union([z.string().url("Invalid URL"), z.literal(""), z.null()]).optional(),
+  applyEmail: z.union([z.string().email("Invalid email"), z.literal(""), z.null()]).optional(),
 }).refine(
   (data) => data.applyUrl || data.applyEmail,
   {
