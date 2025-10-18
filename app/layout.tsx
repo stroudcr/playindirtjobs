@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import { getUrl } from "@/lib/metadata";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Farm Jobs, Gardening Jobs & Ranch Work | PlayInDirtJobs",
-  description: "Find farming, gardening, and ranching jobs across America. Browse 1,000+ sustainable agriculture careers, organic farm positions, and ranch hand opportunities. Apply today!",
+  description: "Find farming, gardening, and ranching jobs across America. Browse sustainable agriculture careers, organic farm positions, and ranch hand opportunities.",
   keywords: [
     "farming jobs",
     "farm jobs",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Find Your Dream Farm Job | PlayInDirtJobs",
     description: "Browse farming, gardening, and ranching jobs from sustainable farms across America. Connect with organic farms, permaculture gardens, and regenerative ranches hiring now.",
-    url: "https://playindirtjobs.com",
+    url: getUrl(),
     siteName: "PlayInDirtJobs",
     images: [
       {
@@ -48,11 +49,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Find Your Dream Farm Job | PlayInDirtJobs",
-    description: "Browse 1,000+ farming, gardening, and ranching jobs from sustainable farms across America.",
+    description: "Browse farming, gardening, and ranching jobs from sustainable farms across America.",
     images: ["/images/PlayInDirtLogo.PNG"],
   },
   alternates: {
-    canonical: "https://playindirtjobs.com",
+    canonical: getUrl(),
   },
   robots: {
     index: true,
@@ -76,8 +77,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "PlayInDirtJobs",
-    "url": "https://playindirtjobs.com",
-    "logo": "https://playindirtjobs.com/images/PlayInDirtLogo.PNG",
+    "url": getUrl(),
+    "logo": getUrl("images/PlayInDirtLogo.PNG"),
     "description": "America's leading job board for sustainable agriculture, organic farming, and regenerative ranching careers. Connect farms with passionate workers.",
     "contactPoint": {
       "@type": "ContactPoint",

@@ -3,13 +3,19 @@ import { db } from "@/lib/db";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Beef } from "lucide-react";
+import { getUrl } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Ranch Jobs | Ranch Hand & Livestock Positions | PlayInDirtJobs",
   description: "Find ranch jobs and ranch hand positions across America. Browse cattle ranch work, livestock management careers, and ranching opportunities. Apply to top ranches today!",
-  alternates: { canonical: "https://playindirtjobs.com/ranch-jobs" },
+  openGraph: {
+    title: "Ranch Jobs | Ranch Hand & Livestock Positions",
+    description: "Find ranch jobs and ranch hand positions across America.",
+    url: getUrl("ranch-jobs"),
+  },
+  alternates: { canonical: getUrl("ranch-jobs") },
 };
 
 export default async function RanchJobsPage() {

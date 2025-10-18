@@ -6,6 +6,7 @@ import { formatSalary, formatDate } from "@/lib/utils";
 import { JOB_CATEGORIES, FARM_TYPES, BENEFITS } from "@/lib/constants";
 import type { Metadata } from "next";
 import { ShareButton } from "./share-button";
+import { getUrl } from "@/lib/metadata";
 
 interface JobPageProps {
   params: Promise<{
@@ -51,7 +52,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
     openGraph: {
       title: `${job.title} at ${job.company}`,
       description: job.description.slice(0, 155),
-      url: `https://playindirtjobs.com/jobs/${job.slug}`,
+      url: getUrl(`jobs/${job.slug}`),
       type: 'website',
       images: [
         {
@@ -69,7 +70,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
       images: [job.companyLogo || '/images/PlayInDirtLogo.PNG'],
     },
     alternates: {
-      canonical: `https://playindirtjobs.com/jobs/${job.slug}`,
+      canonical: getUrl(`jobs/${job.slug}`),
     },
   };
 }

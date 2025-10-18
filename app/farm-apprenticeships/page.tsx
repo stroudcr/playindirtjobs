@@ -2,13 +2,19 @@ import { Metadata } from "next";
 import { db } from "@/lib/db";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getUrl } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Farm Apprenticeships | Agricultural Training Programs | PlayInDirtJobs",
   description: "Find farm apprenticeship programs and agricultural training opportunities. Learn sustainable farming, organic agriculture, and regenerative practices. Start your farming career today!",
-  alternates: { canonical: "https://playindirtjobs.com/farm-apprenticeships" },
+  openGraph: {
+    title: "Farm Apprenticeships | Agricultural Training Programs",
+    description: "Find farm apprenticeship programs and agricultural training opportunities nationwide.",
+    url: getUrl("farm-apprenticeships"),
+  },
+  alternates: { canonical: getUrl("farm-apprenticeships") },
 };
 
 export default async function FarmApprenticeshipsPage() {

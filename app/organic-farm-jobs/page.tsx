@@ -2,13 +2,19 @@ import { Metadata } from "next";
 import { db } from "@/lib/db";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getUrl } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Organic Farm Jobs | Certified Organic Farming Careers | PlayInDirtJobs",
   description: "Find organic farm jobs and certified organic farming positions. Browse sustainable agriculture careers on organic farms nationwide. Join the organic farming movement today!",
-  alternates: { canonical: "https://playindirtjobs.com/organic-farm-jobs" },
+  openGraph: {
+    title: "Organic Farm Jobs | Certified Organic Farming Careers",
+    description: "Find organic farm jobs and certified organic farming positions nationwide.",
+    url: getUrl("organic-farm-jobs"),
+  },
+  alternates: { canonical: getUrl("organic-farm-jobs") },
 };
 
 export default async function OrganicFarmJobsPage() {

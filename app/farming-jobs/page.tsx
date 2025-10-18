@@ -4,19 +4,20 @@ import { db } from "@/lib/db";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Sprout, ArrowRight } from "lucide-react";
+import { getUrl } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Farming Jobs | Farm Hand & Agricultural Positions | PlayInDirtJobs",
-  description: "Browse farming jobs across America. Find farm hand positions, agricultural careers, and sustainable farming opportunities. From organic farms to large-scale agriculture. Apply today!",
+  description: "Browse farming jobs across America. Find farm hand positions, agricultural careers, and sustainable farming opportunities. From organic farms to large-scale agriculture.",
   openGraph: {
     title: "Farming Jobs | Farm Hand & Agricultural Positions",
     description: "Discover farming jobs, farm hand positions, and agricultural careers from farms across America.",
-    url: "https://playindirtjobs.com/farming-jobs",
+    url: getUrl("farming-jobs"),
   },
   alternates: {
-    canonical: "https://playindirtjobs.com/farming-jobs",
+    canonical: getUrl("farming-jobs"),
   },
 };
 
