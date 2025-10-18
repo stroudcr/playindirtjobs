@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
       type: 'website',
       images: [
         {
-          url: job.companyLogo || '/images/PlayInDirtLogo.PNG',
+          url: job.companyLogo || '/images/PlayInDirtX.png',
           width: 1200,
           height: 630,
           alt: `${job.company} logo`,
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
       card: 'summary_large_image',
       title: `${job.title} at ${job.company}`,
       description: job.description.slice(0, 155),
-      images: [job.companyLogo || '/images/PlayInDirtLogo.PNG'],
+      images: [job.companyLogo || '/images/PlayInDirtX.png'],
     },
     alternates: {
       canonical: getUrl(`jobs/${job.slug}`),

@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "PlayInDirtJobs",
     images: [
       {
-        url: "/images/PlayInDirtLogo.PNG",
+        url: "/images/PlayInDirtX.png",
         width: 1200,
         height: 630,
         alt: "PlayInDirtJobs - Farm, Garden & Ranch Jobs",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Find Your Dream Farm Job | PlayInDirtJobs",
     description: "Browse farming, gardening, and ranching jobs from sustainable farms across America.",
-    images: ["/images/PlayInDirtLogo.PNG"],
+    images: ["/images/PlayInDirtX.png"],
   },
   alternates: {
     canonical: getUrl(),
