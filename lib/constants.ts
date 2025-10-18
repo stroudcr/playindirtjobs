@@ -35,6 +35,8 @@ export const FARM_TYPES = [
   { id: "regenerative", label: "Regenerative", emoji: "🌍" },
   { id: "biodynamic", label: "Biodynamic", emoji: "🌙" },
   { id: "csa", label: "CSA", emoji: "🥬" },
+  { id: "garden", label: "Garden", emoji: "🌺" },
+  { id: "ranch", label: "Ranch", emoji: "🤠" },
   { id: "small-scale", label: "Small-scale", emoji: "🏡" },
   { id: "large-scale", label: "Large-scale", emoji: "🏭" },
 ] as const;
