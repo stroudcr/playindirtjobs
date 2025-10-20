@@ -13,6 +13,8 @@ export const JOB_CATEGORIES = [
   { id: "viticulture", label: "Viticulture", emoji: "🍇" },
   { id: "aquaponics", label: "Aquaponics", emoji: "🐟" },
   { id: "marketing", label: "Marketing", emoji: "📢" },
+  { id: "retail", label: "Retail", emoji: "🛒" },
+  { id: "kitchen", label: "Kitchen", emoji: "🍳" },
   { id: "other", label: "Other", emoji: "✨" },
 ] as const;
 
@@ -38,7 +40,9 @@ export const FARM_TYPES = [
   { id: "garden", label: "Garden", emoji: "🌺" },
   { id: "ranch", label: "Ranch", emoji: "🤠" },
   { id: "small-scale", label: "Small-scale", emoji: "🏡" },
-  { id: "large-scale", label: "Large-scale", emoji: "🏭" },
+  { id: "large-scale", label: "Large-scale", emoji: "🗺️" },
+  { id: "indoor", label: "Indoor", emoji: "🏢" },
+  { id: "other", label: "Other", emoji: "✨" },
 ] as const;
 
 // Benefits
