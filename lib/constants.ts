@@ -31,6 +31,7 @@ export const JOB_TYPES = [
 
 // Farm types
 export const FARM_TYPES = [
+  { id: "agritourism", label: "Agritourism", emoji: "🏞️" },
   { id: "organic", label: "Organic", emoji: "🌿" },
   { id: "conventional", label: "Conventional", emoji: "🌾" },
   { id: "permaculture", label: "Permaculture", emoji: "♻️" },
