@@ -23,9 +23,6 @@ export function Footer() {
               Connecting people with farming, gardening, and ranching opportunities.
               Build a sustainable future.
             </p>
-            <a href="https://www.producthunt.com/products/playindirtjobs?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-playindirtjobs&#0045;2" target="_blank" rel="noopener noreferrer">
-              <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1028760&theme=light&t=1761006571640" alt="PlayInDirtJobs - Trade your desk for the outdoors: Farm & ranch jobs | Product Hunt" style={{width: '250px', height: '54px'}} width="250" height="54" />
-            </a>
           </div>
 
           {/* For Job Seekers */}
