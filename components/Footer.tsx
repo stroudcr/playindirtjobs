@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-white mt-20">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* About */}
           <div>
             <Link href="/" className="inline-block mb-4">
@@ -87,6 +87,23 @@ export function Footer() {
                 <Link href="/privacy" className="hover:text-primary transition-colors">
                   Privacy
                 </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Partners */}
+          <div>
+            <h4 className="font-semibold text-forest mb-4">Partners</h4>
+            <ul className="space-y-2 text-sm text-forest-light">
+              <li>
+                <a
+                  href="https://www.welldiem.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  WellDiem
+                </a>
               </li>
             </ul>
           </div>
