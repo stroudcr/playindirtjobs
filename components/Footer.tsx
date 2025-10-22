@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { X as XIcon } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -23,6 +24,17 @@ export function Footer() {
               Connecting people with farming, gardening, and ranching opportunities.
               Build a sustainable future.
             </p>
+            <div className="flex gap-3">
+              <a
+                href="https://www.x.com/playindirtjobs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-forest-light hover:text-primary transition-colors"
+                aria-label="Follow us on X"
+              >
+                <XIcon className="w-5 h-5" />
+              </a>
+            </div>
           </div>
 
           {/* For Job Seekers */}
