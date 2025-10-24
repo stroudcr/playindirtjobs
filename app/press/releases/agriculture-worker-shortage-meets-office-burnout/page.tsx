@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { getPressReleaseBySlug } from "@/lib/press-releases";
-import { Calendar, ArrowLeft, Printer, Share2 } from "lucide-react";
+import { Calendar, ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getUrl } from "@/lib/metadata";
+import { ShareButtons } from "../[slug]/share-buttons";
 
 const slug = "agriculture-worker-shortage-meets-office-burnout";
 
@@ -143,33 +144,7 @@ export default function PressReleasePage() {
         <article className="container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
             {/* Utilities Bar */}
-            <div className="flex flex-wrap gap-3 mb-8">
-              <button
-                onClick={() => window.print()}
-                className="btn bg-white border border-border hover:bg-gray-50 text-forest text-sm"
-              >
-                <Printer className="w-4 h-4" />
-                Print
-              </button>
-              <button
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: release.title,
-                      text: release.excerpt,
-                      url: window.location.href,
-                    });
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('Link copied to clipboard!');
-                  }
-                }}
-                className="btn bg-white border border-border hover:bg-gray-50 text-forest text-sm"
-              >
-                <Share2 className="w-4 h-4" />
-                Share
-              </button>
-            </div>
+            <ShareButtons />
 
             {/* Press Release Header */}
             <div className="card p-8 md:p-12">
