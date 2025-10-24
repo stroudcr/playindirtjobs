@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { getPressReleaseBySlug } from "@/lib/press-releases";
 import { Calendar, ArrowLeft } from "lucide-react";
@@ -148,6 +149,18 @@ export default function PressReleasePage() {
 
             {/* Press Release Header */}
             <div className="card p-8 md:p-12">
+              {/* Logo */}
+              <div className="flex justify-center mb-8">
+                <Image
+                  src="/images/PlayInDirtLogo.PNG"
+                  alt="PlayInDirtJobs Logo"
+                  width={300}
+                  height={300}
+                  className="w-48 md:w-64 h-auto"
+                  priority
+                />
+              </div>
+
               <div className="text-center mb-8 pb-8 border-b border-border">
                 <p className="text-xs font-bold tracking-widest text-forest-light uppercase mb-4">
                   FOR IMMEDIATE RELEASE
