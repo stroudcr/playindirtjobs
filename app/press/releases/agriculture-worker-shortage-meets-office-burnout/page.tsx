@@ -169,12 +169,11 @@ export default function PressReleasePage() {
 
               {/* Press Release Body */}
               <div
-                className="prose prose-lg max-w-none text-forest-light
-                  prose-headings:text-forest prose-headings:font-bold
-                  prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-                  prose-p:mb-4 prose-p:leading-relaxed
-                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                  prose-strong:text-forest prose-strong:font-semibold"
+                className="max-w-none
+                  [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-forest [&>h2]:mt-8 [&>h2]:mb-4
+                  [&>p]:text-forest-light [&>p]:mb-6 [&>p]:leading-relaxed [&>p]:text-base
+                  [&_a]:text-primary [&_a]:no-underline [&_a]:hover:underline
+                  [&_strong]:text-forest [&_strong]:font-semibold"
                 dangerouslySetInnerHTML={{ __html: release.content }}
               />
 
