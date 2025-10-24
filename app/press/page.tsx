@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Download, Mail } from "lucide-react";
+import { Download, Mail, FileText, ArrowRight } from "lucide-react";
+import { getLatestPressRelease } from "@/lib/press-releases";
 
 export const metadata: Metadata = {
   title: "Press & Media | PlayInDirtJobs",
@@ -24,6 +25,18 @@ export const metadata: Metadata = {
 };
 
 export default function PressPage() {
+  const latestRelease = getLatestPressRelease();
+
+  // Format date helper
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+  };
+
   return (
     <main className="min-h-screen bg-earth-cream">
       {/* Hero Section */}
@@ -66,6 +79,59 @@ export default function PressPage() {
           </div>
         </div>
       </section>
+
+      {/* Press Releases Section */}
+      {latestRelease && (
+        <section className="bg-gradient-to-br from-primary/5 to-accent-yellow/5 border-y border-border py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-bold text-forest">
+                  Latest Press Release
+                </h2>
+                <Link
+                  href="/press/releases"
+                  className="text-primary hover:text-primary-dark font-semibold text-sm flex items-center gap-1"
+                >
+                  View All
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              <div className="card p-8 bg-white">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 flex-shrink-0">
+                    <FileText className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-forest-light mb-2">
+                      {formatDate(latestRelease.date)}
+                    </p>
+                    <h3 className="text-2xl font-bold text-forest mb-2">
+                      {latestRelease.title}
+                    </h3>
+                    {latestRelease.subtitle && (
+                      <p className="text-lg text-forest-light font-medium mb-3">
+                        {latestRelease.subtitle}
+                      </p>
+                    )}
+                    <p className="text-forest-light mb-4">
+                      {latestRelease.excerpt}
+                    </p>
+                    <Link
+                      href={`/press/releases/${latestRelease.slug}`}
+                      className="btn btn-primary text-sm"
+                    >
+                      Read Full Release
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Key Facts */}
       <section className="bg-white border-y border-border py-12 md:py-16">
