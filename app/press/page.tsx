@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Newspaper, Download, Mail, Users } from "lucide-react";
+import { Download, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Press & Media | PlayInDirtJobs",
@@ -54,7 +54,7 @@ export default function PressPage() {
             </h2>
             <div className="prose prose-lg max-w-none text-forest-light space-y-4">
               <p>
-                PlayInDirtJobs is America's leading job board connecting passionate workers with sustainable farming, gardening, and ranching opportunities. We bridge the gap between dedicated agricultural professionals and the farms that need them.
+                PlayInDirtJobs is America&apos;s leading job board connecting passionate workers with sustainable farming, gardening, and ranching opportunities. We bridge the gap between dedicated agricultural professionals and the farms that need them.
               </p>
               <p>
                 Founded to honor the historical prominence of agriculture in American life, PlayInDirtJobs serves as the essential platform for organic farms, permaculture gardens, regenerative ranches, and sustainable agriculture operations seeking skilled team members.
@@ -192,7 +192,7 @@ export default function PressPage() {
               Story Ideas
             </h2>
             <p className="text-forest-light mb-6">
-              We're happy to provide expert commentary and insights on topics including:
+              We&apos;re happy to provide expert commentary and insights on topics including:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
@@ -232,7 +232,7 @@ export default function PressPage() {
               Learn More About PlayInDirtJobs
             </h2>
             <p className="text-xl text-forest-light mb-8">
-              Explore our platform to see how we're connecting America's agricultural community.
+              Explore our platform to see how we&apos;re connecting America&apos;s agricultural community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/about" className="btn btn-primary text-lg px-8 py-3">
