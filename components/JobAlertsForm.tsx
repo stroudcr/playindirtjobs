@@ -73,15 +73,15 @@ export default function JobAlertsForm() {
           <CheckCircle className="w-10 h-10 text-primary" />
         </div>
         <h3 className="text-2xl font-bold text-forest mb-3">
-          You're All Set! 🎉
+          You&apos;re All Set! 🎉
         </h3>
         <p className="text-lg text-forest-light mb-4">
-          Check your inbox to confirm your subscription. You'll start receiving
+          Check your inbox to confirm your subscription. You&apos;ll start receiving
           job alerts for sustainable agriculture opportunities that match your
           interests.
         </p>
         <p className="text-sm text-forest-light">
-          Don't see our email? Check your spam folder and mark us as "not spam"
+          Don&apos;t see our email? Check your spam folder and mark us as &quot;not spam&quot;
           to ensure you receive future alerts.
         </p>
         <button
@@ -145,7 +145,7 @@ export default function JobAlertsForm() {
               </div>
               <p className="text-sm text-forest-light">
                 {showCategories
-                  ? "Select specific job categories you're interested in"
+                  ? "Select specific job categories you&apos;re interested in"
                   : "Get alerts for specific job categories"}
               </p>
             </div>
@@ -212,7 +212,7 @@ export default function JobAlertsForm() {
                     <span className="font-medium">
                       {selectedCategories.length} categories selected
                     </span>
-                    {" · "}You'll receive alerts for{" "}
+                    {" · "}You&apos;ll receive alerts for{" "}
                     {selectedCategories
                       .map(
                         (cat) =>
@@ -226,7 +226,7 @@ export default function JobAlertsForm() {
               {selectedCategories.length === 0 && (
                 <div className="bg-accent-yellow/10 rounded-lg p-4 border border-accent-yellow/30">
                   <p className="text-sm text-forest-light">
-                    No categories selected. You'll receive alerts for{" "}
+                    No categories selected. You&apos;ll receive alerts for{" "}
                     <span className="font-medium text-forest">
                       all job postings
                     </span>

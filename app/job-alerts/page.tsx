@@ -226,7 +226,7 @@ export default function JobAlertsPage() {
                 How often will I receive job alerts?
               </h3>
               <p className="text-forest-light">
-                You'll receive an email whenever a new job is posted that
+                You&apos;ll receive an email whenever a new job is posted that
                 matches your selected categories. This could be daily, several
                 times a week, or less frequently depending on posting activity.
                 We bundle alerts to avoid inbox overload while keeping you
@@ -241,7 +241,7 @@ export default function JobAlertsPage() {
               <p className="text-forest-light">
                 Absolutely! When subscribing, you can select specific categories
                 like Organic Farming, Permaculture, Gardening, Ranch Hand, and
-                more. Or choose "All Categories" to never miss an opportunity.
+                more. Or choose &quot;All Categories&quot; to never miss an opportunity.
                 You can update your preferences anytime.
               </p>
             </div>
