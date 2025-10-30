@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { getUrl } from "@/lib/metadata";
-import { JOB_CATEGORIES } from "@/lib/constants";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import JobAlertsForm from "@/components/JobAlertsForm";
 import { Bell, Mail, Zap, Shield, CheckCircle } from "lucide-react";
@@ -124,7 +123,7 @@ export default function JobAlertsPage() {
             Why Subscribe to Job Alerts?
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="card text-center">
+            <div className="card text-center p-8">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Zap className="w-8 h-8 text-primary" />
               </div>
@@ -137,7 +136,7 @@ export default function JobAlertsPage() {
               </p>
             </div>
 
-            <div className="card text-center">
+            <div className="card text-center p-8">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-primary" />
               </div>
@@ -150,7 +149,7 @@ export default function JobAlertsPage() {
               </p>
             </div>
 
-            <div className="card text-center">
+            <div className="card text-center p-8">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-8 h-8 text-primary" />
               </div>
@@ -224,7 +223,7 @@ export default function JobAlertsPage() {
             Frequently Asked Questions
           </h2>
           <div className="max-w-3xl mx-auto space-y-6">
-            <div className="card">
+            <div className="card p-6">
               <h3 className="text-lg font-bold text-forest mb-2">
                 How often will I receive job alerts?
               </h3>
@@ -237,7 +236,7 @@ export default function JobAlertsPage() {
               </p>
             </div>
 
-            <div className="card">
+            <div className="card p-6">
               <h3 className="text-lg font-bold text-forest mb-2">
                 Can I choose which types of jobs I want to hear about?
               </h3>
@@ -249,7 +248,7 @@ export default function JobAlertsPage() {
               </p>
             </div>
 
-            <div className="card">
+            <div className="card p-6">
               <h3 className="text-lg font-bold text-forest mb-2">
                 Is this service really free?
               </h3>
@@ -260,7 +259,7 @@ export default function JobAlertsPage() {
               </p>
             </div>
 
-            <div className="card">
+            <div className="card p-6">
               <h3 className="text-lg font-bold text-forest mb-2">
                 How do I unsubscribe?
               </h3>

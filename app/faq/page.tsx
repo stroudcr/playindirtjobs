@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     question: "What's the difference between Basic and Featured job postings?",
-    answer: "Basic jobs ($45) appear in standard listings. Featured jobs ($95) are highlighted with a special badge, appear at the top of search results, and get significantly more visibility to job seekers."
+    answer: "Basic jobs ($5) appear in standard listings. Featured jobs ($15) are highlighted with a special badge, appear at the top of search results, and get significantly more visibility to job seekers."
   },
   {
     question: "Can I edit my job posting after it's published?",

@@ -83,7 +83,7 @@ export const SORT_OPTIONS = [
 
 // Pricing (in cents)
 export const PRICING = {
-  BASIC: 4500, // $45
-  FEATURED: 9500, // $95
+  BASIC: 500, // $5
+  FEATURED: 1500, // $15
   BUNDLE_5: 19900, // $199 (save $26)
 } as const;

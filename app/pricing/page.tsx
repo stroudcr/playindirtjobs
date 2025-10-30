@@ -6,7 +6,7 @@ import { PRICING } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Pricing | Post Farm, Garden & Ranch Jobs | PlayInDirtJobs",
-  description: "Affordable pricing for posting agricultural jobs. Connect with qualified farm hands, gardeners, and ranch workers. $45 for basic listings, $95 for featured placement. 60-day visibility guaranteed.",
+  description: "Affordable pricing for posting agricultural jobs. Connect with qualified farm hands, gardeners, and ranch workers. $5 for basic listings, $15 for featured placement. 60-day visibility guaranteed.",
   keywords: [
     "farm job posting cost",
     "agricultural job board pricing",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Pricing | Post Agricultural Jobs | PlayInDirtJobs",
-    description: "Simple, transparent pricing for agricultural job postings. Find qualified workers for your farm, garden, or ranch starting at $45.",
+    description: "Simple, transparent pricing for agricultural job postings. Find qualified workers for your farm, garden, or ranch starting at $5.",
     url: "https://playindirtjobs.com/pricing",
   },
   alternates: {
@@ -85,7 +85,7 @@ export default function PricingPage() {
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-forest mb-2">Basic Listing</h2>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-bold text-primary">$45</span>
+                    <span className="text-5xl font-bold text-primary">$5</span>
                     <span className="text-forest-light">/ 60 days</span>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function PricingPage() {
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-forest mb-2">Featured Listing</h2>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-bold text-primary">$95</span>
+                    <span className="text-5xl font-bold text-primary">$15</span>
                     <span className="text-forest-light">/ 60 days</span>
                   </div>
                 </div>
@@ -285,10 +285,10 @@ export default function PricingPage() {
                 Finding the right employees for your farm, garden, nursery, or ranch is one of the most important investments you can make. Quality workers who understand sustainable agriculture, care about the land, and share your values are essential to your operation&apos;s success. PlayInDirtJobs offers affordable, effective job posting solutions designed specifically for the agricultural community.
               </p>
               <p>
-                Unlike general job boards that charge hundreds of dollars for 30-day listings, PlayInDirtJobs provides 60-day postings starting at just $45. Our platform is built exclusively for agricultural employers, which means every job seeker browsing our site is specifically interested in farming, gardening, ranching, and sustainable agriculture careers. You&apos;re not competing with retail jobs or tech positions—your listing reaches a focused audience of passionate agricultural workers.
+                Unlike general job boards that charge hundreds of dollars for 30-day listings, PlayInDirtJobs provides 60-day postings starting at just $5. Our platform is built exclusively for agricultural employers, which means every job seeker browsing our site is specifically interested in farming, gardening, ranching, and sustainable agriculture careers. You&apos;re not competing with retail jobs or tech positions—your listing reaches a focused audience of passionate agricultural workers.
               </p>
               <p>
-                Whether you&apos;re a small organic farm seeking seasonal harvest workers, a permaculture operation looking for long-term apprentices, a livestock ranch hiring experienced ranch hands, or a nursery needing skilled horticulturists, our pricing structure makes professional recruitment accessible. The Featured listing option at $95 is particularly valuable for positions that are difficult to fill or require specialized skills, offering enhanced visibility and placement that can significantly reduce your time-to-hire.
+                Whether you&apos;re a small organic farm seeking seasonal harvest workers, a permaculture operation looking for long-term apprentices, a livestock ranch hiring experienced ranch hands, or a nursery needing skilled horticulturists, our pricing structure makes professional recruitment accessible. The Featured listing option at $15 is particularly valuable for positions that are difficult to fill or require specialized skills, offering enhanced visibility and placement that can significantly reduce your time-to-hire.
               </p>
               <p>
                 Every dollar invested in effective job postings saves time and resources in the long run. Poor hiring decisions, extended vacancy periods, and high turnover all cost far more than a quality job listing. PlayInDirtJobs helps you connect with candidates who are genuinely committed to agricultural work, reducing turnover and building stronger farm teams. Our 60-day listing period gives you ample time to review applications, conduct interviews, and find the perfect fit for your operation.

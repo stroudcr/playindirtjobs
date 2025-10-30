@@ -67,7 +67,7 @@ export default function JobAlertsForm() {
     return (
       <div
         id="subscribe-form"
-        className="card text-center max-w-2xl mx-auto bg-gradient-to-br from-primary/5 to-accent-yellow/5 border-2 border-primary/20"
+        className="card text-center max-w-2xl mx-auto bg-gradient-to-br from-primary/5 to-accent-yellow/5 border-2 border-primary/20 p-8 md:p-10"
       >
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-10 h-10 text-primary" />
@@ -95,7 +95,7 @@ export default function JobAlertsForm() {
   }
 
   return (
-    <div id="subscribe-form" className="card max-w-2xl mx-auto">
+    <div id="subscribe-form" className="card max-w-2xl mx-auto p-8 md:p-10">
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center mx-auto mb-4">
           <Mail className="w-8 h-8 text-white" />
