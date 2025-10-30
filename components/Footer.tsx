@@ -58,7 +58,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#subscribe" className="hover:text-primary transition-colors">
+                <Link href="/job-alerts" className="hover:text-primary transition-colors">
                   Job Alerts
                 </Link>
               </li>
