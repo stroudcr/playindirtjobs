@@ -24,7 +24,7 @@ export default function JobAlertsForm() {
     if (selectedCategories.length === JOB_CATEGORIES.length) {
       setSelectedCategories([]);
     } else {
-      setSelectedCategories(JOB_CATEGORIES.map((cat) => cat.value));
+      setSelectedCategories(JOB_CATEGORIES.map((cat) => cat.id));
     }
   };
 
@@ -178,13 +178,13 @@ export default function JobAlertsForm() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {JOB_CATEGORIES.map((category) => {
                   const isSelected = selectedCategories.includes(
-                    category.value
+                    category.id
                   );
                   return (
                     <button
-                      key={category.value}
+                      key={category.id}
                       type="button"
-                      onClick={() => handleCategoryToggle(category.value)}
+                      onClick={() => handleCategoryToggle(category.id)}
                       className={`px-4 py-3 rounded-lg border-2 transition-all text-left ${
                         isSelected
                           ? "border-primary bg-primary/5 shadow-sm"
@@ -216,7 +216,7 @@ export default function JobAlertsForm() {
                     {selectedCategories
                       .map(
                         (cat) =>
-                          JOB_CATEGORIES.find((c) => c.value === cat)?.label
+                          JOB_CATEGORIES.find((c) => c.id === cat)?.label
                       )
                       .join(", ")}
                   </p>
