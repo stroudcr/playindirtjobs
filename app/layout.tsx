@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Farm Jobs, Gardening Jobs & Ranch Work | PlayInDirtJobs",
+  title: "Farm, Garden & Ranch Jobs | PlayInDirtJobs",
   description: "Find farming, gardening, and ranching jobs across America. Browse sustainable agriculture careers, organic farm positions, and ranch hand opportunities.",
   keywords: [
     "farming jobs",
