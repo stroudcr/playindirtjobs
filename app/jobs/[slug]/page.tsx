@@ -109,8 +109,9 @@ export default async function JobPage({ params }: JobPageProps) {
       "@type": "Place",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": job.location.split(',')[0]?.trim(),
-        "addressRegion": job.location.split(',')[1]?.trim(),
+        "addressLocality": job.city,
+        "addressRegion": job.state,
+        "postalCode": job.postalCode || undefined,
         "addressCountry": "US"
       }
     },
@@ -130,7 +131,7 @@ export default async function JobPage({ params }: JobPageProps) {
       "@type": "Country",
       "name": "US"
     },
-    "jobLocationType": "TELECOMMUTE" in job.jobType ? "TELECOMMUTE" : undefined,
+    "jobLocationType": job.remote ? "TELECOMMUTE" : undefined,
     "industry": "Agriculture"
   };
 

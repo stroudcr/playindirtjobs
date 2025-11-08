@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { JOB_CATEGORIES, JOB_TYPES, FARM_TYPES, BENEFITS, TAGS } from "@/lib/constants";
+import { JOB_CATEGORIES, JOB_TYPES, FARM_TYPES, BENEFITS, TAGS, US_STATES } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { LiveJobPreview } from "@/components/LiveJobPreview";
@@ -19,7 +19,10 @@ export default function PostJobPage() {
   const [formData, setFormData] = useState({
     title: "",
     company: "",
-    location: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    remote: false,
     description: "",
     salaryMin: "",
     salaryMax: "",
@@ -50,7 +53,8 @@ export default function PostJobPage() {
     return !!(
       formData.title &&
       formData.company &&
-      formData.location &&
+      formData.city &&
+      formData.state &&
       formData.description.length >= 100 &&
       formData.categories.length > 0 &&
       formData.jobType.length > 0 &&
@@ -147,19 +151,71 @@ export default function PostJobPage() {
                 />
               </div>
 
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="city" className="block text-sm font-medium text-forest mb-2">
+                    City *
+                  </label>
+                  <input
+                    type="text"
+                    id="city"
+                    required
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    placeholder="e.g., Portland"
+                    className="input"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="state" className="block text-sm font-medium text-forest mb-2">
+                    State *
+                  </label>
+                  <select
+                    id="state"
+                    required
+                    value={formData.state}
+                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                    className="input"
+                  >
+                    <option value="">Select a state</option>
+                    {US_STATES.map((state) => (
+                      <option key={state.code} value={state.code}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
               <div>
-                <label htmlFor="location" className="block text-sm font-medium text-forest mb-2">
-                  Location *
+                <label htmlFor="postalCode" className="block text-sm font-medium text-forest mb-2">
+                  Postal Code (optional)
                 </label>
                 <input
                   type="text"
-                  id="location"
-                  required
-                  value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  placeholder="e.g., Portland, Oregon"
-                  className="input"
+                  id="postalCode"
+                  value={formData.postalCode}
+                  onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                  placeholder="e.g., 97204"
+                  className="input max-w-xs"
+                  maxLength={10}
                 />
+              </div>
+
+              <div>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formData.remote}
+                    onChange={(e) => setFormData({ ...formData, remote: e.target.checked })}
+                    className="w-5 h-5"
+                  />
+                  <div>
+                    <span className="font-medium text-forest">Remote Position</span>
+                    <p className="text-sm text-forest-light">Check if this job can be done remotely</p>
+                  </div>
+                </label>
               </div>
 
               <div>

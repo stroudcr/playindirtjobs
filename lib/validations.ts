@@ -4,7 +4,13 @@ export const jobSchema = z.object({
   // Basic info
   title: z.string().min(5, "Title must be at least 5 characters").max(100),
   company: z.string().min(2, "Company name must be at least 2 characters").max(100),
-  location: z.string().min(2, "Location must be at least 2 characters").max(200),
+
+  // Location (structured for SEO)
+  city: z.string().min(2, "City must be at least 2 characters").max(100),
+  state: z.string().min(2, "State is required").max(2, "Use 2-letter state code"),
+  postalCode: z.string().max(10).optional().nullable(),
+  remote: z.boolean().optional().default(false),
+
   description: z.string().min(100, "Description must be at least 100 characters").max(5000),
 
   // Salary

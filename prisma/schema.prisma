@@ -16,7 +16,13 @@ model Job {
   title       String
   company     String
   description String   @db.Text
-  location    String
+
+  // Location (structured for SEO and schema.org)
+  city        String
+  state       String
+  postalCode  String?
+  remote      Boolean  @default(false)
+  location    String   // Auto-generated display string (kept for backward compatibility)
 
   // Salary
   salaryMin   Int?

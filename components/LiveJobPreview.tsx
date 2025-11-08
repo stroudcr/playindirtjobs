@@ -8,7 +8,10 @@ interface LiveJobPreviewProps {
   data: {
     title: string;
     company: string;
-    location: string;
+    city: string;
+    state: string;
+    postalCode?: string;
+    remote?: boolean;
     description: string;
     salaryMin: string;
     salaryMax: string;
@@ -25,6 +28,13 @@ export function LiveJobPreview({ data, featured = false }: LiveJobPreviewProps) 
     .filter(Boolean)
     .slice(0, 3)
     .join(" ");
+
+  // Format location from structured fields
+  const formatLocation = () => {
+    if (!data.city && !data.state) return "Location";
+    if (data.remote) return `${data.city || ''}, ${data.state || ''} (Remote)`.trim();
+    return `${data.city || ''}, ${data.state || ''}`.replace(/^,\s*/, '').replace(/,\s*$/, '');
+  };
 
   return (
     <div className="space-y-2">
@@ -62,7 +72,7 @@ export function LiveJobPreview({ data, featured = false }: LiveJobPreviewProps) 
         <div className="space-y-1.5 sm:space-y-2 mb-3">
           <div className="flex items-center gap-2 text-xs sm:text-sm text-forest-light">
             <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-            <span className="truncate">{data.location || "Location"}</span>
+            <span className="truncate">{formatLocation()}</span>
           </div>
 
           <div className="flex items-center gap-2 text-xs sm:text-sm text-forest-light">

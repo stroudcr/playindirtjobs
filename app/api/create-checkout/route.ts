@@ -19,6 +19,11 @@ export async function POST(request: NextRequest) {
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 60);
 
+    // Generate formatted location string from structured fields
+    const formattedLocation = jobData.remote
+      ? `${jobData.city}, ${jobData.state} (Remote)`
+      : `${jobData.city}, ${jobData.state}`;
+
     // Create draft job in database
     const job = await db.job.create({
       data: {
@@ -26,7 +31,11 @@ export async function POST(request: NextRequest) {
         title: jobData.title,
         company: jobData.company,
         description: jobData.description,
-        location: jobData.location,
+        city: jobData.city,
+        state: jobData.state,
+        postalCode: jobData.postalCode || null,
+        remote: jobData.remote || false,
+        location: formattedLocation, // Formatted display string
         salaryMin: jobData.salaryMin || null,
         salaryMax: jobData.salaryMax || null,
         salaryType: jobData.salaryType || "annual",
