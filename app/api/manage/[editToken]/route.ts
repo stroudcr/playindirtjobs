@@ -29,6 +29,10 @@ export async function GET(
         title: job.title,
         company: job.company,
         description: job.description,
+        city: job.city,
+        state: job.state,
+        postalCode: job.postalCode,
+        remote: job.remote,
         location: job.location,
         salaryMin: job.salaryMin,
         salaryMax: job.salaryMax,
@@ -99,6 +103,11 @@ export async function PUT(
       );
     }
 
+    // Generate formatted location string from structured fields
+    const formattedLocation = updates.remote
+      ? `${updates.city}, ${updates.state} (Remote)`
+      : `${updates.city}, ${updates.state}`;
+
     // Update only allowed fields (prevent changing payment status, editToken, etc.)
     const job = await db.job.update({
       where: { editToken },
@@ -106,7 +115,11 @@ export async function PUT(
         title: updates.title,
         company: updates.company,
         description: updates.description,
-        location: updates.location,
+        city: updates.city,
+        state: updates.state,
+        postalCode: updates.postalCode || null,
+        remote: updates.remote || false,
+        location: formattedLocation,
         salaryMin: updates.salaryMin || null,
         salaryMax: updates.salaryMax || null,
         salaryType: updates.salaryType || "annual",
@@ -131,6 +144,10 @@ export async function PUT(
         title: job.title,
         company: job.company,
         description: job.description,
+        city: job.city,
+        state: job.state,
+        postalCode: job.postalCode,
+        remote: job.remote,
         location: job.location,
         salaryMin: job.salaryMin,
         salaryMax: job.salaryMax,

@@ -15,7 +15,7 @@ import {
   PowerOff,
   ExternalLink
 } from "lucide-react";
-import { JOB_CATEGORIES, JOB_TYPES, FARM_TYPES, BENEFITS } from "@/lib/constants";
+import { JOB_CATEGORIES, JOB_TYPES, FARM_TYPES, BENEFITS, US_STATES } from "@/lib/constants";
 import { formatDate } from "@/lib/utils";
 
 interface Job {
@@ -24,6 +24,10 @@ interface Job {
   title: string;
   company: string;
   description: string;
+  city: string;
+  state: string;
+  postalCode?: string;
+  remote: boolean;
   location: string;
   salaryMin?: number;
   salaryMax?: number;
@@ -345,18 +349,68 @@ export default function ManageJobPage() {
               />
             </div>
 
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-forest mb-2">
+                  City *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.city || ""}
+                  onChange={(e) => handleInputChange("city", e.target.value)}
+                  className="input w-full"
+                  placeholder="e.g., Portland"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-forest mb-2">
+                  State *
+                </label>
+                <select
+                  required
+                  value={formData.state || ""}
+                  onChange={(e) => handleInputChange("state", e.target.value)}
+                  className="input w-full"
+                >
+                  <option value="">Select a state</option>
+                  {US_STATES.map((state) => (
+                    <option key={state.code} value={state.code}>
+                      {state.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-forest mb-2">
-                Location *
+                Postal Code (optional)
               </label>
               <input
                 type="text"
-                required
-                value={formData.location || ""}
-                onChange={(e) => handleInputChange("location", e.target.value)}
-                className="input w-full"
-                placeholder="e.g., Portland, OR"
+                value={formData.postalCode || ""}
+                onChange={(e) => handleInputChange("postalCode", e.target.value)}
+                className="input w-full max-w-xs"
+                placeholder="e.g., 97204"
+                maxLength={10}
               />
+            </div>
+
+            <div>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.remote || false}
+                  onChange={(e) => handleInputChange("remote", e.target.checked)}
+                  className="w-5 h-5"
+                />
+                <div>
+                  <span className="font-medium text-forest">Remote Position</span>
+                  <p className="text-sm text-forest-light">Check if this job can be done remotely</p>
+                </div>
+              </label>
             </div>
 
             <div>
