@@ -2,6 +2,14 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+// Helper function to parse location into city and state
+function parseLocation(location: string): { city: string; state: string; location: string } {
+  const parts = location.split(',').map(p => p.trim());
+  const city = parts[0] || '';
+  const state = parts[1] || '';
+  return { city, state, location };
+}
+
 const jobsData = [
   {
     slug: 'organic-farm-hand-vermont',
@@ -291,8 +299,15 @@ async function main() {
 
   // Create jobs
   for (const job of jobsData) {
+    const { city, state, location } = parseLocation(job.location);
     const created = await prisma.job.create({
-      data: job,
+      data: {
+        ...job,
+        city,
+        state,
+        location,
+        remote: false, // Add default remote field
+      },
     })
     console.log(`Created job: ${created.title}`)
   }
