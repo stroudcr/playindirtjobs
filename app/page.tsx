@@ -8,6 +8,7 @@ import { FilterSidebar } from "@/components/FilterSidebar";
 import { MobileFilters } from "@/components/MobileFilters";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
 import { Loader2 } from "lucide-react";
+import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
 
 interface Job {
   id: string;
@@ -280,7 +281,27 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="border-t border-border pt-8">
+
+          {/* Browse by State Section */}
+          <div className="border-t border-border pt-8 mt-8">
+            <h3 className="text-xl font-bold text-forest mb-4">Browse Farm Jobs by State</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+              {US_STATES_WITHOUT_DC.map((state) => {
+                const slug = getStateSlug(state.code);
+                return (
+                  <a
+                    key={state.code}
+                    href={`/${slug}-jobs`}
+                    className="text-sm text-forest-light hover:text-primary hover:underline"
+                  >
+                    {state.name}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="border-t border-border pt-8 mt-8">
             <h2 className="text-2xl font-bold text-forest mb-4">Find Your Dream Agriculture Career</h2>
             <p className="text-forest-light leading-relaxed mb-4">
               The agriculture industry offers diverse career paths from hands-on farming and gardening to ranch management and sustainable agriculture leadership. PlayInDirtJobs features the most comprehensive collection of farming jobs, gardening positions, and ranch work opportunities in the United States.

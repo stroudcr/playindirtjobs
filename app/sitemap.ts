@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { db } from '@/lib/db'
+import { US_STATES_WITHOUT_DC, getStateSlug } from '@/lib/constants'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600 // Revalidate every hour
@@ -34,6 +35,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error fetching jobs for sitemap:', error)
     // If database is not available, just return static pages
   }
+
+  // State pages (50 states)
+  const statePages: MetadataRoute.Sitemap = US_STATES_WITHOUT_DC.map((state) => ({
+    url: `${baseUrl}/${getStateSlug(state.code)}-jobs`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: 0.8,
+  }))
 
   // Static pages
   const staticPages = [
@@ -87,5 +96,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  return [...staticPages, ...jobUrls]
+  return [...staticPages, ...statePages, ...jobUrls]
 }

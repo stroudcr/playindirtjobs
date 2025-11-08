@@ -41,9 +41,11 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/api/',
           '/post-job/preview',
+          '/manage/',
         ],
       },
     ],
     sitemap: 'https://playindirtjobs.com/sitemap.xml',
+    host: 'https://playindirtjobs.com',
   }
 }

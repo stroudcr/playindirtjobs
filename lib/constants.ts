@@ -136,6 +136,40 @@ export const US_STATES = [
   { code: "DC", name: "District of Columbia" },
 ] as const;
 
+// State helper functions for SEO-friendly URLs and data normalization
+export function getStateName(input: string): string {
+  const state = US_STATES.find(
+    (s) => s.code.toLowerCase() === input.toLowerCase() ||
+           s.name.toLowerCase() === input.toLowerCase()
+  );
+  return state?.name || input;
+}
+
+export function getStateCode(input: string): string {
+  const state = US_STATES.find(
+    (s) => s.code.toLowerCase() === input.toLowerCase() ||
+           s.name.toLowerCase() === input.toLowerCase()
+  );
+  return state?.code || input;
+}
+
+export function getStateSlug(input: string): string {
+  const stateName = getStateName(input);
+  return stateName.toLowerCase().replace(/\s+/g, '-');
+}
+
+export function getStateFromSlug(slug: string): { code: string; name: string } | null {
+  const name = slug.split('-').map(word =>
+    word.charAt(0).toUpperCase() + word.slice(1)
+  ).join(' ');
+
+  const state = US_STATES.find(s => s.name.toLowerCase() === name.toLowerCase());
+  return state ? { code: state.code, name: state.name } : null;
+}
+
+// Get only the 50 states (excluding DC)
+export const US_STATES_WITHOUT_DC = US_STATES.filter(state => state.code !== 'DC');
+
 // Pricing (in cents)
 export const PRICING = {
   BASIC: 500, // $5

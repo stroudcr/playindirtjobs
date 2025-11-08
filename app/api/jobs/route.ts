@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getStateCode, getStateName } from "@/lib/constants";
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,6 +8,7 @@ export async function GET(request: NextRequest) {
 
     // Parse filters
     const search = searchParams.get("search") || "";
+    const state = searchParams.get("state") || "";
     const categories = searchParams.get("categories")?.split(",").filter(Boolean) || [];
     const jobTypes = searchParams.get("jobTypes")?.split(",").filter(Boolean) || [];
     const farmTypes = searchParams.get("farmTypes")?.split(",").filter(Boolean) || [];
@@ -57,6 +59,19 @@ export async function GET(request: NextRequest) {
       where.benefits = {
         hasSome: benefits,
       };
+    }
+
+    // State filter (supports both 2-letter codes and full names)
+    if (state) {
+      const stateCode = getStateCode(state);
+      const stateName = getStateName(state);
+
+      // Match either the code or the full name to handle mixed data formats
+      where.OR = where.OR || [];
+      where.OR.push(
+        { state: { equals: stateCode, mode: "insensitive" } },
+        { state: { equals: stateName, mode: "insensitive" } }
+      );
     }
 
     // Sort order
