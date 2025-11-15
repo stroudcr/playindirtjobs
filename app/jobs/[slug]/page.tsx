@@ -32,6 +32,25 @@ async function getJob(slug: string) {
   return job;
 }
 
+export async function generateStaticParams() {
+  // Generate static params for all active jobs at build time
+  const jobs = await db.job.findMany({
+    where: {
+      active: true,
+      expiresAt: {
+        gte: new Date(),
+      },
+    },
+    select: {
+      slug: true,
+    },
+  });
+
+  return jobs.map((job) => ({
+    slug: job.slug,
+  }));
+}
+
 export async function generateMetadata({ params }: JobPageProps): Promise<Metadata> {
   const { slug } = await params;
   const job = await getJob(slug);
@@ -89,21 +108,44 @@ export default async function JobPage({ params }: JobPageProps) {
     .join(" ");
 
   // JobPosting Schema for Google Jobs
+  const jobUrl = getUrl(`jobs/${job.slug}`);
+
+  // Map job types to Google's expected values
+  const mapEmploymentType = (type: string): string => {
+    const typeMap: Record<string, string> = {
+      'full-time': 'FULL_TIME',
+      'part-time': 'PART_TIME',
+      'seasonal': 'TEMPORARY',
+      'contract': 'CONTRACTOR',
+      'apprenticeship': 'INTERN',
+      'volunteer': 'VOLUNTEER',
+      'internship': 'INTERN',
+      'temporary': 'TEMPORARY',
+    };
+    return typeMap[type] || type.toUpperCase().replace(/-/g, '_');
+  };
+
+  // Format description as HTML for better Google parsing
+  const descriptionHtml = `<p>${job.description.replace(/\n/g, '</p><p>')}</p>`;
+
   const jobPostingSchema = {
     "@context": "https://schema.org/",
     "@type": "JobPosting",
     "title": job.title,
-    "description": job.description,
+    "description": descriptionHtml,
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": job.company,
+      "value": job.id
+    },
     "datePosted": job.createdAt.toISOString(),
     "validThrough": job.expiresAt.toISOString(),
-    "employmentType": job.jobType.map((type) =>
-      type.toUpperCase().replace(/-/g, '_')
-    ),
+    "employmentType": job.jobType.map(mapEmploymentType),
     "hiringOrganization": {
       "@type": "Organization",
       "name": job.company,
-      "sameAs": job.companyWebsite || undefined,
-      "logo": job.companyLogo || undefined,
+      ...(job.companyWebsite && { "sameAs": job.companyWebsite }),
+      ...(job.companyLogo && { "logo": job.companyLogo }),
     },
     "jobLocation": {
       "@type": "Place",
@@ -111,7 +153,7 @@ export default async function JobPage({ params }: JobPageProps) {
         "@type": "PostalAddress",
         "addressLocality": job.city,
         "addressRegion": job.state,
-        "postalCode": job.postalCode || undefined,
+        ...(job.postalCode && { "postalCode": job.postalCode }),
         "addressCountry": "US"
       }
     },
@@ -121,8 +163,8 @@ export default async function JobPage({ params }: JobPageProps) {
         "currency": "USD",
         "value": {
           "@type": "QuantitativeValue",
-          "minValue": job.salaryMin,
-          "maxValue": job.salaryMax,
+          ...(job.salaryMin && { "minValue": job.salaryMin }),
+          ...(job.salaryMax && { "maxValue": job.salaryMax }),
           "unitText": job.salaryType === "hourly" ? "HOUR" : "YEAR"
         }
       }
@@ -131,8 +173,10 @@ export default async function JobPage({ params }: JobPageProps) {
       "@type": "Country",
       "name": "US"
     },
-    "jobLocationType": job.remote ? "TELECOMMUTE" : undefined,
-    "industry": "Agriculture"
+    ...(job.remote && { "jobLocationType": "TELECOMMUTE" }),
+    "directApply": false,
+    "industry": "Agriculture",
+    "url": jobUrl
   };
 
   return (
