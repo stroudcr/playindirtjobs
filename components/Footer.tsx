@@ -133,6 +133,16 @@ export function Footer() {
                   WellDiem
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://www.fayetteflyer.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  Fayette Flyer
+                </a>
+              </li>
             </ul>
           </div>
         </div>
