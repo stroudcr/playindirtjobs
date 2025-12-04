@@ -32,66 +32,59 @@ async function getJob(slug: string) {
   return job;
 }
 
-export async function generateStaticParams() {
-  // Generate static params for all active jobs at build time
-  const jobs = await db.job.findMany({
-    where: {
-      active: true,
-      expiresAt: {
-        gte: new Date(),
-      },
-    },
-    select: {
-      slug: true,
-    },
-  });
-
-  return jobs.map((job) => ({
-    slug: job.slug,
-  }));
-}
+// Skip static generation - render job pages dynamically at request time
+// This ensures the build succeeds even when the database is unreachable
+export const dynamicParams = true;
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: JobPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const job = await getJob(slug);
+  try {
+    const { slug } = await params;
+    const job = await getJob(slug);
 
-  if (!job) {
+    if (!job) {
+      return {
+        title: "Job Not Found",
+      };
+    }
+
+    const salaryRange = job.salaryMin && job.salaryMax
+      ? `$${job.salaryMin.toLocaleString()}-$${job.salaryMax.toLocaleString()}`
+      : "";
+
     return {
-      title: "Job Not Found",
+      title: `${job.title} - ${job.company} | ${job.location} ${job.jobType.includes('full-time') ? 'Full-Time' : ''} Jobs`,
+      description: `${job.title} at ${job.company} in ${job.location}. ${salaryRange ? salaryRange + '. ' : ''}${job.description.slice(0, 120)}...`,
+      openGraph: {
+        title: `${job.title} at ${job.company}`,
+        description: job.description.slice(0, 155),
+        url: getUrl(`jobs/${job.slug}`),
+        type: 'website',
+        images: [
+          {
+            url: job.companyLogo || '/images/PlayInDirtX.png',
+            width: 1200,
+            height: 630,
+            alt: `${job.company} logo`,
+          }
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${job.title} at ${job.company}`,
+        description: job.description.slice(0, 155),
+        images: [job.companyLogo || '/images/PlayInDirtX.png'],
+      },
+      alternates: {
+        canonical: getUrl(`jobs/${job.slug}`),
+      },
+    };
+  } catch (error) {
+    console.warn('Failed to generate metadata for job:', error);
+    return {
+      title: "Job Details | PlayInDirt Jobs",
     };
   }
-
-  const salaryRange = job.salaryMin && job.salaryMax
-    ? `$${job.salaryMin.toLocaleString()}-$${job.salaryMax.toLocaleString()}`
-    : "";
-
-  return {
-    title: `${job.title} - ${job.company} | ${job.location} ${job.jobType.includes('full-time') ? 'Full-Time' : ''} Jobs`,
-    description: `${job.title} at ${job.company} in ${job.location}. ${salaryRange ? salaryRange + '. ' : ''}${job.description.slice(0, 120)}...`,
-    openGraph: {
-      title: `${job.title} at ${job.company}`,
-      description: job.description.slice(0, 155),
-      url: getUrl(`jobs/${job.slug}`),
-      type: 'website',
-      images: [
-        {
-          url: job.companyLogo || '/images/PlayInDirtX.png',
-          width: 1200,
-          height: 630,
-          alt: `${job.company} logo`,
-        }
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${job.title} at ${job.company}`,
-      description: job.description.slice(0, 155),
-      images: [job.companyLogo || '/images/PlayInDirtX.png'],
-    },
-    alternates: {
-      canonical: getUrl(`jobs/${job.slug}`),
-    },
-  };
 }
 
 export default async function JobPage({ params }: JobPageProps) {
