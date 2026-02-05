@@ -61,9 +61,14 @@ export async function POST(request: NextRequest) {
   }
 }
 
+const unsubscribeSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
+
 export async function DELETE(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const body = await request.json();
+    const { email } = unsubscribeSchema.parse(body);
 
     await db.subscriber.update({
       where: { email },
@@ -75,6 +80,14 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error) {
     console.error("Unsubscribe error:", error);
+
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: error.errors[0].message },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { error: "Failed to unsubscribe" },
       { status: 500 }

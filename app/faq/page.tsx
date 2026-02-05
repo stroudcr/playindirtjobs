@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "How long do job postings stay active?",
-    answer: "All job postings remain active for 30 days from the date of posting. You can edit or remove your posting at any time during this period."
+    answer: "All job postings remain active for 60 days from the date of posting. You can edit or remove your posting at any time during this period."
   },
   {
     question: "What's the difference between Basic and Featured job postings?",

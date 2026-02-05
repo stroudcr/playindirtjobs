@@ -7,11 +7,35 @@ import { formatSalary } from "@/lib/utils";
 import { JOB_CATEGORIES, FARM_TYPES, BENEFITS, PRICING } from "@/lib/constants";
 import { loadStripe } from "@stripe/stripe-js";
 
+interface JobDraft {
+  title: string;
+  company: string;
+  city: string;
+  state: string;
+  location: string;
+  postalCode: string;
+  remote: boolean;
+  description: string;
+  salaryMin?: number;
+  salaryMax?: number;
+  salaryType: "annual" | "hourly";
+  jobType: string[];
+  farmType: string[];
+  categories: string[];
+  tags: string[];
+  benefits: string[];
+  companyEmail: string;
+  companyWebsite: string;
+  companyLogo: string;
+  applyUrl: string;
+  applyEmail: string;
+}
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
 
 export default function PreviewJobPage() {
   const router = useRouter();
-  const [jobData, setJobData] = useState<any>(null);
+  const [jobData, setJobData] = useState<JobDraft | null>(null);
   const [loading, setLoading] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<"basic" | "featured">("basic");
 
@@ -181,7 +205,7 @@ export default function PreviewJobPage() {
                   />
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="font-bold text-forest">Basic</h3>
-                    <span className="text-2xl font-bold text-primary">$99</span>
+                    <span className="text-2xl font-bold text-primary">${(PRICING.BASIC / 100).toFixed(0)}</span>
                   </div>
                   <ul className="text-sm text-forest-light space-y-1">
                     <li>✓ 60-day listing</li>
@@ -210,7 +234,7 @@ export default function PreviewJobPage() {
                       <h3 className="font-bold text-forest">Featured</h3>
                       <span className="text-xs text-accent-yellow font-semibold">⭐ RECOMMENDED</span>
                     </div>
-                    <span className="text-2xl font-bold text-primary">$249</span>
+                    <span className="text-2xl font-bold text-primary">${(PRICING.FEATURED / 100).toFixed(0)}</span>
                   </div>
                   <ul className="text-sm text-forest-light space-y-1">
                     <li>✓ Everything in Basic</li>

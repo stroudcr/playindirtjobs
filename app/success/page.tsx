@@ -5,9 +5,13 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Loader2 } from "lucide-react";
 
+interface SuccessJob {
+  slug: string;
+}
+
 function SuccessContent() {
   const searchParams = useSearchParams();
-  const [job, setJob] = useState<any>(null);
+  const [job, setJob] = useState<SuccessJob | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

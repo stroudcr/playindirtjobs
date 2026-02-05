@@ -71,7 +71,7 @@ All constants defined in `lib/constants.ts`:
 - `JOB_TYPES`: full-time, part-time, seasonal, apprenticeship, etc.
 - `FARM_TYPES`: organic, permaculture, regenerative, biodynamic, etc.
 - `BENEFITS`: housing, meals, equipment, learning, etc.
-- `PRICING`: Basic ($45), Featured ($95), Bundle ($199)
+- `PRICING`: Basic ($5), Featured ($15), Bundle ($199)
 
 Validation schemas in `lib/validations.ts` using Zod.
 

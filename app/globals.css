@@ -42,11 +42,6 @@
   @apply bg-primary/50;
 }
 
-/* Smooth transitions */
-* {
-  @apply transition-colors duration-200;
-}
-
 /* Button base styles */
 .btn {
   @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 inline-flex items-center gap-2;

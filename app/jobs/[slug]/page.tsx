@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { MapPin, DollarSign, Briefcase, Calendar, ArrowLeft, ExternalLink } from "lucide-react";
@@ -14,7 +15,7 @@ interface JobPageProps {
   }>;
 }
 
-async function getJob(slug: string) {
+const getJob = cache(async (slug: string) => {
   const job = await db.job.findUnique({
     where: { slug },
   });
@@ -23,14 +24,8 @@ async function getJob(slug: string) {
     return null;
   }
 
-  // Increment views
-  await db.job.update({
-    where: { id: job.id },
-    data: { views: { increment: 1 } },
-  });
-
   return job;
-}
+});
 
 // Skip static generation - render job pages dynamically at request time
 // This ensures the build succeeds even when the database is unreachable
@@ -94,6 +89,12 @@ export default async function JobPage({ params }: JobPageProps) {
   if (!job) {
     notFound();
   }
+
+  // Increment views only in the page component (not in generateMetadata)
+  await db.job.update({
+    where: { id: job.id },
+    data: { views: { increment: 1 } },
+  });
 
   const categoryEmojis = job.categories
     .map(cat => JOB_CATEGORIES.find(c => c.id === cat)?.emoji)

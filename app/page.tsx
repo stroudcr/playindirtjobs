@@ -1,81 +1,107 @@
-"use client";
-
-import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { JobCard } from "@/components/JobCard";
-import { SearchBar } from "@/components/SearchBar";
-import { FilterSidebar } from "@/components/FilterSidebar";
-import { MobileFilters } from "@/components/MobileFilters";
-import { EmailSubscribe } from "@/components/EmailSubscribe";
-import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
+import { db } from "@/lib/db";
+import { HomeClient } from "@/components/HomeClient";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
+import { Loader2 } from "lucide-react";
 
-interface Job {
-  id: string;
-  slug: string;
-  title: string;
-  company: string;
-  location: string;
-  salaryMin?: number;
-  salaryMax?: number;
-  categories: string[];
-  jobType: string[];
-  featured: boolean;
-  createdAt: Date;
+export const dynamic = "force-dynamic";
+
+interface HomeProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default function Home() {
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([]);
-  const [selectedFarmTypes, setSelectedFarmTypes] = useState<string[]>([]);
-  const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState("latest");
-
-  const fetchJobs = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (searchQuery) params.append("search", searchQuery);
-      if (selectedCategories.length) params.append("categories", selectedCategories.join(","));
-      if (selectedJobTypes.length) params.append("jobTypes", selectedJobTypes.join(","));
-      if (selectedFarmTypes.length) params.append("farmTypes", selectedFarmTypes.join(","));
-      if (selectedBenefits.length) params.append("benefits", selectedBenefits.join(","));
-      if (sortBy) params.append("sortBy", sortBy);
-
-      const response = await fetch(`/api/jobs?${params.toString()}`);
-      const data = await response.json();
-
-      setJobs(data.jobs.map((job: any) => ({
-        ...job,
-        createdAt: new Date(job.createdAt),
-      })));
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [searchQuery, selectedCategories, selectedJobTypes, selectedFarmTypes, selectedBenefits, sortBy]);
-
-  useEffect(() => {
-    fetchJobs();
-  }, [fetchJobs]);
-
-  const handleFilterChange = (filters: {
-    categories?: string[];
-    jobTypes?: string[];
-    farmTypes?: string[];
-    benefits?: string[];
-    sortBy?: string;
-  }) => {
-    if (filters.categories !== undefined) setSelectedCategories(filters.categories);
-    if (filters.jobTypes !== undefined) setSelectedJobTypes(filters.jobTypes);
-    if (filters.farmTypes !== undefined) setSelectedFarmTypes(filters.farmTypes);
-    if (filters.benefits !== undefined) setSelectedBenefits(filters.benefits);
-    if (filters.sortBy !== undefined) setSortBy(filters.sortBy);
+async function getJobs(filters: {
+  search: string;
+  categories: string[];
+  jobTypes: string[];
+  farmTypes: string[];
+  benefits: string[];
+  sortBy: string;
+}) {
+  const where: any = {
+    active: true,
+    expiresAt: { gt: new Date() },
   };
+
+  if (filters.search) {
+    where.OR = [
+      { title: { contains: filters.search, mode: "insensitive" } },
+      { company: { contains: filters.search, mode: "insensitive" } },
+      { location: { contains: filters.search, mode: "insensitive" } },
+      { description: { contains: filters.search, mode: "insensitive" } },
+    ];
+  }
+
+  if (filters.categories.length > 0) {
+    where.categories = { hasSome: filters.categories };
+  }
+
+  if (filters.jobTypes.length > 0) {
+    where.jobType = { hasSome: filters.jobTypes };
+  }
+
+  if (filters.farmTypes.length > 0) {
+    where.farmType = { hasSome: filters.farmTypes };
+  }
+
+  if (filters.benefits.length > 0) {
+    where.benefits = { hasSome: filters.benefits };
+  }
+
+  let orderBy: any = { createdAt: "desc" };
+  if (filters.sortBy === "highest-paid") {
+    orderBy = { salaryMax: "desc" };
+  } else if (filters.sortBy === "most-viewed") {
+    orderBy = { views: "desc" };
+  }
+
+  const jobs = await db.job.findMany({
+    where,
+    orderBy: [
+      { featured: "desc" },
+      orderBy,
+    ],
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      company: true,
+      location: true,
+      salaryMin: true,
+      salaryMax: true,
+      categories: true,
+      jobType: true,
+      featured: true,
+      createdAt: true,
+    },
+    take: 50,
+  });
+
+  return jobs;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+
+  const filters = {
+    search: (typeof params.search === "string" ? params.search : "") || "",
+    categories: (typeof params.categories === "string" ? params.categories.split(",").filter(Boolean) : []),
+    jobTypes: (typeof params.jobTypes === "string" ? params.jobTypes.split(",").filter(Boolean) : []),
+    farmTypes: (typeof params.farmTypes === "string" ? params.farmTypes.split(",").filter(Boolean) : []),
+    benefits: (typeof params.benefits === "string" ? params.benefits.split(",").filter(Boolean) : []),
+    sortBy: (typeof params.sortBy === "string" ? params.sortBy : "latest") || "latest",
+  };
+
+  const jobs = await getJobs(filters);
+
+  // Serialize dates for client component
+  const serializedJobs = jobs.map(job => ({
+    ...job,
+    salaryMin: job.salaryMin ?? undefined,
+    salaryMax: job.salaryMax ?? undefined,
+    createdAt: job.createdAt,
+  }));
 
   return (
     <main className="min-h-screen bg-earth-cream">
@@ -100,121 +126,18 @@ export default function Home() {
               Discover sustainable agriculture careers, organic farming positions, and ranch work opportunities across America.
               <span className="hidden sm:inline"> Build a sustainable future, one job at a time.</span>
             </p>
-            <SearchBar onSearch={setSearchQuery} />
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters Sidebar - Desktop Only */}
-          <div className="hidden lg:block w-64 flex-shrink-0 space-y-6">
-            <EmailSubscribe />
-            <FilterSidebar
-              selectedCategories={selectedCategories}
-              selectedJobTypes={selectedJobTypes}
-              selectedFarmTypes={selectedFarmTypes}
-              selectedBenefits={selectedBenefits}
-              sortBy={sortBy}
-              onFilterChange={handleFilterChange}
-            />
-          </div>
-
-          {/* Mobile Filters */}
-          <MobileFilters
-            selectedCategories={selectedCategories}
-            selectedJobTypes={selectedJobTypes}
-            selectedFarmTypes={selectedFarmTypes}
-            selectedBenefits={selectedBenefits}
-            sortBy={sortBy}
-            onFilterChange={handleFilterChange}
-          />
-
-          {/* Job Listings */}
-          <div className="flex-1 min-w-0">
-            {/* Active filters */}
-            {(selectedCategories.length > 0 ||
-              selectedJobTypes.length > 0 ||
-              selectedFarmTypes.length > 0 ||
-              selectedBenefits.length > 0) && (
-              <div className="mb-6 flex items-center gap-2 flex-wrap">
-                <span className="text-sm text-forest-light">Active filters:</span>
-                {[
-                  ...selectedCategories,
-                  ...selectedJobTypes,
-                  ...selectedFarmTypes,
-                  ...selectedBenefits,
-                ].map((filter) => (
-                  <span
-                    key={filter}
-                    className="px-3 py-1 bg-primary/20 text-primary text-sm font-medium rounded-full"
-                  >
-                    {filter.replace("-", " ")}
-                  </span>
-                ))}
-                <button
-                  onClick={() => {
-                    setSelectedCategories([]);
-                    setSelectedJobTypes([]);
-                    setSelectedFarmTypes([]);
-                    setSelectedBenefits([]);
-                  }}
-                  className="text-sm text-primary hover:underline"
-                >
-                  Clear all
-                </button>
-              </div>
-            )}
-
-            {/* Loading state */}
-            {loading && (
-              <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              </div>
-            )}
-
-            {/* Empty state */}
-            {!loading && jobs.length === 0 && (
-              <div className="text-center py-20">
-                <div className="text-6xl mb-4">🌾</div>
-                <h3 className="text-2xl font-semibold text-forest mb-2">
-                  No jobs found
-                </h3>
-                <p className="text-forest-light mb-6">
-                  Try adjusting your filters or search query
-                </p>
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedCategories([]);
-                    setSelectedJobTypes([]);
-                    setSelectedFarmTypes([]);
-                    setSelectedBenefits([]);
-                  }}
-                  className="btn btn-primary"
-                >
-                  Clear all filters
-                </button>
-              </div>
-            )}
-
-            {/* Job grid */}
-            {!loading && jobs.length > 0 && (
-              <div className="space-y-4">
-                <p className="text-sm text-forest-light mb-4">
-                  Showing {jobs.length} job{jobs.length !== 1 ? "s" : ""}
-                </p>
-                <div className="grid gap-4">
-                  {jobs.map((job) => (
-                    <JobCard key={job.id} job={job} />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+      {/* Main Content - Interactive client component */}
+      <Suspense fallback={
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
-      </div>
+      }>
+        <HomeClient initialJobs={serializedJobs} initialFilters={filters} />
+      </Suspense>
 
       {/* Browse by Category Section */}
       <section className="bg-forest/5 border-y border-border py-12">
