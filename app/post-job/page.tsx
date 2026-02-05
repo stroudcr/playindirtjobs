@@ -104,7 +104,7 @@ export default function PostJobPage() {
     <main className="min-h-screen bg-earth-cream py-6 sm:py-12">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-forest mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display text-forest mb-4">
             Post a Job
           </h1>
           <p className="text-lg sm:text-xl text-forest-light">
@@ -117,7 +117,7 @@ export default function PostJobPage() {
           <div className="space-y-6">
           {/* Basic Information */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-6">Basic Information</h2>
+            <h2 className="text-2xl font-display text-forest mb-6">Basic Information</h2>
 
             <div className="space-y-4">
               <div>
@@ -240,7 +240,7 @@ export default function PostJobPage() {
 
           {/* Salary */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-6">Compensation</h2>
+            <h2 className="text-2xl font-display text-forest mb-6">Compensation</h2>
 
             {/* Salary Type Toggle */}
             <div className="mb-6">
@@ -309,7 +309,7 @@ export default function PostJobPage() {
 
           {/* Categories */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-4">Categories * (max 3)</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">Categories * (max 3)</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {JOB_CATEGORIES.map((category) => (
                 <label
@@ -332,7 +332,7 @@ export default function PostJobPage() {
 
           {/* Job Type */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-4">Job Type *</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">Job Type *</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {JOB_TYPES.map((type) => (
                 <label
@@ -353,7 +353,7 @@ export default function PostJobPage() {
 
           {/* Farm Type */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-4">Farm Type *</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">Farm Type *</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {FARM_TYPES.map((type) => (
                 <label
@@ -375,7 +375,7 @@ export default function PostJobPage() {
 
           {/* Benefits */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-4">Benefits (optional)</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">Benefits (optional)</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {BENEFITS.map((benefit) => (
                 <label
@@ -397,7 +397,7 @@ export default function PostJobPage() {
 
           {/* Company Information */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-6">Company Information</h2>
+            <h2 className="text-2xl font-display text-forest mb-6">Company Information</h2>
             <div className="space-y-4">
               <div>
                 <label htmlFor="companyEmail" className="block text-sm font-medium text-forest mb-2">
@@ -435,7 +435,7 @@ export default function PostJobPage() {
 
           {/* Application Details */}
           <div className="card p-6">
-            <h2 className="text-2xl font-bold text-forest mb-6">Application Details</h2>
+            <h2 className="text-2xl font-display text-forest mb-6">Application Details</h2>
             <div className="space-y-4">
               <div>
                 <label htmlFor="applyUrl" className="block text-sm font-medium text-forest mb-2">

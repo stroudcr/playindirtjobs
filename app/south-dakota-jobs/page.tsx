@@ -54,7 +54,7 @@ export default async function SouthDakotaJobsPage() {
     <>
       <main className="min-h-screen bg-earth-cream">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary/10 via-earth-cream to-accent-yellow/10 border-b border-border py-12 sm:py-16">
+        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <Breadcrumbs items={[
@@ -66,7 +66,7 @@ export default async function SouthDakotaJobsPage() {
               <div className="flex items-start gap-4 mb-6">
                 <MapPin className="w-12 h-12 text-primary flex-shrink-0" />
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-bold text-forest mb-4">
+                  <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">
                     Farm Jobs in {stateContent.name}
                   </h1>
                   <p className="text-xl text-forest-light leading-relaxed">
@@ -91,7 +91,7 @@ export default async function SouthDakotaJobsPage() {
 
         {/* Jobs Section */}
         <section className="container mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-forest mb-6">
+          <h2 className="text-2xl font-display text-forest mb-6">
             {jobs.length} Farm Job{jobs.length !== 1 ? 's' : ''} in {stateContent.name}
           </h2>
 
@@ -123,7 +123,7 @@ export default async function SouthDakotaJobsPage() {
         {/* SEO Content - Introduction */}
         <section className="bg-white border-t border-border py-12">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-forest mb-4">Farm Jobs in {stateContent.name}</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">Farm Jobs in {stateContent.name}</h2>
             <div className="prose prose-green max-w-none text-forest-light space-y-4">
               <p>{stateContent.content.introduction}</p>
             </div>
@@ -132,7 +132,7 @@ export default async function SouthDakotaJobsPage() {
 
         {/* Why Work Section */}
         <section className="container mx-auto px-4 py-12 max-w-4xl">
-          <h2 className="text-2xl font-bold text-forest mb-4">Why Work on {stateContent.name} Farms?</h2>
+          <h2 className="text-2xl font-display text-forest mb-4">Why Work on {stateContent.name} Farms?</h2>
           <div className="prose prose-green max-w-none text-forest-light space-y-4">
             <p>{stateContent.content.whyWork}</p>
           </div>
@@ -141,7 +141,7 @@ export default async function SouthDakotaJobsPage() {
         {/* Types of Farms Section */}
         <section className="bg-white border-t border-border py-12">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-forest mb-4">Types of Farms in {stateContent.name}</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">Types of Farms in {stateContent.name}</h2>
             <div className="prose prose-green max-w-none text-forest-light space-y-4">
               <p>{stateContent.content.typesOfFarms}</p>
             </div>
@@ -150,7 +150,7 @@ export default async function SouthDakotaJobsPage() {
 
         {/* Getting Started Section */}
         <section className="container mx-auto px-4 py-12 max-w-4xl">
-          <h2 className="text-2xl font-bold text-forest mb-4">Getting Started with Farm Work in {stateContent.name}</h2>
+          <h2 className="text-2xl font-display text-forest mb-4">Getting Started with Farm Work in {stateContent.name}</h2>
           <div className="prose prose-green max-w-none text-forest-light space-y-4">
             <p>{stateContent.content.gettingStarted}</p>
           </div>
@@ -159,7 +159,7 @@ export default async function SouthDakotaJobsPage() {
         {/* FAQ Section */}
         <section className="bg-white border-t border-border py-12">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-forest mb-6">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-display text-forest mb-6">Frequently Asked Questions</h2>
             <div className="space-y-6">
               {stateContent.faqs.map((faq, index) => (
                 <div key={index} className="border-b border-border pb-6 last:border-0">
@@ -174,7 +174,7 @@ export default async function SouthDakotaJobsPage() {
         {/* Related States */}
         {stateContent.relatedStates.length > 0 && (
           <section className="container mx-auto px-4 py-12">
-            <h2 className="text-2xl font-bold text-forest mb-6">Farm Jobs in Nearby States</h2>
+            <h2 className="text-2xl font-display text-forest mb-6">Farm Jobs in Nearby States</h2>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
               {stateContent.relatedStates.slice(0, 6).map((stateCode) => {
                 const relatedState = getStateContent(stateCode);
@@ -197,7 +197,7 @@ export default async function SouthDakotaJobsPage() {
         {/* Related Categories */}
         <section className="bg-white border-t border-border py-12">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-forest mb-6">Browse by Job Category</h2>
+            <h2 className="text-2xl font-display text-forest mb-6">Browse by Job Category</h2>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               <Link href="/farming-jobs" className="card p-6 hover:border-primary/50 transition group">
                 <h3 className="font-semibold text-forest mb-2 group-hover:text-primary flex items-center justify-between">

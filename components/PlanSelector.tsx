@@ -24,7 +24,7 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
       id: "featured" as const,
       name: "Featured Listing",
       price: PRICING.FEATURED,
-      badge: "⭐ Most Popular",
+      badge: "Most Popular",
       features: [
         "60 day listing",
         "Featured badge & highlighting",
@@ -37,7 +37,7 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
 
   return (
     <div className="card p-4 sm:p-6">
-      <h3 className="text-lg sm:text-xl font-bold text-forest mb-4">Choose Your Plan</h3>
+      <h3 className="text-lg sm:text-xl font-display text-forest mb-4">Choose Your Plan</h3>
 
       <div className="space-y-3">
         {plans.map((plan) => (
@@ -56,7 +56,8 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
                   <div>
                     <p className="font-semibold text-forest">{plan.name}</p>
                     {plan.badge && (
-                      <span className="inline-block text-xs font-semibold text-primary mt-1">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary mt-1">
+                        <span className="w-1.5 h-1.5 bg-primary rounded-full" />
                         {plan.badge}
                       </span>
                     )}

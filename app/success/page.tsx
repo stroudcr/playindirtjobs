@@ -59,7 +59,7 @@ function SuccessContent() {
       <div className="container mx-auto px-4 max-w-2xl text-center">
         <CheckCircle className="w-20 h-20 text-primary mx-auto mb-6" />
 
-        <h1 className="text-4xl md:text-5xl font-bold text-forest mb-4">
+        <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">
           Job Posted Successfully! 🌱
         </h1>
 
@@ -68,7 +68,7 @@ function SuccessContent() {
         </p>
 
         <div className="card p-8 mb-8 text-left">
-          <h2 className="text-2xl font-bold text-forest mb-4">What&apos;s next?</h2>
+          <h2 className="text-2xl font-display text-forest mb-4">What&apos;s next?</h2>
           <ul className="space-y-3 text-forest-light">
             <li className="flex items-start gap-3">
               <span className="text-primary font-bold">📧</span>

@@ -35,7 +35,7 @@ export default async function GardeningJobsPage() {
 
   return (
     <main className="min-h-screen bg-earth-cream">
-      <section className="bg-gradient-to-br from-secondary/10 via-earth-cream to-accent-yellow/10 border-b border-border py-12 sm:py-16">
+      <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Breadcrumbs items={[
             { label: "Home", href: "/" },
@@ -44,7 +44,7 @@ export default async function GardeningJobsPage() {
           <div className="flex items-start gap-4 mb-6">
             <Leaf className="w-12 h-12 text-secondary flex-shrink-0" />
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-forest mb-4">Gardening Jobs</h1>
+              <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">Gardening Jobs</h1>
               <p className="text-xl text-forest-light">Professional gardener positions, horticulture careers, greenhouse work, and nursery jobs nationwide.</p>
             </div>
           </div>
@@ -52,7 +52,7 @@ export default async function GardeningJobsPage() {
       </section>
 
       <section className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-forest mb-6">{jobs.length} Gardening Jobs Available</h2>
+        <h2 className="text-2xl font-display text-forest mb-6">{jobs.length} Gardening Jobs Available</h2>
         <div className="grid gap-4 max-w-4xl">
           {jobs.map((job) => (
             <JobCard

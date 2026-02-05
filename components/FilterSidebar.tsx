@@ -2,6 +2,7 @@
 
 import { JOB_CATEGORIES, JOB_TYPES, FARM_TYPES, BENEFITS, SORT_OPTIONS } from "@/lib/constants";
 import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface FilterSidebarProps {
   selectedCategories: string[];
@@ -65,16 +66,16 @@ export function FilterSidebar({
     <div className="space-y-6">
         {/* Sort */}
         <div className="card p-4">
-          <h3 className="font-semibold text-forest mb-3">Sort by</h3>
-          <div className="space-y-2">
+          <h3 className="font-display text-forest mb-3">Sort by</h3>
+          <div className="space-y-1">
             {SORT_OPTIONS.map((option) => (
               <button
                 key={option.id}
                 onClick={() => onFilterChange({ sortBy: option.id })}
-                className={`w-full text-left px-3 py-2 rounded transition-colors ${
+                className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
                   sortBy === option.id
-                    ? "bg-primary text-white font-medium"
-                    : "hover:bg-primary/10 text-forest-light"
+                    ? "bg-primary/5 text-primary border-l-2 border-primary font-medium"
+                    : "hover:bg-gray-50 text-forest-light"
                 }`}
               >
                 {option.label}
@@ -87,17 +88,17 @@ export function FilterSidebar({
         <div className="card p-4">
           <button
             onClick={() => setIsOpen({ ...isOpen, categories: !isOpen.categories })}
-            className="w-full flex items-center justify-between font-semibold text-forest mb-3"
+            className="w-full flex items-center justify-between font-display text-forest mb-3"
           >
             <span>Categories</span>
-            <span>{isOpen.categories ? "−" : "+"}</span>
+            {isOpen.categories ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           {isOpen.categories && (
             <div className="space-y-2">
               {JOB_CATEGORIES.map((category) => (
                 <label
                   key={category.id}
-                  className="flex items-center gap-2 cursor-pointer hover:bg-primary/5 p-2 rounded transition-colors"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors"
                 >
                   <input
                     type="checkbox"
@@ -119,17 +120,17 @@ export function FilterSidebar({
         <div className="card p-4">
           <button
             onClick={() => setIsOpen({ ...isOpen, jobTypes: !isOpen.jobTypes })}
-            className="w-full flex items-center justify-between font-semibold text-forest mb-3"
+            className="w-full flex items-center justify-between font-display text-forest mb-3"
           >
             <span>Job Type</span>
-            <span>{isOpen.jobTypes ? "−" : "+"}</span>
+            {isOpen.jobTypes ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           {isOpen.jobTypes && (
             <div className="space-y-2">
               {JOB_TYPES.map((type) => (
                 <label
                   key={type.id}
-                  className="flex items-center gap-2 cursor-pointer hover:bg-primary/5 p-2 rounded transition-colors"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors"
                 >
                   <input
                     type="checkbox"
@@ -148,17 +149,17 @@ export function FilterSidebar({
         <div className="card p-4">
           <button
             onClick={() => setIsOpen({ ...isOpen, farmTypes: !isOpen.farmTypes })}
-            className="w-full flex items-center justify-between font-semibold text-forest mb-3"
+            className="w-full flex items-center justify-between font-display text-forest mb-3"
           >
             <span>Farm Type</span>
-            <span>{isOpen.farmTypes ? "−" : "+"}</span>
+            {isOpen.farmTypes ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           {isOpen.farmTypes && (
             <div className="space-y-2">
               {FARM_TYPES.map((type) => (
                 <label
                   key={type.id}
-                  className="flex items-center gap-2 cursor-pointer hover:bg-primary/5 p-2 rounded transition-colors"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors"
                 >
                   <input
                     type="checkbox"
@@ -180,17 +181,17 @@ export function FilterSidebar({
         <div className="card p-4">
           <button
             onClick={() => setIsOpen({ ...isOpen, benefits: !isOpen.benefits })}
-            className="w-full flex items-center justify-between font-semibold text-forest mb-3"
+            className="w-full flex items-center justify-between font-display text-forest mb-3"
           >
             <span>Benefits</span>
-            <span>{isOpen.benefits ? "−" : "+"}</span>
+            {isOpen.benefits ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           {isOpen.benefits && (
             <div className="space-y-2">
               {BENEFITS.map((benefit) => (
                 <label
                   key={benefit.id}
-                  className="flex items-center gap-2 cursor-pointer hover:bg-primary/5 p-2 rounded transition-colors"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded transition-colors"
                 >
                   <input
                     type="checkbox"

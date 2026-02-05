@@ -47,7 +47,7 @@ export default function AboutPage() {
 
       <main className="min-h-screen bg-earth-cream">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary/10 via-earth-cream to-accent-yellow/10 border-b border-border py-12 sm:py-16">
+        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <Breadcrumbs items={[
@@ -55,7 +55,7 @@ export default function AboutPage() {
                 { label: "About" }
               ]} />
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-forest mb-6 mt-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-forest mb-6 mt-6">
                 Honoring America&apos;s Agricultural Heritage
               </h1>
               <p className="text-xl md:text-2xl text-forest-light leading-relaxed mb-8">
@@ -87,7 +87,7 @@ export default function AboutPage() {
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-4xl mx-auto">
             <div className="card p-8 md:p-12 bg-white">
-              <h2 className="text-3xl md:text-4xl font-bold text-forest mb-6 text-center">
+              <h2 className="text-3xl md:text-4xl font-display text-forest mb-6 text-center">
                 Our Mission
               </h2>
               <p className="text-lg md:text-xl text-forest-light leading-relaxed text-center max-w-3xl mx-auto">
@@ -100,7 +100,7 @@ export default function AboutPage() {
         {/* Our Story */}
         <section className="container mx-auto px-4 pb-12 md:pb-16">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-forest mb-6">
+            <h2 className="text-3xl md:text-4xl font-display text-forest mb-6">
               Our Story
             </h2>
             <div className="prose prose-lg max-w-none text-forest-light space-y-6">
@@ -121,7 +121,7 @@ export default function AboutPage() {
         <section className="bg-white border-y border-border py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-forest mb-10 text-center">
+              <h2 className="text-3xl md:text-4xl font-display text-forest mb-10 text-center">
                 What We Stand For
               </h2>
               <div className="grid md:grid-cols-3 gap-8">
@@ -130,7 +130,7 @@ export default function AboutPage() {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
                     <MapPin className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-forest mb-3">
+                  <h3 className="text-xl font-display text-forest mb-3">
                     Supporting American Agriculture
                   </h3>
                   <p className="text-forest-light leading-relaxed">
@@ -143,7 +143,7 @@ export default function AboutPage() {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
                     <Heart className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-forest mb-3">
+                  <h3 className="text-xl font-display text-forest mb-3">
                     Connecting Passionate Workers
                   </h3>
                   <p className="text-forest-light leading-relaxed">
@@ -156,7 +156,7 @@ export default function AboutPage() {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
                     <Sprout className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-forest mb-3">
+                  <h3 className="text-xl font-display text-forest mb-3">
                     Building a Sustainable Future
                   </h3>
                   <p className="text-forest-light leading-relaxed">
@@ -193,7 +193,7 @@ export default function AboutPage() {
         {/* How We Help */}
         <section className="container mx-auto px-4 pb-12 md:pb-16">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-forest mb-10 text-center">
+            <h2 className="text-3xl md:text-4xl font-display text-forest mb-10 text-center">
               How We Help
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
@@ -202,7 +202,7 @@ export default function AboutPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
                   <Users className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold text-forest mb-4">
+                <h3 className="text-2xl font-display text-forest mb-4">
                   For Job Seekers
                 </h3>
                 <ul className="space-y-3 text-forest-light">
@@ -237,7 +237,7 @@ export default function AboutPage() {
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
                   <Shield className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold text-forest mb-4">
+                <h3 className="text-2xl font-display text-forest mb-4">
                   For Employers
                 </h3>
                 <ul className="space-y-3 text-forest-light">
@@ -274,7 +274,7 @@ export default function AboutPage() {
         <section className="bg-white border-t border-border py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-forest mb-6">
+              <h2 className="text-3xl font-display text-forest mb-6">
                 Agriculture Career Opportunities for Every Passion
               </h2>
               <div className="prose prose-lg max-w-none text-forest-light space-y-6">
@@ -302,7 +302,7 @@ export default function AboutPage() {
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-4xl mx-auto text-center">
             <div className="card p-8 md:p-12 bg-gradient-to-br from-primary/5 to-accent-yellow/5">
-              <h2 className="text-3xl md:text-4xl font-bold text-forest mb-4">
+              <h2 className="text-3xl md:text-4xl font-display text-forest mb-4">
                 Ready to Grow With Us?
               </h2>
               <p className="text-xl text-forest-light mb-8">

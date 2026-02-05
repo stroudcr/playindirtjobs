@@ -58,7 +58,7 @@ export default function PricingPage() {
 
       <main className="min-h-screen bg-earth-cream">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary/10 via-earth-cream to-accent-yellow/10 border-b border-border py-12 sm:py-16">
+        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <Breadcrumbs items={[
@@ -66,7 +66,7 @@ export default function PricingPage() {
                 { label: "Pricing" }
               ]} />
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-forest mb-6 mt-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-forest mb-6 mt-6">
                 Simple, Transparent Pricing
               </h1>
               <p className="text-xl md:text-2xl text-forest-light leading-relaxed">
@@ -83,7 +83,7 @@ export default function PricingPage() {
               {/* Basic Plan */}
               <div className="card p-8 flex flex-col">
                 <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-forest mb-2">Basic Listing</h2>
+                  <h2 className="text-2xl font-display text-forest mb-2">Basic Listing</h2>
                   <div className="flex items-baseline gap-2">
                     <span className="text-5xl font-bold text-primary">$5</span>
                     <span className="text-forest-light">/ 60 days</span>
@@ -123,15 +123,17 @@ export default function PricingPage() {
               </div>
 
               {/* Featured Plan */}
-              <div className="card p-8 flex flex-col border-2 border-primary relative">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="bg-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    ⭐ Most Popular
+              <div className="card p-8 flex flex-col border-2 border-primary relative overflow-hidden lg:scale-105">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-light to-accent-yellow" />
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 mt-1">
+                  <span className="inline-flex items-center gap-1.5 bg-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
+                    <span className="w-1.5 h-1.5 bg-white rounded-full" />
+                    Most Popular
                   </span>
                 </div>
 
                 <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-forest mb-2">Featured Listing</h2>
+                  <h2 className="text-2xl font-display text-forest mb-2">Featured Listing</h2>
                   <div className="flex items-baseline gap-2">
                     <span className="text-5xl font-bold text-primary">$15</span>
                     <span className="text-forest-light">/ 60 days</span>
@@ -181,7 +183,7 @@ export default function PricingPage() {
         <section className="bg-white border-y border-border py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-forest mb-10 text-center">
+              <h2 className="text-3xl md:text-4xl font-display text-forest mb-10 text-center">
                 Frequently Asked Questions
               </h2>
 
@@ -190,7 +192,7 @@ export default function PricingPage() {
                   <div className="flex gap-4">
                     <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-xl font-bold text-forest mb-2">
+                      <h3 className="text-xl font-display text-forest mb-2">
                         How long do job postings stay active?
                       </h3>
                       <p className="text-forest-light leading-relaxed">
@@ -204,7 +206,7 @@ export default function PricingPage() {
                   <div className="flex gap-4">
                     <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-xl font-bold text-forest mb-2">
+                      <h3 className="text-xl font-display text-forest mb-2">
                         Can I edit my job posting after it&apos;s published?
                       </h3>
                       <p className="text-forest-light leading-relaxed">
@@ -218,7 +220,7 @@ export default function PricingPage() {
                   <div className="flex gap-4">
                     <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-xl font-bold text-forest mb-2">
+                      <h3 className="text-xl font-display text-forest mb-2">
                         What payment methods do you accept?
                       </h3>
                       <p className="text-forest-light leading-relaxed">
@@ -232,7 +234,7 @@ export default function PricingPage() {
                   <div className="flex gap-4">
                     <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-xl font-bold text-forest mb-2">
+                      <h3 className="text-xl font-display text-forest mb-2">
                         Do you offer refunds?
                       </h3>
                       <p className="text-forest-light leading-relaxed">
@@ -246,7 +248,7 @@ export default function PricingPage() {
                   <div className="flex gap-4">
                     <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-xl font-bold text-forest mb-2">
+                      <h3 className="text-xl font-display text-forest mb-2">
                         How do applicants contact me about the position?
                       </h3>
                       <p className="text-forest-light leading-relaxed">
@@ -260,7 +262,7 @@ export default function PricingPage() {
                   <div className="flex gap-4">
                     <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                     <div>
-                      <h3 className="text-xl font-bold text-forest mb-2">
+                      <h3 className="text-xl font-display text-forest mb-2">
                         What&apos;s the difference between Basic and Featured listings?
                       </h3>
                       <p className="text-forest-light leading-relaxed">
@@ -277,7 +279,7 @@ export default function PricingPage() {
         {/* SEO-Rich Content */}
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-forest mb-6">
+            <h2 className="text-3xl font-display text-forest mb-6">
               Invest in Quality Agricultural Recruitment
             </h2>
             <div className="prose prose-lg max-w-none text-forest-light space-y-6">
@@ -304,7 +306,7 @@ export default function PricingPage() {
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-4xl mx-auto text-center">
             <div className="card p-8 md:p-12 bg-gradient-to-br from-primary/5 to-accent-yellow/5">
-              <h2 className="text-3xl md:text-4xl font-bold text-forest mb-4">
+              <h2 className="text-3xl md:text-4xl font-display text-forest mb-4">
                 Ready to Find Your Next Team Member?
               </h2>
               <p className="text-xl text-forest-light mb-8">

@@ -44,7 +44,7 @@ export default async function FarmingJobsPage() {
     <>
       <main className="min-h-screen bg-earth-cream">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary/10 via-earth-cream to-accent-yellow/10 border-b border-border py-12 sm:py-16">
+        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl">
               <Breadcrumbs items={[
@@ -55,7 +55,7 @@ export default async function FarmingJobsPage() {
               <div className="flex items-start gap-4 mb-6">
                 <Sprout className="w-12 h-12 text-primary flex-shrink-0" />
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-bold text-forest mb-4">
+                  <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">
                     Farming Jobs
                   </h1>
                   <p className="text-xl text-forest-light leading-relaxed">
@@ -91,7 +91,7 @@ export default async function FarmingJobsPage() {
 
         {/* Jobs Section */}
         <section className="container mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-forest mb-6">
+          <h2 className="text-2xl font-display text-forest mb-6">
             {jobs.length} Farming Jobs Available
           </h2>
 
@@ -123,7 +123,7 @@ export default async function FarmingJobsPage() {
         {/* SEO Content */}
         <section className="bg-white border-t border-border py-12">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-forest mb-4">About Farming Jobs</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">About Farming Jobs</h2>
             <div className="prose prose-green max-w-none text-forest-light space-y-4">
               <p>
                 Farming jobs offer rewarding careers working with the land, growing food, and contributing to sustainable agriculture.
@@ -145,7 +145,7 @@ export default async function FarmingJobsPage() {
 
         {/* Related Categories */}
         <section className="container mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-forest mb-6">Related Job Categories</h2>
+          <h2 className="text-2xl font-display text-forest mb-6">Related Job Categories</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
             <Link href="/gardening-jobs" className="card p-6 hover:border-primary/50 transition group">
               <h3 className="font-semibold text-forest mb-2 group-hover:text-primary flex items-center justify-between">

@@ -54,13 +54,14 @@ export function MobileFilters(props: MobileFiltersProps) {
 
       {/* Drawer */}
       <div
-        className={`fixed inset-y-0 right-0 w-full max-w-sm bg-white z-50 transform transition-transform duration-300 lg:hidden overflow-y-auto ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-y-0 right-0 w-full max-w-sm bg-white z-50 lg:hidden overflow-y-auto ${
+          isOpen ? 'animate-slide-in-right' : 'translate-x-full'
         }`}
+        style={{ display: isOpen ? undefined : 'none' }}
       >
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-border px-4 py-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-forest">Filters</h2>
+          <h2 className="text-xl font-display text-forest">Filters</h2>
           <button
             onClick={() => setIsOpen(false)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"

@@ -72,7 +72,7 @@ export default function JobAlertsForm() {
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-10 h-10 text-primary" />
         </div>
-        <h3 className="text-2xl font-bold text-forest mb-3">
+        <h3 className="text-2xl font-display text-forest mb-3">
           You&apos;re All Set! 🎉
         </h3>
         <p className="text-lg text-forest-light mb-4">
@@ -100,7 +100,7 @@ export default function JobAlertsForm() {
         <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center mx-auto mb-4">
           <Mail className="w-8 h-8 text-white" />
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-forest mb-3">
+        <h2 className="text-2xl md:text-3xl font-display text-forest mb-3">
           Subscribe to Job Alerts
         </h2>
         <p className="text-forest-light">

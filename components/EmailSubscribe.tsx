@@ -38,7 +38,7 @@ export function EmailSubscribe() {
 
   if (success) {
     return (
-      <div className="card p-4 sm:p-6 bg-primary/5 border-primary">
+      <div className="rounded-lg p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20">
         <div className="flex items-center gap-2 sm:gap-3 text-primary">
           <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
           <div>
@@ -53,10 +53,12 @@ export function EmailSubscribe() {
   }
 
   return (
-    <div className="card p-4 sm:p-6">
+    <div className="rounded-lg p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20">
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary flex-shrink-0" />
-        <h3 className="text-lg sm:text-xl font-bold text-forest">Get Job Alerts</h3>
+        <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+          <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+        </div>
+        <h3 className="text-lg sm:text-xl font-display text-forest">Get Job Alerts</h3>
       </div>
 
       <p className="text-sm sm:text-base text-forest-light mb-3 sm:mb-4">

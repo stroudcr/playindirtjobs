@@ -195,14 +195,14 @@ export default async function JobPage({ params }: JobPageProps) {
           {/* Apply section - Mobile Only (at top) */}
           <div className="lg:hidden">
             <div className="card p-4 sticky top-20 z-10">
-              <h3 className="text-lg font-bold text-forest mb-3">Apply for this job</h3>
+              <h3 className="text-lg font-display text-forest mb-3">Apply for this job</h3>
 
               {job.applyUrl && (
                 <a
                   href={job.applyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary w-full justify-center mb-2 py-3"
+                  className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-2 py-3"
                 >
                   Apply Now
                   <ExternalLink className="w-4 h-4" />
@@ -212,7 +212,7 @@ export default async function JobPage({ params }: JobPageProps) {
               {job.applyEmail && !job.applyUrl && (
                 <a
                   href={`mailto:${job.applyEmail}`}
-                  className="btn btn-primary w-full justify-center mb-2 py-3"
+                  className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-2 py-3"
                 >
                   Email Application
                   <ExternalLink className="w-4 h-4" />
@@ -231,15 +231,16 @@ export default async function JobPage({ params }: JobPageProps) {
             <div className="card p-4 sm:p-6">
               {job.featured && (
                 <div className="mb-3 sm:mb-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-white text-xs sm:text-sm font-semibold rounded">
-                    ⭐ Featured Job
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary text-xs sm:text-sm font-semibold rounded-full">
+                    <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                    Featured Job
                   </span>
                 </div>
               )}
 
               <div className="flex items-start justify-between gap-2 sm:gap-4 mb-4">
                 <div className="flex-1 min-w-0">
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-forest mb-2">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-display text-forest mb-2">
                     {job.title}
                   </h1>
                   <p className="text-lg sm:text-xl text-forest-light font-medium">
@@ -276,15 +277,15 @@ export default async function JobPage({ params }: JobPageProps) {
 
             {/* Description */}
             <div className="card p-4 sm:p-6">
-              <h2 className="text-xl sm:text-2xl font-bold text-forest mb-3 sm:mb-4">About this job</h2>
-              <div className="prose prose-green max-w-none text-sm sm:text-base text-forest-light whitespace-pre-wrap">
+              <h2 className="text-xl sm:text-2xl font-display text-forest mb-3 sm:mb-4">About this job</h2>
+              <div className="prose prose-green max-w-none text-sm sm:text-base text-forest-light whitespace-pre-wrap leading-relaxed">
                 {job.description}
               </div>
             </div>
 
             {/* Tags */}
             <div className="card p-4 sm:p-6">
-              <h2 className="text-lg sm:text-xl font-bold text-forest mb-3 sm:mb-4">Tags & Categories</h2>
+              <h2 className="text-lg sm:text-xl font-display text-forest mb-3 sm:mb-4">Tags & Categories</h2>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {job.categories.map((cat) => {
                   const category = JOB_CATEGORIES.find(c => c.id === cat);
@@ -325,14 +326,14 @@ export default async function JobPage({ params }: JobPageProps) {
             <div className="sticky top-20 space-y-6">
               {/* Apply section */}
               <div className="card p-6">
-                <h3 className="text-xl font-bold text-forest mb-4">Apply for this job</h3>
+                <h3 className="text-xl font-display text-forest mb-4">Apply for this job</h3>
 
                 {job.applyUrl && (
                   <a
                     href={job.applyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-primary w-full justify-center mb-3"
+                    className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-3"
                   >
                     Apply Now
                     <ExternalLink className="w-4 h-4" />
@@ -342,7 +343,7 @@ export default async function JobPage({ params }: JobPageProps) {
                 {job.applyEmail && !job.applyUrl && (
                   <a
                     href={`mailto:${job.applyEmail}`}
-                    className="btn btn-primary w-full justify-center mb-3"
+                    className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-3"
                   >
                     Email Application
                     <ExternalLink className="w-4 h-4" />
@@ -357,7 +358,7 @@ export default async function JobPage({ params }: JobPageProps) {
               {/* Benefits */}
               {job.benefits.length > 0 && (
                 <div className="card p-6">
-                  <h3 className="text-xl font-bold text-forest mb-4">Benefits</h3>
+                  <h3 className="text-xl font-display text-forest mb-4">Benefits</h3>
                   <ul className="space-y-3">
                     {job.benefits.map((benefitId) => {
                       const benefit = BENEFITS.find(b => b.id === benefitId);
@@ -374,7 +375,7 @@ export default async function JobPage({ params }: JobPageProps) {
 
               {/* Company info */}
               <div className="card p-6">
-                <h3 className="text-xl font-bold text-forest mb-4">About {job.company}</h3>
+                <h3 className="text-xl font-display text-forest mb-4">About {job.company}</h3>
                 {job.companyWebsite && (
                   <a
                     href={job.companyWebsite}
@@ -393,7 +394,7 @@ export default async function JobPage({ params }: JobPageProps) {
 
               {/* Share */}
               <div className="card p-6">
-                <h3 className="text-xl font-bold text-forest mb-4">Share this job</h3>
+                <h3 className="text-xl font-display text-forest mb-4">Share this job</h3>
                 <div className="flex gap-2">
                   <ShareButton />
                 </div>
@@ -406,7 +407,7 @@ export default async function JobPage({ params }: JobPageProps) {
             {/* Benefits */}
             {job.benefits.length > 0 && (
               <div className="card p-4">
-                <h3 className="text-lg font-bold text-forest mb-3">Benefits</h3>
+                <h3 className="text-lg font-display text-forest mb-3">Benefits</h3>
                 <ul className="space-y-2">
                   {job.benefits.map((benefitId) => {
                     const benefit = BENEFITS.find(b => b.id === benefitId);
@@ -423,7 +424,7 @@ export default async function JobPage({ params }: JobPageProps) {
 
             {/* Company info */}
             <div className="card p-4">
-              <h3 className="text-lg font-bold text-forest mb-3">About {job.company}</h3>
+              <h3 className="text-lg font-display text-forest mb-3">About {job.company}</h3>
               {job.companyWebsite && (
                 <a
                   href={job.companyWebsite}
@@ -442,7 +443,7 @@ export default async function JobPage({ params }: JobPageProps) {
 
             {/* Share */}
             <div className="card p-4">
-              <h3 className="text-lg font-bold text-forest mb-3">Share this job</h3>
+              <h3 className="text-lg font-display text-forest mb-3">Share this job</h3>
               <div className="flex gap-2">
                 <ShareButton />
               </div>

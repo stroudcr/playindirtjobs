@@ -7,7 +7,6 @@ import { SearchBar } from "@/components/SearchBar";
 import { FilterSidebar } from "@/components/FilterSidebar";
 import { MobileFilters } from "@/components/MobileFilters";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
-import { Loader2 } from "lucide-react";
 
 interface Job {
   id: string;
@@ -184,10 +183,29 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
             </div>
           )}
 
-          {/* Loading state */}
+          {/* Loading state - skeleton cards */}
           {loading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <div className="space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="card p-4 animate-pulse">
+                  <div className="flex items-start gap-4 mb-3">
+                    <div className="w-11 h-11 rounded-lg bg-gray-200 flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-5 bg-gray-200 rounded w-3/4" />
+                      <div className="h-4 bg-gray-100 rounded w-1/2" />
+                    </div>
+                  </div>
+                  <div className="flex gap-4 mb-3">
+                    <div className="h-4 bg-gray-100 rounded w-24" />
+                    <div className="h-4 bg-gray-100 rounded w-20" />
+                    <div className="h-4 bg-gray-100 rounded w-16" />
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="h-6 bg-gray-100 rounded w-16" />
+                    <div className="h-6 bg-gray-100 rounded w-20" />
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
@@ -221,9 +239,9 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
           {!loading && jobs.length > 0 && (
             <div className="space-y-4">
               <p className="text-sm text-forest-light mb-4">
-                Showing {jobs.length} job{jobs.length !== 1 ? "s" : ""}
+                Showing <span className="font-semibold text-forest">{jobs.length}</span> job{jobs.length !== 1 ? "s" : ""} found
               </p>
-              <div className="grid gap-4">
+              <div className="grid gap-4 animate-stagger">
                 {jobs.map((job) => (
                   <JobCard key={job.id} job={job} />
                 ))}

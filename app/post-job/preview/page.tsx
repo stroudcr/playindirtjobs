@@ -101,20 +101,21 @@ export default function PreviewJobPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Preview */}
           <div className="lg:col-span-2">
-            <h1 className="text-3xl font-bold text-forest mb-6">Preview Your Job Posting</h1>
+            <h1 className="text-3xl font-display text-forest mb-6">Preview Your Job Posting</h1>
 
             <div className="card p-6 mb-6">
               {selectedPlan === "featured" && (
                 <div className="mb-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-white text-sm font-semibold rounded">
-                    ⭐ Featured Job
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full">
+                    <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                    Featured Job
                   </span>
                 </div>
               )}
 
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div className="flex-1">
-                  <h2 className="text-3xl font-bold text-forest mb-2">
+                  <h2 className="text-3xl font-display text-forest mb-2">
                     {jobData.title}
                   </h2>
                   <p className="text-xl text-forest-light font-medium">
@@ -147,14 +148,14 @@ export default function PreviewJobPage() {
             </div>
 
             <div className="card p-6 mb-6">
-              <h3 className="text-2xl font-bold text-forest mb-4">About this job</h3>
+              <h3 className="text-2xl font-display text-forest mb-4">About this job</h3>
               <div className="prose prose-green max-w-none text-forest-light whitespace-pre-wrap">
                 {jobData.description}
               </div>
             </div>
 
             <div className="card p-6">
-              <h3 className="text-xl font-bold text-forest mb-4">Tags & Categories</h3>
+              <h3 className="text-xl font-display text-forest mb-4">Tags & Categories</h3>
               <div className="flex flex-wrap gap-2">
                 {jobData.categories.map((cat: string) => {
                   const category = JOB_CATEGORIES.find(c => c.id === cat);
@@ -185,7 +186,7 @@ export default function PreviewJobPage() {
           {/* Pricing */}
           <div className="lg:col-span-1">
             <div className="sticky top-20">
-              <h2 className="text-2xl font-bold text-forest mb-4">Select Your Plan</h2>
+              <h2 className="text-2xl font-display text-forest mb-4">Select Your Plan</h2>
 
               <div className="space-y-4 mb-6">
                 <label
@@ -263,7 +264,7 @@ export default function PreviewJobPage() {
                 )}
               </button>
 
-              <div className="card p-4 bg-accent-yellow/10 border-accent-yellow">
+              <div className="card p-4 bg-gray-50">
                 <p className="text-sm text-forest-light">
                   💳 Secure payment powered by Stripe
                   <br />

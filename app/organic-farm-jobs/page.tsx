@@ -30,19 +30,19 @@ export default async function OrganicFarmJobsPage() {
 
   return (
     <main className="min-h-screen bg-earth-cream">
-      <section className="bg-gradient-to-br from-primary/10 via-earth-cream to-secondary/10 border-b border-border py-12 sm:py-16">
+      <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Breadcrumbs items={[
             { label: "Home", href: "/" },
             { label: "Organic Farm Jobs" }
           ]} />
-          <h1 className="text-4xl md:text-5xl font-bold text-forest mb-4">Organic Farm Jobs</h1>
+          <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">Organic Farm Jobs</h1>
           <p className="text-xl text-forest-light">Certified organic farming positions and sustainable agriculture careers on organic farms across America.</p>
         </div>
       </section>
 
       <section className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-forest mb-6">{jobs.length} Organic Farm Jobs Available</h2>
+        <h2 className="text-2xl font-display text-forest mb-6">{jobs.length} Organic Farm Jobs Available</h2>
         <div className="grid gap-4 max-w-4xl">
           {jobs.map((job) => (
             <JobCard

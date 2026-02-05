@@ -79,13 +79,13 @@ export default function FAQPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <section className="bg-gradient-to-br from-primary/10 via-earth-cream to-secondary/10 border-b border-border py-12 sm:py-16">
+      <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Breadcrumbs items={[
             { label: "Home", href: "/" },
             { label: "FAQ" }
           ]} />
-          <h1 className="text-4xl md:text-5xl font-bold text-forest mb-4">Frequently Asked Questions</h1>
+          <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">Frequently Asked Questions</h1>
           <p className="text-xl text-forest-light">Everything you need to know about posting jobs and finding agriculture careers on PlayInDirtJobs.</p>
         </div>
       </section>
@@ -94,14 +94,14 @@ export default function FAQPage() {
         <div className="space-y-8">
           {faqs.map((faq, index) => (
             <div key={index} className="bg-white rounded-lg border border-border p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-forest mb-3">{faq.question}</h2>
+              <h2 className="text-xl font-display text-forest mb-3">{faq.question}</h2>
               <p className="text-forest-light leading-relaxed">{faq.answer}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-12 bg-primary/10 border border-primary/20 rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold text-forest mb-4">Still have questions?</h2>
+          <h2 className="text-2xl font-display text-forest mb-4">Still have questions?</h2>
           <p className="text-forest-light mb-6">Contact us and we&apos;ll be happy to help.</p>
           <a href="mailto:info@playindirtjobs.com" className="btn btn-primary">
             Contact Support
