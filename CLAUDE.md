@@ -71,7 +71,8 @@ All constants defined in `lib/constants.ts`:
 - `JOB_TYPES`: full-time, part-time, seasonal, apprenticeship, etc.
 - `FARM_TYPES`: organic, permaculture, regenerative, biodynamic, etc.
 - `BENEFITS`: housing, meals, equipment, learning, etc.
-- `PRICING`: Basic ($5), Featured ($15), Bundle ($199)
+- `PRICING`: Basic ($5 / 500 cents), Featured ($15 / 1500 cents), Bundle ($199 / 19900 cents)
+- Pricing is stored in **cents**. Use `(PRICING.BASIC / 100).toFixed(0)` to display dollar amounts.
 
 Validation schemas in `lib/validations.ts` using Zod.
 
@@ -81,7 +82,8 @@ Validation schemas in `lib/validations.ts` using Zod.
 - `POST /api/stripe-webhook`: Handles payment completion, activates jobs
 - `GET /api/jobs`: Lists jobs with filtering/sorting
 - `GET /api/jobs/[id]`: Individual job details
-- `POST /api/subscribe`: Email subscription signup
+- `POST /api/subscribe`: Email subscription signup (Zod validated)
+- `DELETE /api/subscribe`: Unsubscribe by email (Zod validated)
 
 ### Email System
 
@@ -100,8 +102,8 @@ STRIPE_WEBHOOK_SECRET     # From Stripe CLI or dashboard
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 RESEND_API_KEY
 NEXT_PUBLIC_APP_URL       # e.g., http://localhost:3000
-BASIC_JOB_PRICE=4500      # In cents
-FEATURED_JOB_PRICE=9500
+BASIC_JOB_PRICE=500       # In cents ($5)
+FEATURED_JOB_PRICE=1500   # In cents ($15)
 ```
 
 See `.env.example` for full reference.
@@ -117,16 +119,18 @@ Custom solarpunk color scheme in `tailwind.config.ts`:
 ### Component Structure
 
 **Page Components:**
-- `/` - Homepage with job listings, filters, search
+- `/` - Homepage: **server component** fetches jobs via Prisma for SEO, delegates interactive filtering to `HomeClient`
 - `/post-job` - Job posting form with live preview
-- `/jobs/[slug]` - Individual job detail page
+- `/jobs/[slug]` - Individual job detail page (uses React `cache()` to deduplicate `getJob` between `generateMetadata` and page)
 - `/success` - Post-payment success page
 - Category pages: `/farming-jobs`, `/gardening-jobs`, `/ranch-jobs`, etc.
+- State pages: `/california-jobs`, `/texas-jobs`, etc.
 
 **Reusable Components:**
+- `HomeClient` - Client wrapper for homepage interactive filtering (receives SSR initial jobs, fetches via `/api/jobs` on filter change, syncs filters to URL params)
 - `JobCard` - Job listing card
 - `FilterSidebar` / `MobileFilters` - Filtering UI
-- `SearchBar` - Search functionality
+- `SearchBar` - Search functionality (accepts optional `initialQuery` prop)
 - `LiveJobPreview` - Real-time preview in job posting form
 - `PlanSelector` - Pricing plan selection
 - `EmailSubscribe` - Newsletter signup
@@ -145,8 +149,11 @@ No traditional auth system. Job management URLs include `editToken` query param:
 
 ### Server vs Client Components
 - Most pages are Server Components for SEO
+- Homepage uses a **hybrid SSR pattern**: `app/page.tsx` is a server component that fetches initial jobs via Prisma, then passes them to `HomeClient` (client component) for interactive filtering. This ensures job listings appear in initial HTML for SEO while preserving snappy client-side filter UX.
+- Job detail page uses React `cache()` on `getJob()` to deduplicate the Prisma query between `generateMetadata` and the page component. View increment runs only in the page component (not metadata).
 - Forms and interactive UI use `"use client"` directive
 - API routes handle all mutations
+- `formatSalary()` in `lib/utils.ts` takes `number | undefined` (not `null`) — use `?? undefined` when passing Prisma nullable fields
 
 ### Stripe Integration
 - Use test mode keys in development
