@@ -110,11 +110,17 @@ See `.env.example` for full reference.
 
 ### Styling and Theme
 
-Custom solarpunk color scheme in `tailwind.config.ts`:
+Professional design system in `tailwind.config.ts`:
 - Primary green: `#10b981`
-- Earth tones: browns, yellows, sky blue
-- Nature-themed emojis throughout UI
-- Custom CSS classes: `.btn`, `.card`, `.input` in `app/globals.css`
+- Clean neutrals: `earth.cream` (`#fafaf8`), `earth.sand` (`#f5f5f0`), `border` (`#e5e5e5`)
+- Neutral layered shadows (`soft`, `soft-lg`, `soft-xl`) — no green tint
+- Two font families: `font-sans` (Inter) for body, `font-display` (DM Serif Display) for headings
+- DM Serif Display loaded via `next/font/google` in `app/layout.tsx` with CSS variable `--font-dm-serif-display`
+- CSS animations: `fade-in-up`, `fade-in`, `slide-in-right`, `.animate-stagger` (nth-child delays)
+- Custom CSS classes: `.btn`, `.btn-outline`, `.card`, `.input` in `app/globals.css`
+- Hero sections use `bg-gradient-to-b from-white to-earth-sand` (consistent across all pages)
+- Featured jobs: left accent bar + pill badge with dot indicator (not solid bg badge)
+- JobCard/LiveJobPreview: company initial avatar with deterministic color hash
 
 ### Component Structure
 
@@ -127,13 +133,16 @@ Custom solarpunk color scheme in `tailwind.config.ts`:
 - State pages: `/california-jobs`, `/texas-jobs`, etc.
 
 **Reusable Components:**
-- `HomeClient` - Client wrapper for homepage interactive filtering (receives SSR initial jobs, fetches via `/api/jobs` on filter change, syncs filters to URL params)
-- `JobCard` - Job listing card
-- `FilterSidebar` / `MobileFilters` - Filtering UI
-- `SearchBar` - Search functionality (accepts optional `initialQuery` prop)
-- `LiveJobPreview` - Real-time preview in job posting form
+- `HomeClient` - Client wrapper for homepage interactive filtering (receives SSR initial jobs, fetches via `/api/jobs` on filter change, syncs filters to URL params). Uses skeleton cards for loading state.
+- `JobCard` - Job listing card with company avatar, featured accent bar, `font-display` title
+- `FilterSidebar` / `MobileFilters` - Filtering UI (chevron icons, refined sort styling)
+- `MobileNav` - Hamburger navigation for mobile (client component, overlay pattern)
+- `SearchBar` - Search functionality (accepts optional `initialQuery` prop, visible search button)
+- `LiveJobPreview` - Real-time preview in job posting form (mirrors JobCard styling)
 - `PlanSelector` - Pricing plan selection
-- `EmailSubscribe` - Newsletter signup
+- `EmailSubscribe` - Newsletter signup (gradient background treatment)
+- `Header` - Glassmorphism header (`bg-white/90 backdrop-blur-md`) with desktop nav links + MobileNav
+- `Footer` - Gradient accent bar, 4-column link grid, bottom bar with Terms/Privacy/Contact
 
 ## Important Patterns
 
@@ -169,12 +178,53 @@ No traditional auth system. Job management URLs include `editToken` query param:
 4. Copy webhook secret to `.env`
 5. Test with card: `4242 4242 4242 4242`
 
+## Design Conventions
+
+When adding new pages or components, follow these patterns:
+- **Headings** (h1, h2, h3): Use `font-display` class (DM Serif Display serif font)
+- **Hero sections**: `bg-gradient-to-b from-white to-earth-sand border-b border-border`
+- **Featured badges**: Pill with dot indicator: `<span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full"><span className="w-1.5 h-1.5 bg-primary rounded-full" />Featured</span>`
+- **Category tags**: `bg-primary/5 text-primary` — Job type tags: `bg-gray-100 text-forest-light`
+- **Section backgrounds**: Use `bg-gray-50` for alternate sections (not `bg-forest/5`)
+- **Card hover**: `hover:shadow-soft-lg hover:border-gray-300` with `group` transition
+- **Apply/CTA buttons**: `bg-gradient-to-r from-primary to-primary-dark` for high-emphasis
+
+## SEO Infrastructure
+
+### URL Helpers
+- `getBaseUrl()` and `getUrl(path)` in `lib/metadata.ts` — always use these for canonical URLs, OG urls, and JSON-LD URLs. Never hardcode `https://playindirtjobs.com`.
+- `getBaseUrl()` returns the base domain (from `NEXT_PUBLIC_APP_URL` or production fallback)
+- `getUrl("about")` returns full URL like `https://playindirtjobs.com/about`
+
+### Structured Data (JSON-LD)
+- **Organization** — root layout (`app/layout.tsx`)
+- **WebSite + SearchAction** — root layout, enables sitelinks search box in Google SERPs
+- **JobPosting** — job detail pages (`app/jobs/[slug]/page.tsx`), comprehensive schema
+- **FAQPage** — all 50 state pages + `/faq` page
+- **BreadcrumbList** — `components/Breadcrumbs.tsx`, auto-generated from items prop
+- **AboutPage** — `/about` page
+- **Product** — `/pricing` page (offers for Basic and Featured listings)
+
+### Sitemap & Robots
+- Dynamic sitemap at `app/sitemap.ts` — includes homepage, category pages, state pages, active jobs, about, pricing, contact, terms, privacy, FAQ
+- `robots.txt` with multi-bot rules
+
+### Metadata Patterns
+- All pages should have: `title`, `description`, `openGraph` (with `siteName`, `locale`, `type`, `images`), `twitter` card, `alternates.canonical`
+- Category pages and state pages include OG images and Twitter cards
+- State pages use Unsplash hero images for OG; category pages use `/images/PlayInDirtX.png`
+- Terms and privacy pages have `robots: { index: true, follow: true }` plus canonicals
+
+### Breadcrumbs
+- `Breadcrumbs` component handles both visual breadcrumbs and BreadcrumbList JSON-LD
+- Uses `getBaseUrl()` for JSON-LD item URLs (not hardcoded)
+- `variant="light"` for white text on dark backgrounds (state page heroes)
+
 ## Known Limitations / TODOs
 
 From README:
 - Job management dashboard (edit/deactivate via magic link) - not yet implemented
 - Advanced analytics for job posters
-- Social sharing for job posts
 - Map view for job locations
 - Saved jobs for job seekers
 - Company profiles
