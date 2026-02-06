@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Terms of Service | PlayInDirtJobs",
@@ -7,6 +8,9 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  alternates: {
+    canonical: getUrl("terms"),
   },
 };
 

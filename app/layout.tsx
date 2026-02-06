@@ -92,7 +92,21 @@ export default function RootLayout({
       "contactType": "Customer Service",
       "email": "info@playindirtjobs.com"
     },
-    "sameAs": []
+  };
+
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "PlayInDirtJobs",
+    "url": getUrl(),
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${getUrl()}?search={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    }
   };
 
   return (
@@ -101,6 +115,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
       </head>
       <body className={`${inter.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>

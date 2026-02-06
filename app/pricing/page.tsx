@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Check, HelpCircle } from "lucide-react";
 import { PRICING } from "@/lib/constants";
+import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Pricing | Post Farm, Garden & Ranch Jobs | PlayInDirtJobs",
@@ -18,10 +19,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Pricing | Post Agricultural Jobs | PlayInDirtJobs",
     description: "Simple, transparent pricing for agricultural job postings. Find qualified workers for your farm, garden, or ranch starting at $5.",
-    url: "https://playindirtjobs.com/pricing",
+    url: getUrl("pricing"),
   },
   alternates: {
-    canonical: "https://playindirtjobs.com/pricing",
+    canonical: getUrl("pricing"),
   },
 };
 

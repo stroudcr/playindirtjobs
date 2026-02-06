@@ -155,7 +155,7 @@ export default async function IndianaJobsPage() {
         {/* State Quick Facts */}
         <section className="bg-white border-y border-border py-12">
           <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="text-2xl font-display text-forest mb-4">Farm Jobs in {stateContent.name}</h2>
+            <h2 className="text-2xl font-display text-forest mb-4">About Agriculture in {stateContent.name}</h2>
             <p className="text-lg text-forest-light leading-relaxed mb-8">
               {stateContent.content.introduction.leadParagraph}
             </p>

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Mail, MessageSquare } from "lucide-react";
+import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Contact Us | PlayInDirtJobs",
   description: "Get in touch with PlayInDirtJobs. We're here to help with questions about posting jobs or finding agricultural work opportunities.",
   alternates: {
-    canonical: "https://playindirtjobs.com/contact",
+    canonical: getUrl("contact"),
   },
 };
 

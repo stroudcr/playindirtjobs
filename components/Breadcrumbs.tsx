@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getBaseUrl } from "@/lib/metadata";
 
 interface BreadcrumbItem {
   label: string;
@@ -18,7 +19,7 @@ export function Breadcrumbs({ items, variant = "default" }: BreadcrumbsProps) {
       "@type": "ListItem",
       "position": index + 1,
       "name": item.label,
-      ...(item.href && { "item": `https://playindirtjobs.com${item.href}` })
+      ...(item.href && { "item": `${getBaseUrl()}${item.href}` })
     }))
   };
 
