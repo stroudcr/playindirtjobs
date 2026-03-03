@@ -39,9 +39,10 @@ export async function POST(request: NextRequest) {
     const plan = session.metadata.plan;
 
     if (jobId) {
+      // Activate the job and store payment ID
+      let job;
       try {
-        // Activate the job and store payment ID
-        const job = await db.job.update({
+        job = await db.job.update({
           where: { id: jobId },
           data: {
             active: true,
@@ -50,8 +51,13 @@ export async function POST(request: NextRequest) {
         });
 
         console.log(`Job ${jobId} activated successfully`);
+      } catch (error) {
+        console.error(`CRITICAL: Failed to activate job ${jobId}:`, error);
+        return NextResponse.json({ received: true });
+      }
 
-        // Send receipt email first
+      // Send receipt email (independent of confirmation email)
+      try {
         await sendReceiptEmail(job.companyEmail, {
           jobTitle: job.title,
           company: job.company,
@@ -60,8 +66,12 @@ export async function POST(request: NextRequest) {
           transactionId: session.payment_intent || session.id,
           date: new Date(),
         });
+      } catch (error) {
+        console.error(`CRITICAL: Failed to send receipt email for job ${jobId} to ${job.companyEmail}:`, error);
+      }
 
-        // Send email confirmation with magic link
+      // Send email confirmation with magic link (independent of receipt email)
+      try {
         await sendJobConfirmationEmail(job.companyEmail, {
           id: job.id,
           title: job.title,
@@ -70,7 +80,7 @@ export async function POST(request: NextRequest) {
           editToken: job.editToken,
         });
       } catch (error) {
-        console.error("Error activating job:", error);
+        console.error(`CRITICAL: Failed to send confirmation email for job ${jobId} to ${job.companyEmail}:`, error);
       }
     }
   }

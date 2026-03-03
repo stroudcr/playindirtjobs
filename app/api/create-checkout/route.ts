@@ -1,12 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { stripe } from "@/lib/stripe";
 import { PRICING } from "@/lib/constants";
 import { db } from "@/lib/db";
 import { slugify } from "@/lib/utils";
+import { jobSchema } from "@/lib/validations";
+
+const checkoutSchema = z.object({
+  jobData: jobSchema,
+  plan: z.enum(["basic", "featured"]),
+});
 
 export async function POST(request: NextRequest) {
   try {
-    const { jobData, plan } = await request.json();
+    const body = await request.json();
+
+    // Validate input
+    const result = checkoutSchema.safeParse(body);
+    if (!result.success) {
+      return NextResponse.json(
+        { error: "Validation failed", details: result.error.flatten() },
+        { status: 400 }
+      );
+    }
+
+    const { jobData, plan } = result.data;
 
     // Determine price based on plan
     const price = plan === "featured" ? PRICING.FEATURED : PRICING.BASIC;
@@ -38,7 +56,7 @@ export async function POST(request: NextRequest) {
         location: formattedLocation, // Formatted display string
         salaryMin: jobData.salaryMin || null,
         salaryMax: jobData.salaryMax || null,
-        salaryType: jobData.salaryType || "annual",
+        salaryType: (body.jobData?.salaryType as string) || "annual",
         jobType: jobData.jobType,
         farmType: jobData.farmType,
         categories: jobData.categories,

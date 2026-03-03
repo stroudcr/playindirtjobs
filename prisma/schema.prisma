@@ -59,9 +59,11 @@ model Job {
   updatedAt   DateTime @updatedAt
   expiresAt   DateTime // Jobs expire after 60 days
 
+  @@index([active, expiresAt, createdAt])
   @@index([active, createdAt])
   @@index([slug])
   @@index([featured])
+  @@index([companyEmail])
 }
 
 model Subscriber {

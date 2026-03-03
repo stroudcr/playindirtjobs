@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Loader2 } from "lucide-react";
 
+const MAX_ATTEMPTS = 15;
+
 interface SuccessJob {
   slug: string;
 }
@@ -13,13 +15,18 @@ function SuccessContent() {
   const searchParams = useSearchParams();
   const [job, setJob] = useState<SuccessJob | null>(null);
   const [loading, setLoading] = useState(true);
+  const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
     const jobId = searchParams.get("job_id");
 
     if (jobId) {
+      let attempts = 0;
+
       // Poll for job activation (webhooks can take a moment)
       const checkJob = async () => {
+        attempts++;
+
         try {
           const response = await fetch(`/api/jobs/${jobId}`);
           const data = await response.json();
@@ -27,12 +34,18 @@ function SuccessContent() {
           if (data.job) {
             setJob(data.job);
             setLoading(false);
+          } else if (attempts >= MAX_ATTEMPTS) {
+            setTimedOut(true);
+            setLoading(false);
           } else {
             // If job not active yet, check again in 2 seconds
             setTimeout(checkJob, 2000);
           }
         } catch (error) {
           console.error("Error fetching job:", error);
+          if (attempts >= MAX_ATTEMPTS) {
+            setTimedOut(true);
+          }
           setLoading(false);
         }
       };
@@ -60,11 +73,13 @@ function SuccessContent() {
         <CheckCircle className="w-20 h-20 text-primary mx-auto mb-6" />
 
         <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">
-          Job Posted Successfully! 🌱
+          {timedOut ? "Payment Received!" : "Job Posted Successfully!"} 🌱
         </h1>
 
         <p className="text-xl text-forest-light mb-8">
-          Your job posting is now live and visible to job seekers.
+          {timedOut
+            ? "Your posting is being processed and you'll receive a confirmation email shortly."
+            : "Your job posting is now live and visible to job seekers."}
         </p>
 
         <div className="card p-8 mb-8 text-left">

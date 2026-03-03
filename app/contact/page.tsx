@@ -24,7 +24,7 @@ export default function ContactPage() {
               { label: "Contact" }
             ]} />
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-forest mb-6 mt-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-forest mb-6 mt-6">
               Get in Touch
             </h1>
             <p className="text-xl md:text-2xl text-forest-light leading-relaxed">
@@ -42,7 +42,7 @@ export default function ContactPage() {
               <Mail className="w-8 h-8 text-primary" />
             </div>
 
-            <h2 className="text-3xl font-bold text-forest mb-4">
+            <h2 className="text-3xl font-display text-forest mb-4">
               Reach Us At
             </h2>
 
@@ -65,14 +65,14 @@ export default function ContactPage() {
       {/* Quick Links */}
       <section className="container mx-auto px-4 pb-12 md:pb-16">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-forest mb-6 text-center">
+          <h2 className="text-2xl font-display text-forest mb-6 text-center">
             Quick Links
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {/* Job Seekers */}
             <div className="card p-6 bg-white hover:shadow-lg transition-shadow">
               <MessageSquare className="w-8 h-8 text-primary mb-3" />
-              <h3 className="text-xl font-bold text-forest mb-2">
+              <h3 className="text-xl font-display text-forest mb-2">
                 For Job Seekers
               </h3>
               <p className="text-forest-light mb-4">
@@ -86,7 +86,7 @@ export default function ContactPage() {
             {/* Employers */}
             <div className="card p-6 bg-white hover:shadow-lg transition-shadow">
               <MessageSquare className="w-8 h-8 text-primary mb-3" />
-              <h3 className="text-xl font-bold text-forest mb-2">
+              <h3 className="text-xl font-display text-forest mb-2">
                 For Employers
               </h3>
               <p className="text-forest-light mb-4">
@@ -104,7 +104,7 @@ export default function ContactPage() {
       <section className="bg-white border-t border-border py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl font-bold text-forest mb-6">
+            <h2 className="text-2xl font-display text-forest mb-6">
               Additional Resources
             </h2>
             <div className="flex flex-wrap justify-center gap-4">

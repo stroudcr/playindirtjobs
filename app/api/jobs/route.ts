@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { getStateCode, getStateName } from "@/lib/constants";
 
@@ -15,23 +16,41 @@ export async function GET(request: NextRequest) {
     const benefits = searchParams.get("benefits")?.split(",").filter(Boolean) || [];
     const sortBy = searchParams.get("sortBy") || "latest";
 
-    // Build where clause
-    const where: any = {
+    // Build where clause with AND to keep filter groups independent
+    const andConditions: Prisma.JobWhereInput[] = [];
+
+    // Search filter
+    if (search) {
+      andConditions.push({
+        OR: [
+          { title: { contains: search, mode: "insensitive" } },
+          { company: { contains: search, mode: "insensitive" } },
+          { location: { contains: search, mode: "insensitive" } },
+          { description: { contains: search, mode: "insensitive" } },
+        ],
+      });
+    }
+
+    // State filter (supports both 2-letter codes and full names)
+    if (state) {
+      const stateCode = getStateCode(state);
+      const stateName = getStateName(state);
+
+      andConditions.push({
+        OR: [
+          { state: { equals: stateCode, mode: "insensitive" } },
+          { state: { equals: stateName, mode: "insensitive" } },
+        ],
+      });
+    }
+
+    const where: Prisma.JobWhereInput = {
       active: true,
       expiresAt: {
         gt: new Date(),
       },
+      ...(andConditions.length > 0 && { AND: andConditions }),
     };
-
-    // Search filter
-    if (search) {
-      where.OR = [
-        { title: { contains: search, mode: "insensitive" } },
-        { company: { contains: search, mode: "insensitive" } },
-        { location: { contains: search, mode: "insensitive" } },
-        { description: { contains: search, mode: "insensitive" } },
-      ];
-    }
 
     // Category filter
     if (categories.length > 0) {
@@ -61,21 +80,8 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    // State filter (supports both 2-letter codes and full names)
-    if (state) {
-      const stateCode = getStateCode(state);
-      const stateName = getStateName(state);
-
-      // Match either the code or the full name to handle mixed data formats
-      where.OR = where.OR || [];
-      where.OR.push(
-        { state: { equals: stateCode, mode: "insensitive" } },
-        { state: { equals: stateName, mode: "insensitive" } }
-      );
-    }
-
     // Sort order
-    let orderBy: any = { createdAt: "desc" };
+    let orderBy: Prisma.JobOrderByWithRelationInput = { createdAt: "desc" };
     if (sortBy === "highest-paid") {
       orderBy = { salaryMax: "desc" };
     } else if (sortBy === "most-viewed") {
