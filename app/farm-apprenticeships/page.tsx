@@ -38,9 +38,23 @@ export default async function FarmApprenticeshipsPage() {
     orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
   });
 
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Farm Apprenticeships",
+    "description": "Find farm apprenticeship programs and agricultural training opportunities. Learn sustainable farming, organic agriculture, and regenerative practices.",
+    "url": getUrl("farm-apprenticeships"),
+    "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
+  };
+
   return (
-    <main className="min-h-screen bg-earth-cream">
-      <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <main className="min-h-screen bg-earth-cream">
+        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Breadcrumbs items={[
             { label: "Home", href: "/" },
@@ -69,5 +83,6 @@ export default async function FarmApprenticeshipsPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

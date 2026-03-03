@@ -38,9 +38,23 @@ export default async function OrganicFarmJobsPage() {
     orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
   });
 
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Organic Farm Jobs",
+    "description": "Find organic farm jobs and certified organic farming positions. Browse sustainable agriculture careers on organic farms nationwide.",
+    "url": getUrl("organic-farm-jobs"),
+    "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
+  };
+
   return (
-    <main className="min-h-screen bg-earth-cream">
-      <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <main className="min-h-screen bg-earth-cream">
+        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Breadcrumbs items={[
             { label: "Home", href: "/" },
@@ -69,5 +83,6 @@ export default async function OrganicFarmJobsPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

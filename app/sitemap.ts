@@ -1,12 +1,13 @@
 import { MetadataRoute } from 'next'
 import { db } from '@/lib/db'
 import { US_STATES_WITHOUT_DC, getStateSlug } from '@/lib/constants'
+import { getBaseUrl } from '@/lib/metadata'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600 // Revalidate every hour
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://playindirtjobs.com'
+  const baseUrl = getBaseUrl()
 
   // Get all active jobs
   let jobUrls: MetadataRoute.Sitemap = []

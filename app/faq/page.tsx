@@ -1,10 +1,26 @@
 import { Metadata } from "next";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | PlayInDirtJobs",
   description: "Common questions about posting farm jobs, finding agriculture careers, pricing, and using PlayInDirtJobs job board.",
-  alternates: { canonical: "https://playindirtjobs.com/faq" },
+  openGraph: {
+    title: "Frequently Asked Questions | PlayInDirtJobs",
+    description: "Common questions about posting farm jobs, finding agriculture careers, pricing, and using PlayInDirtJobs job board.",
+    url: getUrl("faq"),
+    siteName: 'PlayInDirtJobs',
+    locale: 'en_US',
+    type: 'website',
+    images: [{ url: '/images/PlayInDirtX.png', width: 1200, height: 630, alt: 'FAQ - PlayInDirtJobs' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Frequently Asked Questions | PlayInDirtJobs',
+    description: 'Common questions about posting farm jobs, finding agriculture careers, pricing, and using PlayInDirtJobs job board.',
+    images: ['/images/PlayInDirtX.png'],
+  },
+  alternates: { canonical: getUrl("faq") },
 };
 
 const faqs = [

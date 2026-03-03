@@ -43,9 +43,23 @@ export default async function RanchJobsPage() {
     orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
   });
 
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Ranch Jobs",
+    "description": "Find ranch jobs and ranch hand positions across America. Browse cattle ranch work, livestock management careers, and ranching opportunities.",
+    "url": getUrl("ranch-jobs"),
+    "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
+  };
+
   return (
-    <main className="min-h-screen bg-earth-cream">
-      <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <main className="min-h-screen bg-earth-cream">
+        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Breadcrumbs items={[
             { label: "Home", href: "/" },
@@ -79,5 +93,6 @@ export default async function RanchJobsPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

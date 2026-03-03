@@ -40,6 +40,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
     if (!job) {
       return {
         title: "Job Not Found",
+        robots: { index: false, follow: false },
       };
     }
 

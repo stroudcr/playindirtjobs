@@ -50,8 +50,21 @@ export default async function FarmingJobsPage() {
     ],
   });
 
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Farming Jobs",
+    "description": "Browse farming jobs across America. Find farm hand positions, agricultural careers, and sustainable farming opportunities.",
+    "url": getUrl("farming-jobs"),
+    "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
       <main className="min-h-screen bg-earth-cream">
         {/* Hero Section */}
         <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
@@ -78,16 +91,16 @@ export default async function FarmingJobsPage() {
               <div className="bg-white rounded-lg p-6 shadow-soft">
                 <h2 className="text-lg font-semibold text-forest mb-3">Popular Farming Careers:</h2>
                 <div className="flex flex-wrap gap-2">
-                  <Link href="/" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
+                  <Link href="/?search=farm+hand" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
                     Farm Hand Jobs
                   </Link>
-                  <Link href="/" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
+                  <Link href="/?search=farm+manager" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
                     Farm Manager Positions
                   </Link>
                   <Link href="/organic-farm-jobs" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
                     Organic Farming
                   </Link>
-                  <Link href="/" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
+                  <Link href="/?search=harvest+worker" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
                     Harvest Worker Jobs
                   </Link>
                   <Link href="/farm-apprenticeships" className="px-3 py-1.5 bg-primary/10 text-primary rounded hover:bg-primary/20 transition text-sm">
