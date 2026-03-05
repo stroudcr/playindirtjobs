@@ -34,6 +34,12 @@ export function Header() {
               Job Alerts
             </Link>
             <Link
+              href="/almanac"
+              className="text-sm font-medium text-forest hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-gray-50"
+            >
+              The Almanac
+            </Link>
+            <Link
               href="/pricing"
               className="text-sm font-medium text-forest hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-gray-50"
             >

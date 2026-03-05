@@ -107,6 +107,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/almanac" className="hover:text-primary transition-colors">
+                  The Almanac
+                </Link>
+              </li>
+              <li>
                 <Link href="/press" className="hover:text-primary transition-colors">
                   Press
                 </Link>

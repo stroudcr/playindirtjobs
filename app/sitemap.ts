@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { db } from '@/lib/db'
 import { US_STATES_WITHOUT_DC, getStateSlug } from '@/lib/constants'
 import { getBaseUrl } from '@/lib/metadata'
+import { almanacArticles } from '@/lib/almanac-content'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600 // Revalidate every hour
@@ -127,5 +128,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  return [...staticPages, ...statePages, ...jobUrls]
+  // Almanac pages
+  const almanacPages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/almanac`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    ...almanacArticles.map((article) => ({
+      url: `${baseUrl}/almanac/${article.slug}`,
+      lastModified: new Date(article.date),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+  ]
+
+  return [...staticPages, ...statePages, ...almanacPages, ...jobUrls]
 }

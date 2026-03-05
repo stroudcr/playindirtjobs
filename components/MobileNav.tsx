@@ -37,6 +37,13 @@ export function MobileNav() {
                 Job Alerts
               </Link>
               <Link
+                href="/almanac"
+                onClick={() => setIsOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-forest hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                The Almanac
+              </Link>
+              <Link
                 href="/pricing"
                 onClick={() => setIsOpen(false)}
                 className="px-4 py-3 text-sm font-medium text-forest hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
