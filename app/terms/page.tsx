@@ -164,7 +164,7 @@ export default function TermsPage() {
                 <strong>Payment Processing:</strong> All payments are processed securely through Stripe, a third-party payment processor. We do not store your credit card information. By making a payment, you agree to Stripe&rsquo;s terms and conditions.
               </p>
               <p className="text-forest-light mb-4">
-                <strong>Refund Policy:</strong> Job posting fees are generally non-refundable once the posting goes live. If you experience technical issues preventing your listing from being published, please contact us at info@playindirtjobs.com within 48 hours.
+                <strong>Refund Policy:</strong> Job posting fees are generally non-refundable once the posting goes live. If you experience technical issues preventing your listing from being published, please contact us at playindirtjobs@welldiem.com within 48 hours.
               </p>
               <p className="text-forest-light mb-4">
                 <strong>Pricing Changes:</strong> We reserve the right to modify our pricing at any time. Changes will not affect existing active postings.
@@ -239,7 +239,7 @@ export default function TermsPage() {
             <section id="dispute" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">12. Dispute Resolution</h2>
               <p className="text-forest-light mb-4">
-                <strong>Informal Resolution:</strong> Before filing a claim, you agree to contact us at info@playindirtjobs.com to attempt to resolve the dispute informally. We will attempt to resolve the dispute within 60 days.
+                <strong>Informal Resolution:</strong> Before filing a claim, you agree to contact us at playindirtjobs@welldiem.com to attempt to resolve the dispute informally. We will attempt to resolve the dispute within 60 days.
               </p>
               <p className="text-forest-light mb-4">
                 <strong>Arbitration Agreement:</strong> If we cannot resolve the dispute informally, you agree that any dispute arising out of or relating to these Terms or the Service shall be resolved through binding arbitration in accordance with the Commercial Arbitration Rules of the American Arbitration Association, rather than in court.
@@ -308,7 +308,7 @@ export default function TermsPage() {
                   <strong>Company:</strong> WellDiem Company LLC
                 </p>
                 <p className="text-forest-light mb-2">
-                  <strong>Email:</strong> <a href="mailto:info@playindirtjobs.com" className="text-primary hover:underline">info@playindirtjobs.com</a>
+                  <strong>Email:</strong> <a href="mailto:playindirtjobs@welldiem.com" className="text-primary hover:underline">playindirtjobs@welldiem.com</a>
                 </p>
                 <p className="text-forest-light">
                   <strong>Website:</strong> <Link href="/" className="text-primary hover:underline">https://playindirtjobs.com</Link>

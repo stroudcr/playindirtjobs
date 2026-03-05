@@ -90,7 +90,7 @@ export default function RootLayout({
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Customer Service",
-      "email": "info@playindirtjobs.com"
+      "email": "playindirtjobs@welldiem.com"
     },
   };
 

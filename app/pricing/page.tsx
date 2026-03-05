@@ -322,7 +322,7 @@ export default function PricingPage() {
                 </Link>
               </div>
               <p className="text-sm text-forest-light mt-8">
-                Questions? Contact us at info@playindirtjobs.com
+                Questions? Contact us at playindirtjobs@welldiem.com
               </p>
             </div>
           </div>

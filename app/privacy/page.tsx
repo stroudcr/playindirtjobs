@@ -259,7 +259,7 @@ export default function PrivacyPage() {
                 To exercise your California privacy rights, please contact us at:
               </p>
               <p className="text-forest-light mb-4">
-                <strong>Email:</strong> <a href="mailto:info@playindirtjobs.com" className="text-primary hover:underline">info@playindirtjobs.com</a><br />
+                <strong>Email:</strong> <a href="mailto:playindirtjobs@welldiem.com" className="text-primary hover:underline">playindirtjobs@welldiem.com</a><br />
                 <strong>Subject Line:</strong> &ldquo;CCPA Privacy Request&rdquo;
               </p>
               <p className="text-forest-light mb-4">
@@ -312,14 +312,14 @@ export default function PrivacyPage() {
                 <li>Right to withdraw consent</li>
               </ul>
               <p className="text-forest-light mb-4">
-                To exercise these rights, please contact us at info@playindirtjobs.com. You also have the right to lodge a complaint with a supervisory authority.
+                To exercise these rights, please contact us at playindirtjobs@welldiem.com. You also have the right to lodge a complaint with a supervisory authority.
               </p>
             </section>
 
             <section id="children" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">12. Children&rsquo;s Privacy</h2>
               <p className="text-forest-light mb-4">
-                Our services are not directed to individuals under the age of 18, and we do not knowingly collect personal information from children under 13 (or 16 in certain jurisdictions). If you believe we have collected information from a child, please contact us immediately at info@playindirtjobs.com, and we will delete it.
+                Our services are not directed to individuals under the age of 18, and we do not knowingly collect personal information from children under 13 (or 16 in certain jurisdictions). If you believe we have collected information from a child, please contact us immediately at playindirtjobs@welldiem.com, and we will delete it.
               </p>
             </section>
 
@@ -363,7 +363,7 @@ export default function PrivacyPage() {
                   <strong>Company:</strong> WellDiem Company LLC
                 </p>
                 <p className="text-forest-light mb-2">
-                  <strong>Email:</strong> <a href="mailto:info@playindirtjobs.com" className="text-primary hover:underline">info@playindirtjobs.com</a>
+                  <strong>Email:</strong> <a href="mailto:playindirtjobs@welldiem.com" className="text-primary hover:underline">playindirtjobs@welldiem.com</a>
                 </p>
                 <p className="text-forest-light mb-4">
                   <strong>Website:</strong> <Link href="/" className="text-primary hover:underline">https://playindirtjobs.com</Link>
