@@ -32,10 +32,10 @@ export const almanacArticles: AlmanacArticle[] = [
     readTime: 9,
     featured: false,
     heroImage: {
-      src: "https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c18?w=1200&h=630&fit=crop",
-      alt: "Farmer working in a green vegetable field on a sunny day",
-      credit: "Zoe Schaeffer",
-      creditUrl: "https://unsplash.com/@dirtjoy",
+      src: "https://images.unsplash.com/photo-1774533522525-fb00871e97be?w=1200&h=630&fit=crop",
+      alt: "A paved road runs alongside a black wooden fence through green farmland",
+      credit: "Cristina Anne Costello",
+      creditUrl: "https://unsplash.com/@lightupphotos",
     },
     relatedSlugs: [
       "how-to-get-a-farm-job-with-no-experience",
