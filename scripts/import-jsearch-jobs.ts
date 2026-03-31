@@ -20,21 +20,29 @@ const RAPIDAPI_HOST = 'jsearch.p.rapidapi.com';
 const PLACEHOLDER_EMAIL = 'playindirtjobs@welldiem.com';
 
 const SEARCH_QUERIES = [
-  'farm hand in Illinois',
-  'gardener in Illinois',
-  'ranch hand in Illinois',
-  'agricultural worker in Illinois',
-  'horticulture in Illinois',
-  'farm manager in Illinois',
-  'livestock in Illinois',
-  'greenhouse worker in Illinois',
-  'harvest worker in Illinois',
-  'organic farm in Illinois',
-  'landscape in Illinois',
-  'cattle ranch in Illinois',
+  'farm hand in California',
+  'gardener in Oregon',
+  'ranch hand in Texas',
+  'agricultural worker in Iowa',
+  'horticulture in North Carolina',
+  'farm manager in Vermont',
+  'livestock in Montana',
+  'greenhouse worker in Colorado',
+  'harvest worker in Washington',
+  'organic farm in New York',
+  'landscape gardener in Florida',
+  'cattle ranch in Wyoming',
+  'farm worker in Pennsylvania',
+  'nursery worker in Georgia',
+  'vineyard worker in California',
+  'dairy farm in Wisconsin',
+  'poultry farm in Arkansas',
+  'farm hand in Minnesota',
+  'gardener in Virginia',
+  'ranch hand in Oklahoma',
 ];
 
-const JOBS_PER_QUERY = 2;
+const JOBS_PER_QUERY = 3;
 
 // JSearch API response types
 interface JSearchJob {
