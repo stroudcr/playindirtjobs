@@ -7,7 +7,7 @@ A modern job board for farming, gardening, and ranching opportunities. Built wit
 - **Beautiful Solarpunk Design** - Vibrant greens, earthy tones, and nature-themed emojis
 - **Advanced Filtering** - Search by category, job type, farm type, benefits, and more
 - **No Authentication Required** - Post jobs and manage them via magic links
-- **Stripe Integration** - Secure payment processing for job postings ($45 basic, $95 featured)
+- **Stripe Integration** - Secure payment processing for job postings ($15 basic, $25 featured)
 - **Email Notifications** - Job alerts and management links via Resend
 - **SEO Optimized** - Server-side rendering for better search visibility
 - **Responsive Design** - Beautiful on desktop, tablet, and mobile
@@ -65,8 +65,8 @@ RESEND_API_KEY="re_..."
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
 # Job Pricing (in cents)
-BASIC_JOB_PRICE=4500
-FEATURED_JOB_PRICE=9500
+BASIC_JOB_PRICE=1500
+FEATURED_JOB_PRICE=2500
 \`\`\`
 
 ### 4. Set up the database
@@ -194,8 +194,8 @@ Update pricing in \`lib/constants.ts\` and your \`.env\` file:
 
 \`\`\`typescript
 export const PRICING = {
-  BASIC: 4500,      // $45
-  FEATURED: 9500,   // $95
+  BASIC: 1500,      // $15
+  FEATURED: 2500,   // $25
 };
 \`\`\`
 

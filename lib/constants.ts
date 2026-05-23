@@ -172,7 +172,7 @@ export const US_STATES_WITHOUT_DC = US_STATES.filter(state => state.code !== 'DC
 
 // Pricing (in cents)
 export const PRICING = {
-  BASIC: 500, // $5
-  FEATURED: 1500, // $15
-  BUNDLE_5: 19900, // $199 (save $26)
+  BASIC: 1500, // $15
+  FEATURED: 2500, // $25
+  BUNDLE_5: 19900, // $199
 } as const;
