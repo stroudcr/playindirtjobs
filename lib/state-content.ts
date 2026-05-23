@@ -52,6 +52,14 @@ export interface StateContent {
   majorCities: string[];
 }
 
+function getStateSeoTitle(name: string): string {
+  return `Farm Jobs in ${name} | Farming & Ranch Work`;
+}
+
+function getStateSeoDescription(name: string): string {
+  return `Browse farm jobs in ${name}: ranch, organic, greenhouse, livestock, harvest, and agriculture roles with seasonal and full-time work.`;
+}
+
 // Template-based content generator for states
 // This allows us to quickly create all 50 state pages with reasonable content
 // Individual states can be enhanced with detailed, unique content over time
@@ -3893,16 +3901,23 @@ export const STATE_CONTENT_MAP: Record<string, StateContent> = {
 // Helper function to get state content
 export function getStateContent(stateCodeOrName: string): StateContent | null {
   const upperCode = stateCodeOrName.toUpperCase();
-  return STATE_CONTENT_MAP[upperCode] || null;
+  const content = STATE_CONTENT_MAP[upperCode] || null;
+  if (!content) return null;
+
+  return {
+    ...content,
+    metaTitle: getStateSeoTitle(content.name),
+    metaDescription: getStateSeoDescription(content.name),
+  };
 }
 
 // Generate SEO-friendly meta tags for a state
-export function generateStateMetaTags(stateCode: string, jobCount: number) {
+export function generateStateMetaTags(stateCode: string, _jobCount: number) {
   const content = getStateContent(stateCode);
   if (!content) return null;
 
   return {
-    title: content.metaTitle.replace('Agricultural Careers', `${jobCount}+ Agricultural Position${jobCount !== 1 ? 's' : ''}`),
+    title: content.metaTitle,
     description: content.metaDescription,
   };
 }

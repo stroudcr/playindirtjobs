@@ -2,14 +2,16 @@
  * Get the base URL for the application based on environment
  * Uses NEXT_PUBLIC_APP_URL if available, otherwise falls back to production URL
  */
+const PRODUCTION_URL = 'https://www.playindirtjobs.com';
+
 export function getBaseUrl(): string {
   // In browser, use NEXT_PUBLIC_APP_URL if available
   if (typeof window !== 'undefined') {
-    return process.env.NEXT_PUBLIC_APP_URL || 'https://playindirtjobs.com';
+    return process.env.NEXT_PUBLIC_APP_URL || PRODUCTION_URL;
   }
 
   // In server-side rendering
-  return process.env.NEXT_PUBLIC_APP_URL || 'https://playindirtjobs.com';
+  return process.env.NEXT_PUBLIC_APP_URL || PRODUCTION_URL;
 }
 
 /**

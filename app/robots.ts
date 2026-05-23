@@ -1,6 +1,13 @@
 import { MetadataRoute } from 'next'
 import { getBaseUrl } from '@/lib/metadata'
 
+const DISALLOWED_PATHS = [
+  '/api/',
+  '/manage/',
+  '/post-job/preview',
+  '/success',
+]
+
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = getBaseUrl()
 
@@ -9,43 +16,27 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'OAI-SearchBot',
         allow: '/',
-        disallow: [
-          '/api/',
-          '/post-job/preview',
-        ],
+        disallow: DISALLOWED_PATHS,
       },
       {
         userAgent: 'GPTBot',
         allow: '/',
-        disallow: [
-          '/api/',
-          '/post-job/preview',
-        ],
+        disallow: DISALLOWED_PATHS,
       },
       {
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: [
-          '/api/',
-          '/post-job/preview',
-        ],
+        disallow: DISALLOWED_PATHS,
       },
       {
         userAgent: 'Bingbot',
         allow: '/',
-        disallow: [
-          '/api/',
-          '/post-job/preview',
-        ],
+        disallow: DISALLOWED_PATHS,
       },
       {
         userAgent: '*',
         allow: '/',
-        disallow: [
-          '/api/',
-          '/post-job/preview',
-          '/manage/',
-        ],
+        disallow: DISALLOWED_PATHS,
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

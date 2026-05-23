@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Download, Mail, FileText, ArrowRight } from "lucide-react";
 import { getLatestPressRelease } from "@/lib/press-releases";
+import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Press & Media | PlayInDirtJobs",
@@ -17,10 +18,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Press & Media | PlayInDirtJobs",
     description: "Press resources and media kit for PlayInDirtJobs, America's premier agricultural job board.",
-    url: "https://playindirtjobs.com/press",
+    url: getUrl("press"),
   },
   alternates: {
-    canonical: "https://playindirtjobs.com/press",
+    canonical: getUrl("press"),
   },
 };
 

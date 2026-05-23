@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { US_STATES_WITHOUT_DC, getStateSlug } from '@/lib/constants'
 import { getBaseUrl } from '@/lib/metadata'
 import { almanacArticles } from '@/lib/almanac-content'
+import { pressReleases } from '@/lib/press-releases'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 3600 // Revalidate every hour
@@ -97,6 +98,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     {
+      url: `${baseUrl}/job-alerts`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
@@ -113,6 +120,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/press`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.4,
+    },
+    {
+      url: `${baseUrl}/press/releases`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.4,
     },
     {
       url: `${baseUrl}/terms`,
@@ -144,5 +163,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ]
 
-  return [...staticPages, ...statePages, ...almanacPages, ...jobUrls]
+  const pressReleasePages: MetadataRoute.Sitemap = pressReleases.map((release) => ({
+    url: `${baseUrl}/press/releases/${release.slug}`,
+    lastModified: new Date(release.date),
+    changeFrequency: 'yearly' as const,
+    priority: 0.4,
+  }))
+
+  return [...staticPages, ...statePages, ...almanacPages, ...pressReleasePages, ...jobUrls]
 }

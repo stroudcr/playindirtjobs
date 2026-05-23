@@ -19,6 +19,7 @@ const dmSerifDisplay = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getUrl()),
   title: "Farm, Garden & Ranch Jobs | PlayInDirtJobs",
   description: "Find farming, gardening, and ranching jobs across America. Browse sustainable agriculture careers, organic farm positions, and ranch hand opportunities.",
   keywords: [
