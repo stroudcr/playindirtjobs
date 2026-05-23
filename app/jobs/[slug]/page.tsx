@@ -1,10 +1,10 @@
 import { cache } from "react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { MapPin, DollarSign, Briefcase, Calendar, ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { formatSalary, formatDate } from "@/lib/utils";
-import { JOB_CATEGORIES, FARM_TYPES, BENEFITS } from "@/lib/constants";
+import { BENEFITS, FARM_TYPES, getStateSlug, JOB_CATEGORIES, US_STATES_WITHOUT_DC } from "@/lib/constants";
 import type { Metadata } from "next";
 import { ShareButton } from "./share-button";
 import { getUrl, truncateMetaText } from "@/lib/metadata";
@@ -26,6 +26,38 @@ const getJob = cache(async (slug: string) => {
 
   return job;
 });
+
+function getLegacyJobRedirect(slug: string): string | null {
+  const state = US_STATES_WITHOUT_DC.find((state) =>
+    slug.includes(getStateSlug(state.code))
+  );
+
+  if (state) {
+    return `/${getStateSlug(state.code)}-jobs`;
+  }
+
+  if (/(apprentice|apprenticeship|internship|intern)/.test(slug)) {
+    return "/farm-apprenticeships";
+  }
+
+  if (/(organic|regenerative|permaculture|biodynamic)/.test(slug)) {
+    return "/organic-farm-jobs";
+  }
+
+  if (/(ranch|livestock|cattle|equine|horse)/.test(slug)) {
+    return "/ranch-jobs";
+  }
+
+  if (/(garden|gardener|greenhouse|horticulture|nursery|landscape|grower)/.test(slug)) {
+    return "/gardening-jobs";
+  }
+
+  if (/(farm|agriculture|agricultural|harvest|crop|field)/.test(slug)) {
+    return "/farming-jobs";
+  }
+
+  return null;
+}
 
 // Skip static generation - render job pages dynamically at request time
 // This ensures the build succeeds even when the database is unreachable
@@ -96,6 +128,12 @@ export default async function JobPage({ params }: JobPageProps) {
   const job = await getJob(slug);
 
   if (!job) {
+    const legacyRedirect = getLegacyJobRedirect(slug);
+
+    if (legacyRedirect) {
+      permanentRedirect(legacyRedirect);
+    }
+
     notFound();
   }
 
