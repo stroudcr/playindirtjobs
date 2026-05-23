@@ -26,7 +26,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = getAlmanacArticle(slug);
   if (!article) return {};
-  const metaTitle = truncateMetaText(article.metaTitle, 60);
+  const metaTitle =
+    article.metaTitle.length <= 60
+      ? article.metaTitle
+      : truncateMetaText(article.title, 60);
   const metaDescription = truncateMetaText(article.metaDescription, 155);
 
   return {

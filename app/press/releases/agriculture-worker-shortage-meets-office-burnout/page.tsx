@@ -18,7 +18,11 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Press Release Not Found",
     };
   }
-  const metaTitle = truncateMetaText(`${release.title} | PlayInDirtJobs`, 60);
+  const releaseMetaTitle = `${release.title} | PlayInDirtJobs`;
+  const metaTitle =
+    releaseMetaTitle.length <= 60
+      ? releaseMetaTitle
+      : truncateMetaText(release.title, 60);
   const metaDescription = truncateMetaText(release.excerpt, 155);
 
   return {
