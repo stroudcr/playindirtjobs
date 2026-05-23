@@ -8,6 +8,7 @@ import { Calendar, Clock, User, ArrowRight } from "lucide-react";
 import { getUrl } from "@/lib/metadata";
 import {
   almanacArticles,
+  formatAlmanacDate,
   getAlmanacArticle,
 } from "@/lib/almanac-content";
 
@@ -78,7 +79,7 @@ export default async function AlmanacArticlePage({
   const article = getAlmanacArticle(slug);
   if (!article) notFound();
 
-  const formattedDate = new Date(article.date).toLocaleDateString("en-US", {
+  const formattedDate = formatAlmanacDate(article.date, {
     year: "numeric",
     month: "long",
     day: "numeric",

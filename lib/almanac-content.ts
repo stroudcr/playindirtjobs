@@ -19,7 +19,143 @@ export interface AlmanacArticle {
   relatedSlugs?: string[];
 }
 
+export function formatAlmanacDate(
+  date: string,
+  options: Intl.DateTimeFormatOptions
+) {
+  return new Date(`${date}T12:00:00`).toLocaleDateString("en-US", options);
+}
+
 export const almanacArticles: AlmanacArticle[] = [
+  {
+    slug: "farm-jobs-with-housing",
+    title: "Farm Jobs With Housing: What to Know Before You Accept",
+    category: "Career Advice",
+    excerpt: "Live-in farm jobs can make agricultural work far more affordable, but the details matter. Learn how to evaluate housing, meals, transportation, and red flags before you say yes.",
+    metaTitle: "Farm Jobs With Housing: What to Know Before You Accept | The Almanac",
+    metaDescription: "A practical guide to farm jobs with housing. Learn what to ask before accepting live-in farm work, how to compare total compensation, and what safe housing should include.",
+    date: "2026-05-23",
+    author: "PlayInDirtJobs",
+    readTime: 8,
+    featured: false,
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1653775174587-d95ea44ab4ef?w=1200&h=630&fit=crop",
+      alt: "A small cabin surrounded by green farmland",
+      credit: "Nadin Nandin",
+      creditUrl: "https://unsplash.com/photos/an-aerial-view-of-a-farm-with-a-small-cabin-LmlvfY6UXCY",
+    },
+    relatedSlugs: [
+      "how-much-do-farm-jobs-pay",
+      "seasonal-farm-work-complete-guide-to-harvest-jobs",
+    ],
+    content: `
+<p>A farm job with housing can change everything. Rent is often the biggest monthly expense for workers, and on-farm housing can make a modest hourly wage stretch much further. It can also make remote farm work possible when there are no apartments nearby, no public transit, and no easy commute.</p>
+
+<p>But housing is not just a perk. It is where you sleep, cook, recover from long days, call your family, and keep your belongings. A good housing arrangement can make a season feel stable and generous. A vague one can turn into stress fast. Before you accept a farm job with housing, you need to understand the whole offer - not just the wage.</p>
+
+<h2>Why Housing Changes the Whole Offer</h2>
+
+<p>Farm pay should always be evaluated as total compensation. According to <a href="https://www.ers.usda.gov/topics/farm-economy/farm-labor/">USDA Economic Research Service farm labor data</a>, hired farmworker wages have risen over time, but average farm wages still trail average nonsupervisory nonfarm wages. That makes housing, meals, transportation, and utilities especially important when comparing offers.</p>
+
+<p>A $16/hour job with free, clean housing and access to farm produce may leave you with more usable income than a $20/hour job where you pay market rent, utilities, gas, and groceries. The reverse can also be true: if "housing included" means a crowded room, unclear deductions, unreliable transportation, or no real kitchen, the offer may be less valuable than it looks.</p>
+
+<p>Do the math before you decide. Estimate your monthly take-home pay, then subtract anything the employer charges for rent, utilities, meals, laundry, internet, transportation, or equipment. Add back the value of costs you will not have to pay yourself. The final number - not the hourly wage alone - is the number that tells you whether the job works.</p>
+
+<h2>Get the Terms in Writing</h2>
+
+<p>The best farm housing arrangements are clear before anyone packs a bag. Ask for the housing terms in writing, ideally in the offer letter, employment agreement, or a separate housing agreement. This protects both sides: you know what you are agreeing to, and the employer avoids misunderstandings during the busiest part of the season.</p>
+
+<p>At minimum, clarify:</p>
+
+<ul>
+<li><strong>Cost.</strong> Is housing free, subsidized, or deducted from wages? If there is a deduction, how much is taken and when?</li>
+<li><strong>Utilities.</strong> Are electricity, heat, water, trash, laundry, and internet included?</li>
+<li><strong>Food.</strong> Are meals provided, is farm produce included, or are you expected to cook all meals yourself?</li>
+<li><strong>Transportation.</strong> How do workers get from housing to the worksite, grocery store, medical care, and town?</li>
+<li><strong>Dates.</strong> When can you move in, when must you move out, and what happens if the season ends early?</li>
+<li><strong>Occupancy rules.</strong> Will you have a private room or shared room? Are guests, partners, pets, alcohol, smoking, or quiet hours addressed?</li>
+<li><strong>Job separation.</strong> If you quit, are laid off, or are fired, how long do you have to leave the housing?</li>
+</ul>
+
+<p>If an employer says, "Do not worry, we will figure it out when you get here," slow down. Farms are busy, people forget details, and housing misunderstandings become much harder to solve once you are already living there.</p>
+
+<h2>What Safe Farm Housing Should Include</h2>
+
+<p>You do not need luxury housing. Many farm workers are perfectly happy in simple cabins, bunkhouses, campers, shared houses, yurts, or converted spaces when they are clean, dry, safe, and honestly described. The key is livability.</p>
+
+<p>The <a href="https://www.dol.gov/agencies/whd/osha-housing-checklist">U.S. Department of Labor housing safety and health checklist</a> for agricultural worker housing is a useful reference even if your specific job is not covered by every federal standard. It points to practical basics: housing should protect workers from weather, avoid overcrowding, provide safe drinking water, include sanitary toilets and bathing facilities, offer a place to store and prepare food, and be kept free of garbage, pests, and obvious hazards.</p>
+
+<p>Before accepting, ask for current photos or a video walkthrough. Look for the things that affect daily life:</p>
+
+<ul>
+<li><strong>A real sleeping space.</strong> You should know whether you have a private room, shared room, bunk, loft, tent platform, camper, or cabin.</li>
+<li><strong>Weather protection.</strong> The space should stay dry in rain, ventilated in heat, and warm enough in cold weather.</li>
+<li><strong>Safe water and bathrooms.</strong> Ask whether drinking water is tested or from a municipal source, and whether bathrooms are indoor, shared, or separate from the housing.</li>
+<li><strong>Food storage and cooking.</strong> You need refrigeration, a way to cook, clean dishes, store dry goods, and keep pests out.</li>
+<li><strong>Electrical safety.</strong> Extension cords, heaters, fans, and appliances should not be patched together in a way that feels risky.</li>
+<li><strong>Fire safety.</strong> Ask about smoke detectors, exits, fire extinguishers, and where fuel or chemicals are stored.</li>
+<li><strong>Privacy and storage.</strong> Even in shared housing, workers need somewhere secure for clothing, documents, medication, and personal items.</li>
+</ul>
+
+<p>Trust your instincts. Rustic can be charming. Unsafe is different.</p>
+
+<h2>Meals, Kitchens, and Transportation</h2>
+
+<p>Housing is only part of the live-in equation. A cabin without a kitchen, a bunkhouse miles from town, or a meal plan that does not fit the work schedule can quickly become expensive or exhausting.</p>
+
+<p>If meals are included, ask how often, who cooks, whether meals are available on days off, and whether dietary needs can be accommodated. If meals are not included, ask what cooking equipment is available and how workers get groceries. For H-2A employers, the Department of Labor says employers must either provide three meals a day or provide free and convenient cooking and kitchen facilities that allow workers to prepare their own meals; the <a href="https://www.dol.gov/agencies/whd/fact-sheets/26d-meal-obligations-H-2A">DOL H-2A meal obligations fact sheet</a> gives the details for those covered jobs.</p>
+
+<p>Transportation matters just as much. Living on a farm can be wonderful, but rural isolation is real. Ask whether you need your own car, whether workers share vehicles, how far the grocery store is, and what happens if someone needs urgent medical care. If work happens at multiple fields, barns, markets, or packing sheds, clarify whether transportation during the workday is paid time and provided by the employer.</p>
+
+<p>Also ask about heat recovery. Farm housing should support rest after hard outdoor work, especially in summer. OSHA's <a href="https://www.osha.gov/heat-exposure/water-rest-shade">Water. Rest. Shade.</a> guidance emphasizes access to water, rest, and cool recovery areas during heat exposure. That same logic applies after work: if workers are sleeping in a hot room with no ventilation after a ten-hour harvest day, recovery becomes a safety issue, not a comfort complaint.</p>
+
+<h2>Special Note on H-2A Jobs</h2>
+
+<p>Some agricultural jobs are part of the H-2A temporary agricultural worker program. If a worker cannot reasonably return to their permanent home the same day, H-2A rules include specific protections around no-cost housing, daily transportation between housing and the worksite, wages, meals or kitchen facilities, and other conditions. The <a href="https://www.dol.gov/agencies/whd/workers/h2a">Department of Labor's H-2A worker page</a> is the best starting point for current federal information.</p>
+
+<p>Other migrant and seasonal agricultural workers may also have rights under the Migrant and Seasonal Agricultural Worker Protection Act. The <a href="https://www.dol.gov/agencies/whd/fact-sheets/49-mspa">DOL MSPA fact sheet</a> explains that MSPA addresses wages, housing, transportation, disclosures, and recordkeeping, and that housing terms must be posted or given to workers when covered housing is provided.</p>
+
+<p>This article is practical career guidance, not legal advice. Rules vary by worker program, state, employer type, and housing arrangement. If something feels unsafe or unlawful, contact the U.S. Department of Labor Wage and Hour Division, your state labor agency, a legal aid organization, or a trusted farmworker support group.</p>
+
+<h2>Red Flags Before You Accept</h2>
+
+<p>Most farms that offer housing are trying to solve a real problem: their work is rural, seasonal, and hard to commute to. Many provide thoughtful, generous living arrangements. Still, be cautious when you see any of these warning signs:</p>
+
+<ul>
+<li><strong>No photos or walkthrough.</strong> If housing exists, the employer should be able to show it.</li>
+<li><strong>Unclear deductions.</strong> You should know exactly what will come out of your paycheck.</li>
+<li><strong>No written terms.</strong> Verbal promises are hard to rely on once the season is underway.</li>
+<li><strong>Unsafe water, heat, or electricity.</strong> These are basics, not perks.</li>
+<li><strong>Overcrowding.</strong> Ask how many people share the room, bathroom, kitchen, and laundry.</li>
+<li><strong>No transportation plan.</strong> If the farm is remote, "someone can probably drive you" is not enough.</li>
+<li><strong>Pressure to decide immediately.</strong> A good employer should welcome practical questions.</li>
+<li><strong>No move-out plan.</strong> You need to know what happens if the job ends early or the arrangement is not a fit.</li>
+</ul>
+
+<p>One red flag does not always mean you should walk away. It does mean you should ask follow-up questions before you commit.</p>
+
+<h2>Questions to Ask the Employer</h2>
+
+<p>Use these questions before accepting a live-in farm job:</p>
+
+<ul>
+<li>Can you send current photos or a video walkthrough of the housing?</li>
+<li>Is the room private or shared, and how many people live in the house or bunkhouse?</li>
+<li>Is housing free, or are rent, utilities, meals, or deposits deducted from wages?</li>
+<li>What kitchen, refrigeration, laundry, bathroom, and shower facilities are available?</li>
+<li>Is drinking water from a tested well, municipal supply, or another source?</li>
+<li>How do workers get groceries, medical care, and transportation to worksites?</li>
+<li>What are the rules for guests, pets, quiet hours, shared chores, and personal storage?</li>
+<li>What happens to housing if the job ends early, weather delays work, or either side decides it is not a fit?</li>
+</ul>
+
+<h2>The Bottom Line</h2>
+
+<p>A farm job with housing can be a great opportunity. It can lower your cost of living, help you build savings, and make remote agricultural work accessible. But the best offers are specific. They tell you where you will sleep, what you will pay, how you will eat, how you will get around, and what rights and responsibilities come with the arrangement.</p>
+
+<p>Before you accept, compare the full package. Read our guide to <a href="/almanac/how-much-do-farm-jobs-pay">farm job pay and total compensation</a>, then browse current <a href="/">farm, garden, and ranch jobs on PlayInDirtJobs</a> with a sharper eye for the housing details that matter.</p>
+`,
+  },
   {
     slug: "how-much-do-farm-jobs-pay",
     title: "How Much Do Farm Jobs Pay? A Realistic Guide to Agricultural Salaries",

@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
-import type { AlmanacArticle } from "@/lib/almanac-content";
+import {
+  formatAlmanacDate,
+  type AlmanacArticle,
+} from "@/lib/almanac-content";
 
 interface ArticleCardProps {
   article: AlmanacArticle;
 }
 
 export function ArticleCard({ article }: ArticleCardProps) {
-  const formattedDate = new Date(article.date).toLocaleDateString("en-US", {
+  const formattedDate = formatAlmanacDate(article.date, {
     year: "numeric",
     month: "short",
     day: "numeric",
