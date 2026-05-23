@@ -7,7 +7,7 @@ import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Pricing | Post Farm, Garden & Ranch Jobs | PlayInDirtJobs",
-  description: "Affordable pricing for posting agricultural jobs. Connect with qualified farm hands, gardeners, and ranch workers. $15 for basic listings, $25 for featured placement. 60-day visibility guaranteed.",
+  description: "Simple pricing for agricultural job postings: $15 basic listings and $25 featured listings with 60 days of visibility.",
   keywords: [
     "farm job posting cost",
     "agricultural job board pricing",

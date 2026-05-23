@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
 import { ArticleCard } from "@/components/ArticleCard";
 import { Calendar, Clock, User, ArrowRight } from "lucide-react";
-import { getUrl } from "@/lib/metadata";
+import { getUrl, truncateMetaText } from "@/lib/metadata";
 import {
   almanacArticles,
   formatAlmanacDate,
@@ -26,13 +26,15 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = getAlmanacArticle(slug);
   if (!article) return {};
+  const metaTitle = truncateMetaText(article.metaTitle, 60);
+  const metaDescription = truncateMetaText(article.metaDescription, 155);
 
   return {
-    title: article.metaTitle,
-    description: article.metaDescription,
+    title: metaTitle,
+    description: metaDescription,
     openGraph: {
-      title: article.metaTitle,
-      description: article.metaDescription,
+      title: metaTitle,
+      description: metaDescription,
       url: getUrl(`almanac/${article.slug}`),
       siteName: "PlayInDirtJobs",
       type: "article",
@@ -58,8 +60,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: article.metaTitle,
-      description: article.metaDescription,
+      title: metaTitle,
+      description: metaDescription,
       images: article.heroImage
         ? [article.heroImage.src]
         : ["/images/PlayInDirtX.png"],

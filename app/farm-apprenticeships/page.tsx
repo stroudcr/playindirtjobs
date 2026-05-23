@@ -7,11 +7,11 @@ import { getUrl } from "@/lib/metadata";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Farm Apprenticeships | Agricultural Training Programs | PlayInDirtJobs",
-  description: "Find farm apprenticeship programs and agricultural training opportunities. Learn sustainable farming, organic agriculture, and regenerative practices. Start your farming career today!",
+  title: "Farm Apprenticeships & Training | PlayInDirtJobs",
+  description: "Find farm apprenticeships and agricultural training programs in organic farming, regenerative agriculture, livestock, crops, and market gardening.",
   openGraph: {
-    title: "Farm Apprenticeships | Agricultural Training Programs",
-    description: "Find farm apprenticeship programs and agricultural training opportunities nationwide.",
+    title: "Farm Apprenticeships & Training | PlayInDirtJobs",
+    description: "Find farm apprenticeships and agricultural training programs in organic farming, regenerative agriculture, livestock, crops, and market gardening.",
     url: getUrl("farm-apprenticeships"),
     siteName: 'PlayInDirtJobs',
     locale: 'en_US',
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Farm Apprenticeships | Agricultural Training Programs',
-    description: 'Find farm apprenticeship programs and agricultural training opportunities nationwide.',
+    title: 'Farm Apprenticeships & Training | PlayInDirtJobs',
+    description: 'Find farm apprenticeships and agricultural training programs in organic farming, regenerative agriculture, livestock, crops, and market gardening.',
     images: ['/images/PlayInDirtX.png'],
   },
   alternates: { canonical: getUrl("farm-apprenticeships") },
@@ -42,7 +42,7 @@ export default async function FarmApprenticeshipsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Farm Apprenticeships",
-    "description": "Find farm apprenticeship programs and agricultural training opportunities. Learn sustainable farming, organic agriculture, and regenerative practices.",
+    "description": "Find farm apprenticeships and agricultural training programs in organic farming, regenerative agriculture, livestock, crops, and market gardening.",
     "url": getUrl("farm-apprenticeships"),
     "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
   };

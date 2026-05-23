@@ -7,11 +7,11 @@ import { getUrl } from "@/lib/metadata";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Organic Farm Jobs | Certified Organic Farming Careers | PlayInDirtJobs",
-  description: "Find organic farm jobs and certified organic farming positions. Browse sustainable agriculture careers on organic farms nationwide. Join the organic farming movement today!",
+  title: "Organic Farm Jobs | Sustainable Ag Work | PlayInDirtJobs",
+  description: "Find organic farm jobs nationwide, including certified organic, regenerative, harvest, greenhouse, and sustainable agriculture roles.",
   openGraph: {
-    title: "Organic Farm Jobs | Certified Organic Farming Careers",
-    description: "Find organic farm jobs and certified organic farming positions nationwide.",
+    title: "Organic Farm Jobs | Sustainable Ag Work | PlayInDirtJobs",
+    description: "Find organic farm jobs nationwide, including certified organic, regenerative, harvest, greenhouse, and sustainable agriculture roles.",
     url: getUrl("organic-farm-jobs"),
     siteName: 'PlayInDirtJobs',
     locale: 'en_US',
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Organic Farm Jobs | Certified Organic Farming Careers',
-    description: 'Find organic farm jobs and certified organic farming positions nationwide.',
+    title: 'Organic Farm Jobs | Sustainable Ag Work | PlayInDirtJobs',
+    description: 'Find organic farm jobs nationwide, including certified organic, regenerative, harvest, greenhouse, and sustainable agriculture roles.',
     images: ['/images/PlayInDirtX.png'],
   },
   alternates: { canonical: getUrl("organic-farm-jobs") },
@@ -42,7 +42,7 @@ export default async function OrganicFarmJobsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Organic Farm Jobs",
-    "description": "Find organic farm jobs and certified organic farming positions. Browse sustainable agriculture careers on organic farms nationwide.",
+    "description": "Find organic farm jobs nationwide, including certified organic, regenerative, harvest, greenhouse, and sustainable agriculture roles.",
     "url": getUrl("organic-farm-jobs"),
     "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
   };

@@ -25,3 +25,21 @@ export function getUrl(path: string = ''): string {
 
   return cleanPath ? `${cleanBase}/${cleanPath}` : cleanBase;
 }
+
+export function normalizeMetaText(text: string): string {
+  return text.replace(/\s+/g, ' ').trim();
+}
+
+export function truncateMetaText(text: string, maxLength: number): string {
+  const normalized = normalizeMetaText(text);
+
+  if (normalized.length <= maxLength) {
+    return normalized;
+  }
+
+  const truncated = normalized.slice(0, maxLength - 3);
+  const lastSpace = truncated.lastIndexOf(' ');
+  const cutPoint = lastSpace > 40 ? lastSpace : truncated.length;
+
+  return `${truncated.slice(0, cutPoint).trim()}...`;
+}

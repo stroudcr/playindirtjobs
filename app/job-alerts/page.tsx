@@ -7,7 +7,7 @@ import { Bell, Mail, Zap, Shield, CheckCircle } from "lucide-react";
 export const metadata: Metadata = {
   title: "Get Sustainable Agriculture Job Alerts | PlayInDirtJobs",
   description:
-    "Never miss your dream farming, gardening, or ranching job. Subscribe to free job alerts and get instant notifications for sustainable agriculture opportunities matching your interests.",
+    "Subscribe to free farming, gardening, ranching, and sustainable agriculture job alerts matched to your interests.",
   keywords: [
     "farming job alerts",
     "agriculture job notifications",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Get Sustainable Agriculture Job Alerts | PlayInDirtJobs",
     description:
-      "Subscribe to free job alerts for sustainable farming, gardening, and ranching opportunities. Get notified instantly when new positions are posted.",
+      "Subscribe to free farming, gardening, ranching, and sustainable agriculture job alerts matched to your interests.",
     url: getUrl("/job-alerts"),
   },
   alternates: {

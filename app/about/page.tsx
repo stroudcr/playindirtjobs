@@ -6,8 +6,8 @@ import { Heart, Users, Sprout, MapPin, Clock, Shield } from "lucide-react";
 import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
-  title: "About PlayInDirtJobs | Connecting America's Agricultural Community",
-  description: "Learn about PlayInDirtJobs, the premier job board connecting passionate workers with sustainable farming, gardening, and ranching opportunities across America. Honoring agricultural heritage since 2025.",
+  title: "About PlayInDirtJobs | Farm Job Board",
+  description: "Learn how PlayInDirtJobs connects agricultural workers with farming, gardening, ranching, and sustainable agriculture opportunities.",
   keywords: [
     "about playindirtjobs",
     "agricultural job board",
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
     "ranch work opportunities",
   ],
   openGraph: {
-    title: "About PlayInDirtJobs | America's Agriculture Job Board",
-    description: "Connecting passionate workers with meaningful agricultural careers across America. Honoring the historical prominence of farming and ranching.",
+    title: "About PlayInDirtJobs | Farm Job Board",
+    description: "Learn how PlayInDirtJobs connects agricultural workers with farming, gardening, ranching, and sustainable agriculture opportunities.",
     url: getUrl("about"),
   },
   alternates: {
@@ -35,7 +35,7 @@ export default function AboutPage() {
     "url": getUrl("about"),
     "mainEntity": {
       "@type": "Organization",
-      "@id": "https://playindirtjobs.com/#organization"
+      "@id": getUrl("#organization")
     }
   };
 

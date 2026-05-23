@@ -8,11 +8,11 @@ import { getUrl } from "@/lib/metadata";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Ranch Jobs | Ranch Hand & Livestock Positions | PlayInDirtJobs",
-  description: "Find ranch jobs and ranch hand positions across America. Browse cattle ranch work, livestock management careers, and ranching opportunities. Apply to top ranches today!",
+  title: "Ranch Jobs | Ranch Hand & Livestock Work | PlayInDirtJobs",
+  description: "Find ranch jobs across America, including ranch hand, livestock, cattle, horse care, and grazing operation roles.",
   openGraph: {
-    title: "Ranch Jobs | Ranch Hand & Livestock Positions",
-    description: "Find ranch jobs and ranch hand positions across America.",
+    title: "Ranch Jobs | Ranch Hand & Livestock Work | PlayInDirtJobs",
+    description: "Find ranch jobs across America, including ranch hand, livestock, cattle, horse care, and grazing operation roles.",
     url: getUrl("ranch-jobs"),
     siteName: 'PlayInDirtJobs',
     locale: 'en_US',
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ranch Jobs | Ranch Hand & Livestock Positions',
-    description: 'Find ranch jobs and ranch hand positions across America.',
+    title: 'Ranch Jobs | Ranch Hand & Livestock Work | PlayInDirtJobs',
+    description: 'Find ranch jobs across America, including ranch hand, livestock, cattle, horse care, and grazing operation roles.',
     images: ['/images/PlayInDirtX.png'],
   },
   alternates: { canonical: getUrl("ranch-jobs") },
@@ -47,7 +47,7 @@ export default async function RanchJobsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Ranch Jobs",
-    "description": "Find ranch jobs and ranch hand positions across America. Browse cattle ranch work, livestock management careers, and ranching opportunities.",
+    "description": "Find ranch jobs across America, including ranch hand, livestock, cattle, horse care, and grazing operation roles.",
     "url": getUrl("ranch-jobs"),
     "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
   };

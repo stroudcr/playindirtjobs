@@ -7,7 +7,7 @@ import { formatSalary, formatDate } from "@/lib/utils";
 import { JOB_CATEGORIES, FARM_TYPES, BENEFITS } from "@/lib/constants";
 import type { Metadata } from "next";
 import { ShareButton } from "./share-button";
-import { getUrl } from "@/lib/metadata";
+import { getUrl, truncateMetaText } from "@/lib/metadata";
 
 interface JobPageProps {
   params: Promise<{
@@ -47,13 +47,21 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
     const salaryRange = job.salaryMin && job.salaryMax
       ? `$${job.salaryMin.toLocaleString()}-$${job.salaryMax.toLocaleString()}`
       : "";
+    const metaTitle = truncateMetaText(
+      `${job.title} at ${job.company} | ${job.location}`,
+      60
+    );
+    const metaDescription = truncateMetaText(
+      `Apply for ${job.title} at ${job.company} in ${job.location}. ${salaryRange ? `${salaryRange}. ` : ""}${job.description}`,
+      155
+    );
 
     return {
-      title: `${job.title} - ${job.company} | ${job.location} ${job.jobType.includes('full-time') ? 'Full-Time' : ''} Jobs`,
-      description: `${job.title} at ${job.company} in ${job.location}. ${salaryRange ? salaryRange + '. ' : ''}${job.description.slice(0, 120)}...`,
+      title: metaTitle,
+      description: metaDescription,
       openGraph: {
-        title: `${job.title} at ${job.company}`,
-        description: job.description.slice(0, 155),
+        title: metaTitle,
+        description: metaDescription,
         url: getUrl(`jobs/${job.slug}`),
         type: 'website',
         images: [
@@ -67,8 +75,8 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${job.title} at ${job.company}`,
-        description: job.description.slice(0, 155),
+        title: metaTitle,
+        description: metaDescription,
         images: [job.companyLogo || '/images/PlayInDirtX.png'],
       },
       alternates: {

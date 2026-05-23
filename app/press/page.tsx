@@ -7,7 +7,7 @@ import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Press & Media | PlayInDirtJobs",
-  description: "Press resources, media kit, and contact information for PlayInDirtJobs. Download our logo, brand assets, and learn about our mission to connect America's agricultural community.",
+  description: "Press resources, media contact information, brand assets, and news about PlayInDirtJobs and agricultural employment.",
   keywords: [
     "playindirtjobs press",
     "agricultural job board media",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Press & Media | PlayInDirtJobs",
-    description: "Press resources and media kit for PlayInDirtJobs, America's premier agricultural job board.",
+    description: "Press resources, media contact information, brand assets, and news about PlayInDirtJobs and agricultural employment.",
     url: getUrl("press"),
   },
   alternates: {

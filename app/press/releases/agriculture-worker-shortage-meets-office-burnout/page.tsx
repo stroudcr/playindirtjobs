@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { getPressReleaseBySlug } from "@/lib/press-releases";
 import { Calendar, ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
-import { getUrl } from "@/lib/metadata";
+import { getUrl, truncateMetaText } from "@/lib/metadata";
 import { ShareButtons } from "../[slug]/share-buttons";
 
 const slug = "agriculture-worker-shortage-meets-office-burnout";
@@ -18,10 +18,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Press Release Not Found",
     };
   }
+  const metaTitle = truncateMetaText(`${release.title} | PlayInDirtJobs`, 60);
+  const metaDescription = truncateMetaText(release.excerpt, 155);
 
   return {
-    title: `${release.title} | PlayInDirtJobs Press Release`,
-    description: release.excerpt,
+    title: metaTitle,
+    description: metaDescription,
     keywords: [
       "playindirtjobs launch",
       "agricultural job board",
@@ -32,8 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
       "agriculture labor shortage",
     ],
     openGraph: {
-      title: release.title,
-      description: release.excerpt,
+      title: metaTitle,
+      description: metaDescription,
       url: getUrl(`press/releases/${release.slug}`),
       type: "article",
       publishedTime: release.date,
@@ -49,8 +51,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: release.title,
-      description: release.excerpt,
+      title: metaTitle,
+      description: metaDescription,
       images: [getUrl("images/PlayInDirtX.png")],
     },
     alternates: {

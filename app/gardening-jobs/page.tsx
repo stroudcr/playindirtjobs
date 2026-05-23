@@ -8,11 +8,11 @@ import { getUrl } from "@/lib/metadata";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Gardening Jobs | Professional Gardener Careers | PlayInDirtJobs",
-  description: "Find gardening jobs and professional gardener positions. Browse horticulture careers, landscape gardening, greenhouse work, and nursery jobs. Apply to gardening opportunities nationwide.",
+  title: "Gardening Jobs | Horticulture Careers | PlayInDirtJobs",
+  description: "Find gardening jobs and horticulture careers nationwide, including greenhouse, nursery, landscape, harvest, and professional gardener roles.",
   openGraph: {
-    title: "Gardening Jobs | Professional Gardener Careers",
-    description: "Find gardening jobs and professional gardener positions nationwide.",
+    title: "Gardening Jobs | Horticulture Careers | PlayInDirtJobs",
+    description: "Find gardening jobs and horticulture careers nationwide, including greenhouse, nursery, landscape, harvest, and professional gardener roles.",
     url: getUrl("gardening-jobs"),
     siteName: 'PlayInDirtJobs',
     locale: 'en_US',
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Gardening Jobs | Professional Gardener Careers',
-    description: 'Find gardening jobs and professional gardener positions nationwide.',
+    title: 'Gardening Jobs | Horticulture Careers | PlayInDirtJobs',
+    description: 'Find gardening jobs and horticulture careers nationwide, including greenhouse, nursery, landscape, harvest, and professional gardener roles.',
     images: ['/images/PlayInDirtX.png'],
   },
   alternates: { canonical: getUrl("gardening-jobs") },
@@ -47,7 +47,7 @@ export default async function GardeningJobsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Gardening Jobs",
-    "description": "Find gardening jobs and professional gardener positions. Browse horticulture careers, landscape gardening, greenhouse work, and nursery jobs.",
+    "description": "Find gardening jobs and horticulture careers nationwide, including greenhouse, nursery, landscape, harvest, and professional gardener roles.",
     "url": getUrl("gardening-jobs"),
     "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
   };

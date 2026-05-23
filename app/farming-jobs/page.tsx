@@ -9,11 +9,11 @@ import { getUrl } from "@/lib/metadata";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Farming Jobs | Farm Hand & Agricultural Positions | PlayInDirtJobs",
-  description: "Browse farming jobs across America. Find farm hand positions, agricultural careers, and sustainable farming opportunities. From organic farms to large-scale agriculture.",
+  title: "Farming Jobs | Farm Hand Roles | PlayInDirtJobs",
+  description: "Browse farming jobs across America, including farm hand, harvest, organic, livestock, and sustainable agriculture roles.",
   openGraph: {
-    title: "Farming Jobs | Farm Hand & Agricultural Positions",
-    description: "Discover farming jobs, farm hand positions, and agricultural careers from farms across America.",
+    title: "Farming Jobs | Farm Hand Roles | PlayInDirtJobs",
+    description: "Browse farming jobs across America, including farm hand, harvest, organic, livestock, and sustainable agriculture roles.",
     url: getUrl("farming-jobs"),
     siteName: 'PlayInDirtJobs',
     locale: 'en_US',
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Farming Jobs | Farm Hand & Agricultural Positions',
-    description: 'Discover farming jobs, farm hand positions, and agricultural careers from farms across America.',
+    title: 'Farming Jobs | Farm Hand Roles | PlayInDirtJobs',
+    description: 'Browse farming jobs across America, including farm hand, harvest, organic, livestock, and sustainable agriculture roles.',
     images: ['/images/PlayInDirtX.png'],
   },
   alternates: {
@@ -54,7 +54,7 @@ export default async function FarmingJobsPage() {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Farming Jobs",
-    "description": "Browse farming jobs across America. Find farm hand positions, agricultural careers, and sustainable farming opportunities.",
+    "description": "Browse farming jobs across America, including farm hand, harvest, organic, livestock, and sustainable agriculture roles.",
     "url": getUrl("farming-jobs"),
     "isPartOf": { "@type": "WebSite", "name": "PlayInDirtJobs" }
   };

@@ -12,11 +12,11 @@ import {
 } from "@/lib/almanac-content";
 
 export const metadata: Metadata = {
-  title: "The Almanac — Guides & Insights for Farm Workers | PlayInDirtJobs",
+  title: "The Almanac | Farm Worker Guides | PlayInDirtJobs",
   description:
     "Essential guides, career advice, and industry insights for agricultural workers and employers. Your trusted resource for navigating farming careers.",
   openGraph: {
-    title: "The Almanac — Guides & Insights for Farm Workers | PlayInDirtJobs",
+    title: "The Almanac | Farm Worker Guides | PlayInDirtJobs",
     description:
       "Essential guides, career advice, and industry insights for agricultural workers and employers.",
     url: getUrl("almanac"),
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Almanac — Guides & Insights for Farm Workers | PlayInDirtJobs",
+    title: "The Almanac | Farm Worker Guides | PlayInDirtJobs",
     description:
       "Essential guides, career advice, and industry insights for agricultural workers and employers.",
     images: ["/images/PlayInDirtX.png"],

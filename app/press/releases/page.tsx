@@ -7,7 +7,7 @@ import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Press Releases | PlayInDirtJobs",
-  description: "Latest news and press releases from PlayInDirtJobs. Stay updated on our mission to connect America's agricultural community with meaningful farming, gardening, and ranching careers.",
+  description: "Latest PlayInDirtJobs news and press releases about farm jobs, sustainable agriculture careers, and agricultural hiring.",
   keywords: [
     "playindirtjobs press releases",
     "agricultural job board news",
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Press Releases | PlayInDirtJobs",
-    description: "Latest news and announcements from PlayInDirtJobs, America's premier agricultural job board.",
+    description: "Latest PlayInDirtJobs news and press releases about farm jobs, sustainable agriculture careers, and agricultural hiring.",
     url: getUrl("press/releases"),
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Press Releases | PlayInDirtJobs",
-    description: "Latest news and announcements from PlayInDirtJobs.",
+    description: "Latest PlayInDirtJobs news and press releases about farm jobs, sustainable agriculture careers, and agricultural hiring.",
   },
   alternates: {
     canonical: getUrl("press/releases"),
