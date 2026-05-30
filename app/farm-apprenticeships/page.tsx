@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { db } from "@/lib/db";
+import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { getUrl } from "@/lib/metadata";
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default async function FarmApprenticeshipsPage() {
-  const jobs = await db.job.findMany({
+  const jobs = await getCachedPublicJobs("farm-apprenticeships", {
     where: {
       active: true,
       expiresAt: { gte: new Date() },

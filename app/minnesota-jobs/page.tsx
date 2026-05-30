@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { db } from "@/lib/db";
+import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 export default async function MinnesotaJobsPage() {
-  const jobs = await db.job.findMany({
+  const jobs = await getCachedPublicJobs("minnesota-jobs", {
     where: {
       active: true,
       expiresAt: { gte: new Date() },

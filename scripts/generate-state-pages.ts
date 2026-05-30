@@ -9,7 +9,7 @@ import { US_STATES_WITHOUT_DC } from '../lib/constants';
 
 const STATE_PAGE_TEMPLATE = (stateCode: string, stateName: string, stateSlug: string) => `import { Metadata } from "next";
 import Link from "next/link";
-import { db } from "@/lib/db";
+import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { MapPin, ArrowRight } from "lucide-react";
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ${stateName.replace(/\s+/g, '')}JobsPage() {
-  const jobs = await db.job.findMany({
+  const jobs = await getCachedPublicJobs("${stateSlug}-jobs", {
     where: {
       active: true,
       expiresAt: { gte: new Date() },

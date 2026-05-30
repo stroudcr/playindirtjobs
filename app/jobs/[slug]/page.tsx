@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { notFound, permanentRedirect } from "next/navigation";
+import { after } from "next/server";
 import { db } from "@/lib/db";
 import { MapPin, DollarSign, Briefcase, Calendar, ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -8,6 +9,7 @@ import { BENEFITS, FARM_TYPES, getStateSlug, JOB_CATEGORIES, US_STATES_WITHOUT_D
 import type { Metadata } from "next";
 import { ShareButton } from "./share-button";
 import { getUrl, truncateMetaText } from "@/lib/metadata";
+import { isTransientPrismaReadError, logTransientPrismaReadError } from "@/lib/public-jobs";
 
 interface JobPageProps {
   params: Promise<{
@@ -57,6 +59,27 @@ function getLegacyJobRedirect(slug: string): string | null {
   }
 
   return null;
+}
+
+function JobTemporarilyUnavailable() {
+  return (
+    <main className="min-h-screen bg-earth-cream">
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-2xl rounded-lg border border-border bg-white p-8 shadow-soft">
+          <Link href="/" className="inline-flex items-center text-primary hover:underline mb-6">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to all jobs
+          </Link>
+          <h1 className="text-3xl font-display text-forest mb-4">
+            Job Details Temporarily Unavailable
+          </h1>
+          <p className="text-forest-light leading-relaxed">
+            We could not load this job listing because the database is temporarily unreachable. Please try again in a few minutes.
+          </p>
+        </div>
+      </section>
+    </main>
+  );
 }
 
 // Skip static generation - render job pages dynamically at request time
@@ -116,7 +139,12 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
       },
     };
   } catch (error) {
-    console.warn('Failed to generate metadata for job:', error);
+    if (isTransientPrismaReadError(error)) {
+      logTransientPrismaReadError("job-metadata", error);
+    } else {
+      console.warn('Failed to generate metadata for job:', error);
+    }
+
     return {
       title: "Job Details | PlayInDirt Jobs",
     };
@@ -125,7 +153,18 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
 
 export default async function JobPage({ params }: JobPageProps) {
   const { slug } = await params;
-  const job = await getJob(slug);
+  let job;
+
+  try {
+    job = await getJob(slug);
+  } catch (error) {
+    if (isTransientPrismaReadError(error)) {
+      logTransientPrismaReadError("job-page", error);
+      return <JobTemporarilyUnavailable />;
+    }
+
+    throw error;
+  }
 
   if (!job) {
     const legacyRedirect = getLegacyJobRedirect(slug);
@@ -137,10 +176,16 @@ export default async function JobPage({ params }: JobPageProps) {
     notFound();
   }
 
-  // Increment views only in the page component (not in generateMetadata)
-  await db.job.update({
-    where: { id: job.id },
-    data: { views: { increment: 1 } },
+  // Increment views only in the page component (not in generateMetadata).
+  after(async () => {
+    try {
+      await db.job.update({
+        where: { id: job.id },
+        data: { views: { increment: 1 } },
+      });
+    } catch (error) {
+      console.warn("Failed to increment job view count:", error);
+    }
   });
 
   const categoryEmojis = job.categories

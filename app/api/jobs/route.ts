@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
-import { db } from "@/lib/db";
 import { getStateCode, getStateName } from "@/lib/constants";
+import { findPublicJobs } from "@/lib/public-jobs";
 
 export async function GET(request: NextRequest) {
   try {
@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch jobs
-    const jobs = await db.job.findMany({
+    const jobs = await findPublicJobs("api-jobs", {
       where,
       orderBy: [
         { featured: "desc" }, // Featured jobs first

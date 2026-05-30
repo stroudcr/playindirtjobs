@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Suspense } from "react";
-import { db } from "@/lib/db";
+import type { Prisma } from "@prisma/client";
 import { HomeClient } from "@/components/HomeClient";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
+import { findPublicJobs, getCachedPublicJobs } from "@/lib/public-jobs";
 
 export const dynamic = "force-dynamic";
 
@@ -10,15 +11,28 @@ interface HomeProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-async function getJobs(filters: {
+type JobFilters = {
   search: string;
   categories: string[];
   jobTypes: string[];
   farmTypes: string[];
   benefits: string[];
   sortBy: string;
-}) {
-  const where: any = {
+};
+
+function hasDefaultFilters(filters: JobFilters) {
+  return (
+    !filters.search &&
+    filters.categories.length === 0 &&
+    filters.jobTypes.length === 0 &&
+    filters.farmTypes.length === 0 &&
+    filters.benefits.length === 0 &&
+    filters.sortBy === "latest"
+  );
+}
+
+async function getJobs(filters: JobFilters) {
+  const where: Prisma.JobWhereInput = {
     active: true,
     expiresAt: { gt: new Date() },
   };
@@ -48,14 +62,14 @@ async function getJobs(filters: {
     where.benefits = { hasSome: filters.benefits };
   }
 
-  let orderBy: any = { createdAt: "desc" };
+  let orderBy: Prisma.JobOrderByWithRelationInput = { createdAt: "desc" };
   if (filters.sortBy === "highest-paid") {
     orderBy = { salaryMax: "desc" };
   } else if (filters.sortBy === "most-viewed") {
     orderBy = { views: "desc" };
   }
 
-  const jobs = await db.job.findMany({
+  const query = {
     where,
     orderBy: [
       { featured: "desc" },
@@ -75,9 +89,13 @@ async function getJobs(filters: {
       createdAt: true,
     },
     take: 50,
-  });
+  } satisfies Prisma.JobFindManyArgs;
 
-  return jobs;
+  if (hasDefaultFilters(filters)) {
+    return getCachedPublicJobs("home-default-jobs", query);
+  }
+
+  return findPublicJobs("home-filtered-jobs", query);
 }
 
 function SkeletonCard() {
@@ -143,7 +161,7 @@ export default async function Home({ searchParams }: HomeProps) {
     ...job,
     salaryMin: job.salaryMin ?? undefined,
     salaryMax: job.salaryMax ?? undefined,
-    createdAt: job.createdAt,
+    createdAt: new Date(job.createdAt),
   }));
 
   return (

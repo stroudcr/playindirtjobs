@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { db } from "@/lib/db";
+import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Sprout, ArrowRight } from "lucide-react";
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 export default async function FarmingJobsPage() {
-  const jobs = await db.job.findMany({
+  const jobs = await getCachedPublicJobs("farming-jobs", {
     where: {
       active: true,
       expiresAt: { gte: new Date() },

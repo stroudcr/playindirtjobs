@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { db } from "@/lib/db";
+import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Beef } from "lucide-react";
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RanchJobsPage() {
-  const jobs = await db.job.findMany({
+  const jobs = await getCachedPublicJobs("ranch-jobs", {
     where: {
       active: true,
       expiresAt: { gte: new Date() },
