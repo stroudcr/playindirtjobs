@@ -94,6 +94,13 @@ export default async function AlmanacArticlePage({
     .map((slug) => getAlmanacArticle(slug))
     .filter(Boolean) as NonNullable<ReturnType<typeof getAlmanacArticle>>[];
 
+  const cta = article.cta ?? {
+    heading: "Ready to start your farm career?",
+    body: "Browse hundreds of farming, gardening, and ranching jobs across America.",
+    href: "/",
+    label: "Browse Jobs",
+  };
+
   const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -260,14 +267,13 @@ export default async function AlmanacArticlePage({
         <div className="max-w-4xl mx-auto">
           <div className="card p-8 text-center bg-white">
             <h2 className="font-display text-2xl text-forest mb-3">
-              Ready to start your farm career?
+              {cta.heading}
             </h2>
             <p className="text-forest-light mb-6">
-              Browse hundreds of farming, gardening, and ranching jobs across
-              America.
+              {cta.body}
             </p>
-            <Link href="/" className="btn btn-primary">
-              Browse Jobs
+            <Link href={cta.href} className="btn btn-primary">
+              {cta.label}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

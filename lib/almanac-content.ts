@@ -1,7 +1,7 @@
 export interface AlmanacArticle {
   slug: string;
   title: string;
-  category: "Getting Started" | "Industry Insights" | "Seasonal Guide" | "Career Advice";
+  category: "Getting Started" | "Industry Insights" | "Seasonal Guide" | "Career Advice" | "Hiring Advice";
   excerpt: string;
   metaTitle: string;
   metaDescription: string;
@@ -17,6 +17,13 @@ export interface AlmanacArticle {
   };
   content: string;
   relatedSlugs?: string[];
+  audience?: "worker" | "employer";
+  cta?: {
+    heading: string;
+    body: string;
+    href: string;
+    label: string;
+  };
 }
 
 export function formatAlmanacDate(
@@ -27,6 +34,254 @@ export function formatAlmanacDate(
 }
 
 export const almanacArticles: AlmanacArticle[] = [
+  {
+    slug: "why-farm-job-posting-isnt-getting-applicants",
+    title: "Why Your Farm Job Posting Isn't Getting Applicants",
+    category: "Hiring Advice",
+    excerpt: "If your farm, garden, nursery, or ranch job post is getting skipped, the problem may not be the work. It may be that candidates cannot see the real offer clearly enough to apply.",
+    metaTitle: "Why Farm Job Posts Get No Applicants | PlayInDirtJobs",
+    metaDescription: "Farm job posting not getting applicants? Learn how to write clearer agricultural job ads that attract reliable farm, garden, nursery, and ranch workers.",
+    date: "2026-05-30",
+    author: "PlayInDirtJobs",
+    readTime: 10,
+    featured: false,
+    audience: "employer",
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1779924443806-bc1846e261f3?w=1200&h=630&fit=crop",
+      alt: "Dewy grass beside a gravel country road and bare field at sunrise",
+      credit: "Samuel James",
+      creditUrl: "https://unsplash.com/photos/dewy-grass-power-lines-and-a-country-road-at-sunrise-dI4wkWqryKk",
+    },
+    relatedSlugs: [
+      "how-much-do-farm-jobs-pay",
+      "farm-jobs-with-housing",
+      "seasonal-farm-work-complete-guide-to-harvest-jobs",
+    ],
+    cta: {
+      heading: "Ready to find reliable farm help?",
+      body: "Post your farm, garden, nursery, or ranch job on PlayInDirtJobs and reach people already looking for hands-on agricultural work.",
+      href: "/post-job",
+      label: "Post a Job",
+    },
+    content: `
+<p>You wrote the job post. You need help before the busy season hits. The work is real, the position matters, and your farm, nursery, ranch, greenhouse, garden center, vineyard, orchard, or market garden cannot run short-handed forever. Then the listing goes live and almost nothing happens.</p>
+
+<p>That is frustrating, but it is not unusual. Agricultural employers are hiring in a tight labor market where workers have options and where the best candidates quickly move past vague job ads. The problem is not always that people do not want farm work. Often, the problem is that the job posting does not answer the questions serious candidates need answered before they apply.</p>
+
+<p>A better farm job posting does two things at once: it makes the job easier to find, and it makes the real offer easier to understand. It should attract people who can succeed in the role while helping poor-fit candidates opt out before you spend time interviewing them. That clarity saves everyone time.</p>
+
+<h2>Farm Labor Is Tight, So Clarity Matters</h2>
+
+<p>The broader labor picture gives agricultural employers little room for vague recruiting. The <a href="https://ers.usda.gov/topics/farm-economy/farm-labor">USDA Economic Research Service farm labor overview</a> notes that hired farmworkers are essential to labor-intensive parts of agriculture, and that wages and contract labor made up 42 percent of production expenses for greenhouse and nursery operations and 40 percent for fruit and tree nut operations in the 2022 Census of Agriculture. ERS also reports that real farm wages have risen faster over the past decade, consistent with growers saying workers are harder to find.</p>
+
+<p>The <a href="https://www.bls.gov/ooh/farming-fishing-and-forestry/agricultural-workers.htm">Bureau of Labor Statistics agricultural workers outlook</a> shows why recruiting is still active even when overall employment is projected to decline. BLS projects about 116,200 agricultural worker openings each year on average from 2024 to 2034, mostly from replacement needs. In other words, employers are not only competing for growth positions. They are replacing people who leave, retire, transfer, or decide the schedule and physical demands are not for them.</p>
+
+<p>That makes your job post more than an announcement. It is the first screen in your hiring process. If it is thin, confusing, or too rosy, you may lose careful applicants and attract people who only learn the real conditions later.</p>
+
+<h2>Why Candidates Skip Farm Job Posts</h2>
+
+<p>Most workers do not skip a listing because the farm sounds imperfect. They skip it because they cannot tell what they are being asked to commit to. A clear, honest posting often performs better than a shiny one because agriculture candidates know the work is physical, seasonal, and weather-dependent. They want the truth early.</p>
+
+<p>These are the gaps that commonly make good applicants hesitate:</p>
+
+<ul>
+<li><strong>No pay range.</strong> "Competitive pay" is not enough when workers are comparing rent, transportation, childcare, food, and other seasonal options.</li>
+<li><strong>No schedule.</strong> Farm work often includes early mornings, weekends, holidays, livestock chores, irrigation checks, market days, or harvest overtime. Leaving that out creates surprises later.</li>
+<li><strong>Unclear season length.</strong> A seasonal worker needs to know whether the role runs six weeks, four months, or year-round with slower winter duties.</li>
+<li><strong>Vague housing details.</strong> If housing is included, candidates need to know what kind, whether it is shared, what it costs, and what transportation or kitchen access exists.</li>
+<li><strong>No physical expectations.</strong> Bending, lifting, crouching, heat, cold, mud, ladders, livestock, machinery, and repetitive work should be named plainly.</li>
+<li><strong>No training information.</strong> Entry-level candidates may be willing to work hard, but they need to know whether you teach harvesting standards, equipment use, animal handling, safety procedures, or crop-specific skills.</li>
+<li><strong>Too many "must haves."</strong> A long list of required skills can scare away promising beginners. Separate what is truly required from what is preferred.</li>
+<li><strong>No sense of management.</strong> Candidates want to know who they report to, how crews are organized, and what kind of communication they can expect.</li>
+</ul>
+
+<p>None of this means you need to make the job sound easy. The goal is to make the job sound real.</p>
+
+<h2>Start With the Right Job Title</h2>
+
+<p>A farm job title should be searchable and specific. Cute titles may fit your culture, but candidates search for plain language: farm hand, ranch hand, greenhouse worker, nursery worker, harvest crew member, equipment operator, livestock caretaker, farm manager, market garden assistant, irrigation technician, or orchard worker.</p>
+
+<p>The <a href="https://farms.extension.wisc.edu/articles/writing-effective-job-descriptions/">University of Wisconsin Extension guide to writing effective job descriptions</a> recommends choosing descriptive titles and avoiding terms that are too narrow if the job includes broader duties. That is especially useful for diversified farms. If someone will seed trays, harvest greens, wash bins, load a van, weed carrots, and help at market, "lettuce harvester" may be too narrow. "Vegetable Farm Crew Member" tells a clearer story.</p>
+
+<p>Good titles usually include three pieces: the role, the operation type, and the employment pattern. For example:</p>
+
+<ul>
+<li>Seasonal Vegetable Farm Crew Member</li>
+<li>Greenhouse Nursery Worker - Full-Time</li>
+<li>Ranch Hand With Livestock Experience</li>
+<li>Organic Orchard Harvest Crew Lead</li>
+<li>Farm Market and Wash-Pack Assistant</li>
+</ul>
+
+<p>Those titles are not fancy. That is the point. They help job seekers recognize themselves in the role.</p>
+
+<h2>Describe the Operation, Not Just the Task List</h2>
+
+<p>Before candidates decide whether to apply, they want to understand the setting. A two-acre flower farm, a 600-cow dairy, a wholesale nursery, a regenerative cattle ranch, a CSA vegetable farm, and an urban garden program are all "agriculture," but they are very different workplaces.</p>
+
+<p>Use the first paragraph to explain:</p>
+
+<ul>
+<li>What you grow, raise, sell, or manage</li>
+<li>Where the work happens and whether it is indoor, outdoor, field, barn, greenhouse, retail, or mixed</li>
+<li>Whether the operation is organic, regenerative, conventional, direct-market, wholesale, educational, nonprofit, or family-run</li>
+<li>How large the crew is and who the person reports to</li>
+<li>Why the role matters this season</li>
+</ul>
+
+<p>This does not need to be a brand essay. Three to five honest sentences are enough. A candidate should be able to picture the place and understand why you are hiring.</p>
+
+<h2>Turn Daily Reality Into Clear Duties</h2>
+
+<p>A job post should not list every possible task, but it should name the work that will fill most days. Wisconsin Extension recommends starting with the most important duties and using direct action words like operate, maintain, harvest, wash, seed, feed, repair, load, prune, irrigate, or follow safety guidelines.</p>
+
+<p>For agriculture, duties are clearest when grouped by work area:</p>
+
+<ul>
+<li><strong>Crop work:</strong> seeding, transplanting, weeding, pruning, irrigation, harvest, washing, packing, loading, recordkeeping.</li>
+<li><strong>Livestock work:</strong> feeding, watering, bedding, moving animals, checking health, cleaning pens, fencing, milking, egg collection.</li>
+<li><strong>Nursery and greenhouse work:</strong> potting, propagation, watering, spacing, sanitation, order pulling, plant care, customer loading.</li>
+<li><strong>Equipment and maintenance:</strong> tractor work, basic repairs, tool care, mowing, fence repair, wash-pack cleanup, vehicle checks.</li>
+<li><strong>Market and customer work:</strong> farmers market setup, CSA packing, farm stand sales, delivery routes, customer communication.</li>
+</ul>
+
+<p>If a duty only happens occasionally, say so. "Occasional Saturday farmers market shifts" is less alarming than hiding market work until the interview.</p>
+
+<h2>Be Specific About Schedule and Season</h2>
+
+<p>Agriculture schedules are not always nine to five, and serious candidates know that. What they need is a clear expectation. The BLS notes that agricultural workers often work outdoors in all kinds of weather, that some work more than 40 hours per week, and that schedules may include early mornings, weekends, and holidays because living crops and animals need care.</p>
+
+<p>Your posting should answer:</p>
+
+<ul>
+<li>Is the role full-time, part-time, seasonal, temporary, year-round, apprenticeship, or contract?</li>
+<li>What are the expected start and end dates?</li>
+<li>How many hours per week are typical?</li>
+<li>Which days are normally worked?</li>
+<li>Are weekends, holidays, evening chores, market days, or overtime expected?</li>
+<li>Does the schedule change during planting, calving, lambing, kidding, harvest, market season, or winter?</li>
+</ul>
+
+<p><a href="https://www.canr.msu.edu/news/recruiting_labor_for_your_farm">Michigan State University Extension</a> recommends that entry-level farm postings clearly describe details such as nights, weekends or holidays, starting wage, hours per week, shift length, benefits, needed skills, indoor or outdoor work, training, and location. That list is a strong minimum standard for any agricultural job ad.</p>
+
+<h2>Put Pay, Benefits, Housing, and Transportation in Plain View</h2>
+
+<p>Leaving compensation vague may feel flexible, but it often costs applicants. Workers who are willing to do hard physical work still need to know whether the job can support them. If you have a firm range, publish it. If pay depends on experience, publish the range and explain what moves someone toward the higher end.</p>
+
+<p>Include benefits that matter in agricultural life:</p>
+
+<ul>
+<li>Hourly wage, salary, piece rate, stipend, bonus, or overtime expectations</li>
+<li>Housing, housing cost, room type, utilities, kitchen access, and move-in dates</li>
+<li>Meals, farm produce, food stipend, or shared kitchen details</li>
+<li>Transportation to worksites, markets, grocery stores, or town</li>
+<li>Health insurance, paid time off, retirement, sick leave, or workers' compensation details where applicable</li>
+<li>Training, mentorship, certifications, equipment, uniforms, tools, or protective gear</li>
+</ul>
+
+<p>If you cannot offer top wages, clarity becomes even more important. Housing, predictable hours, training, respectful management, access to produce, a reliable season length, or a path to crew lead can all matter to candidates. But they only count if people can see them.</p>
+
+<h2>Separate Required Skills From Preferred Skills</h2>
+
+<p>One of the fastest ways to shrink your applicant pool is to list every nice-to-have skill as required. A first-season vegetable crew member may not need three years of experience. A greenhouse worker may not need a degree. A ranch hand may need calm animal handling, reliability, and a valid license more than a perfect resume.</p>
+
+<p>Use two lists:</p>
+
+<ul>
+<li><strong>Required:</strong> the person cannot safely or legally do the job without this.</li>
+<li><strong>Preferred:</strong> useful experience you would value but are willing to train around.</li>
+</ul>
+
+<p>For example, "valid driver's license required; tractor experience preferred" is clearer than "must know farm equipment." "Able to lift 50 pounds with assistance available" is clearer than "must be strong." "Spanish language skills preferred" is clearer than burying bilingual communication needs in a general description.</p>
+
+<p>Clear requirements also help with fairness. They make it easier for candidates to understand the role, and they make it easier for you to compare applicants against the same standard.</p>
+
+<h2>Name the Hard Parts Honestly</h2>
+
+<p>Some employers avoid naming difficult parts of the job because they fear fewer applications. But hiding the hard parts usually creates a worse problem: interviews with poor-fit candidates, early quits, and strained crews during peak season.</p>
+
+<p>Be honest about:</p>
+
+<ul>
+<li>Heat, cold, rain, mud, dust, pollen, greenhouse humidity, or smoke-season realities</li>
+<li>Standing, kneeling, bending, crouching, lifting, carrying, climbing, or repetitive hand work</li>
+<li>Animal handling risks, machinery, sharp tools, pesticides, cleaning chemicals, or food safety rules</li>
+<li>Fast harvest pace, early start times, weekend markets, and variable hours</li>
+<li>Shared housing, rural isolation, transportation limits, or limited cell service</li>
+</ul>
+
+<p>Safety expectations belong in the posting too. The <a href="https://www.osha.gov/heat-exposure/water-rest-shade">OSHA Water, Rest, Shade guidance</a> emphasizes access to cool fluids, breaks as heat stress rises, and worker awareness around heat illness risks. If your work involves summer field labor, greenhouse humidity, heavy protective gear, or hot packing spaces, say what you provide and what procedures workers are expected to follow.</p>
+
+<p>Good candidates are not scared off by honest conditions. Many are reassured by an employer who names them and has a plan.</p>
+
+<h2>Use Multiple Recruiting Channels, Then Send People to One Strong Posting</h2>
+
+<p>Posting in only one place can limit reach, especially in rural areas. The <a href="https://cap.unl.edu/nebraska-agricultural-labor-guide/chapter-1-recruitment/">University of Nebraska-Lincoln agricultural recruitment guide</a> recommends using several approaches at once, including word of mouth, local flyers, social media, university or college job boards, and agriculture-specific job websites.</p>
+
+<p>That does not mean you need to rewrite the job everywhere. Create one complete posting, then share it through the channels that fit your operation:</p>
+
+<ul>
+<li>Current employees and alumni</li>
+<li>Local farm stores, equipment dealers, markets, feed stores, cafes, and community boards</li>
+<li>High school agriculture programs, FFA chapters, 4-H, community colleges, and university agriculture departments</li>
+<li>Your farm newsletter, Instagram, Facebook, and website</li>
+<li>Specialized agriculture job boards where candidates already expect farm, garden, nursery, and ranch work</li>
+</ul>
+
+<p>The core posting should be detailed enough that every share points back to the same reliable information. That keeps applicants from hearing different versions of the role.</p>
+
+<h2>Before and After: A Stronger Farm Job Post</h2>
+
+<p>Here is a vague version many candidates would skip:</p>
+
+<blockquote>
+<p><strong>Farm help wanted.</strong> Busy organic farm looking for a hard worker. Must be reliable and able to work outside. Duties vary. Competitive pay. Housing possible. Send resume.</p>
+</blockquote>
+
+<p>That post may be true, but it leaves too much unanswered. Compare it with this version:</p>
+
+<blockquote>
+<p><strong>Seasonal Vegetable Farm Crew Member - Organic Market Garden</strong></p>
+<p>Green Valley Farm is a 12-acre organic vegetable and flower farm outside Asheville, NC. We sell through a CSA, two farmers markets, and local restaurants. We are hiring one seasonal crew member for May 15 through October 31 to help with field work, harvest, wash-pack, and occasional Saturday market shifts.</p>
+<p><strong>Schedule:</strong> 35 to 45 hours per week, Monday through Friday, usually 7 AM to 3:30 PM. Two Saturdays per month during market season. Harvest weeks may run longer with advance notice.</p>
+<p><strong>Pay and benefits:</strong> $17 to $20 per hour depending on experience. Farm produce included weekly. Shared on-farm housing available for $300 per month including utilities, kitchen, laundry, and Wi-Fi. Workers need reliable transportation for personal errands; farm vehicle is used for work tasks.</p>
+<p><strong>Primary duties:</strong> transplanting, weeding, irrigation setup, harvesting vegetables and flowers, washing and packing produce, cleaning harvest bins, loading market vehicles, and following food safety and heat safety procedures.</p>
+<p><strong>Required:</strong> reliability, ability to lift 50 pounds with assistance, ability to work outdoors in heat and rain, and willingness to learn our harvest standards. <strong>Preferred:</strong> one season of farm, garden, landscaping, greenhouse, or kitchen experience.</p>
+<p>To apply, send a short note about your work experience and why this role interests you.</p>
+</blockquote>
+
+<p>The second version will not attract everyone. That is good. It is designed to attract people who understand the schedule, pay, housing, physical work, and season length before applying.</p>
+
+<h2>A Farm Job Posting Checklist</h2>
+
+<p>Before you publish, check whether your posting answers these questions:</p>
+
+<ul>
+<li>Is the title specific and searchable?</li>
+<li>Does the opening paragraph explain what kind of operation this is?</li>
+<li>Does the posting list the main daily duties?</li>
+<li>Does it explain season length, start date, end date, and weekly hours?</li>
+<li>Does it mention weekends, holidays, early mornings, markets, livestock chores, or overtime?</li>
+<li>Does it include pay or a realistic pay range?</li>
+<li>Does it describe housing, meals, transportation, tools, equipment, and training if offered?</li>
+<li>Does it separate required qualifications from preferred qualifications?</li>
+<li>Does it clearly state physical demands and weather conditions?</li>
+<li>Does it explain who the worker reports to?</li>
+<li>Does it include simple application instructions?</li>
+<li>Does the tone sound like a real person someone would want to work for?</li>
+</ul>
+
+<p>If your role uses the H-2A program or you are comparing your posting against H-2A standards, review the current <a href="https://www.dol.gov/agencies/whd/fact-sheets/26-H2A">U.S. Department of Labor H-2A fact sheet</a>. H-2A rules include specific requirements around job orders, wage rates, housing, meals, transportation, tools, deductions, and other significant conditions of employment. This article is practical hiring guidance, not legal advice, so check federal and state requirements for your specific operation.</p>
+
+<h2>The Bottom Line</h2>
+
+<p>If your farm job posting is not getting applicants, do not only ask where else you can post it. Ask whether the posting makes the real job clear enough for the right person to say yes.</p>
+
+<p>A strong agricultural job post is specific about pay, schedule, duties, physical demands, housing, training, and the kind of workplace you run. That clarity builds trust before the interview. It also helps you spend less time sorting through poor-fit applicants and more time talking with people who understand the work.</p>
+
+<p>When your listing is ready, <a href="/post-job">post your farm, garden, nursery, or ranch job on PlayInDirtJobs</a> and put it in front of people already looking for hands-on agricultural work.</p>
+`,
+  },
   {
     slug: "farm-jobs-with-housing",
     title: "Farm Jobs With Housing: What to Know Before You Accept",
