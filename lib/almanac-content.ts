@@ -35,6 +35,207 @@ export function formatAlmanacDate(
 
 export const almanacArticles: AlmanacArticle[] = [
   {
+    slug: "extreme-heat-farming-summer-guide",
+    title: "Extreme Heat Farming Guide: Protect Crops, Livestock, and Crews This Summer",
+    category: "Seasonal Guide",
+    excerpt: "A practical summer guide for farms facing extreme heat, with steps for safer field work, better harvest timing, crop protection, livestock care, and seasonal hiring.",
+    metaTitle: "Extreme Heat Farming Guide for Summer | PlayInDirtJobs",
+    metaDescription: "A summer farm heat guide for protecting crops, livestock, and field crews during extreme heat, with tips for harvest, irrigation, shade, and hiring.",
+    date: "2026-07-09",
+    author: "PlayInDirtJobs",
+    readTime: 9,
+    featured: false,
+    audience: "employer",
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1200&h=630&fit=crop",
+      alt: "Rows of green crops growing in a farm field during golden evening light",
+      credit: "Dan Meyers",
+      creditUrl: "https://unsplash.com/s/photos/agriculture",
+    },
+    relatedSlugs: [
+      "seasonal-farm-work-complete-guide-to-harvest-jobs",
+      "organic-vs-regenerative-farming",
+      "why-farm-job-posting-isnt-getting-applicants",
+    ],
+    cta: {
+      heading: "Need reliable help for the next heat window?",
+      body: "Post your seasonal farm, ranch, greenhouse, orchard, or harvest job on PlayInDirtJobs and reach people already looking for hands-on agricultural work.",
+      href: "/post-job",
+      label: "Post a Job",
+    },
+    content: `
+<p>Extreme heat has moved from occasional inconvenience to a summer planning problem for many farms. Specialty crop growers, livestock operations, greenhouses, market gardens, orchards, ranches, and seasonal crews are all feeling the same pressure: the work still has to get done, but the timing, pace, water plan, and staffing model need to change when the forecast turns dangerous.</p>
+
+<p>That is why extreme heat is one of the most important seasonal farm topics right now. In a July 2026 <a href="https://apnews.com/article/heat-dome-specialty-farmers-climate-change-e828eb5fdd188eeaa1ccd5144d34dfab">Associated Press report on specialty farmers and recent heat domes</a>, growers described shifting harvests into the cooler parts of the day, protecting seedlings, using shade, increasing water checks, and prioritizing vulnerable crops before quality drops. Those are not abstract climate ideas. They are daily operating decisions.</p>
+
+<p>This summer farm heat guide is written for farm owners, crew leaders, field managers, ranch managers, greenhouse leads, and workers who need a practical plan before the next hot stretch arrives.</p>
+
+<h2>Why Extreme Heat Changes the Farm Workday</h2>
+
+<p>Heat affects the farm in three directions at once. It affects people doing physical work, crops under stress, and animals that cannot cool themselves easily. A good heat plan has to account for all three.</p>
+
+<p>The <a href="https://www.osha.gov/heat-exposure">OSHA occupational heat overview</a> lists agriculture among the industries where workers have suffered heat-related illness, and it names risk factors that are common on farms: heavy physical activity, hot conditions, lack of acclimatization, and clothing or protective equipment that holds in body heat. That means the same day that stresses lettuce, berries, tomatoes, dairy cows, poultry, or seedlings can also put the crew at risk.</p>
+
+<p>On hot weeks, the goal is not simply to "push through." The goal is to reorganize the work so the farm protects the people first, saves the most perishable crops, keeps animals stable, and postpones lower-value or lower-risk tasks until conditions improve.</p>
+
+<h2>Start With a Heat Forecast, Not Just a Weather Forecast</h2>
+
+<p>A standard high temperature does not tell the whole story. Humidity, overnight lows, sun exposure, wind, workload, reflective surfaces, greenhouse conditions, clothing, and whether workers are acclimated all change the risk.</p>
+
+<p>Before a heat wave, check more than one signal:</p>
+
+<ul>
+<li><strong>HeatRisk:</strong> The <a href="https://www.wpc.ncep.noaa.gov/heatrisk/">National Weather Service HeatRisk tool</a> highlights impactful heat in the seven-day forecast and uses categories from little to no risk through extreme risk.</li>
+<li><strong>Local watches and warnings:</strong> Pay attention to heat advisories, excessive heat watches, and excessive heat warnings from your local National Weather Service office.</li>
+<li><strong>Hourly conditions:</strong> Look at heat index, cloud cover, wind, and the timing of peak heat. A 95-degree afternoon with still air can demand a different work plan than a breezy morning at the same farm.</li>
+<li><strong>Overnight recovery:</strong> If nights stay hot, crops, livestock, housing, and workers may not cool down enough before the next shift.</li>
+<li><strong>Indoor heat:</strong> Greenhouses, barns, wash-pack areas, kitchens, and equipment sheds can become hazardous even when the outdoor temperature looks manageable.</li>
+</ul>
+
+<p>Build the next day's schedule around the risk window. Put the most physical field work first, move packing and maintenance into shaded or cooled periods where possible, and avoid treating the posted high temperature as the only decision point.</p>
+
+<h2>Protect the Crew Before Protecting the Crop</h2>
+
+<p>No harvest is worth a preventable heat illness. A farm heat plan should be specific enough that a new worker, a temporary harvest hand, or a volunteer can understand what to do without guessing.</p>
+
+<p>The <a href="https://www.osha.gov/heat-exposure/water-rest-shade">OSHA Water. Rest. Shade. guidance</a> says employers should provide cool drinking water near the work, require breaks as heat stress rises, and give workers a cool place to recover. The <a href="https://www.cdc.gov/niosh/heat-stress/recommendations/index.html">CDC/NIOSH workplace heat recommendations</a> add useful operating details, including accessible water, hydration reminders, modified work/rest periods, lighter work for new or unacclimatized workers, and longer or more frequent rest as temperature, humidity, sunshine, protective clothing, and workload increase.</p>
+
+<p>On farms, that usually means:</p>
+
+<ul>
+<li><strong>Move heavy tasks earlier.</strong> Harvesting, lifting, trellising, animal moves, fence work, irrigation repair, compost turning, and loading trucks belong in the coolest safe window when possible.</li>
+<li><strong>Set break rules before the shift starts.</strong> Breaks should not depend on whether a worker feels comfortable asking. Heat breaks need to be expected and enforced.</li>
+<li><strong>Put water where the work happens.</strong> A water cooler at the barn is not enough if the crew is harvesting three fields away.</li>
+<li><strong>Assign a heat watcher.</strong> A crew lead should monitor symptoms, pace, water supplies, and whether newer workers are overexerting.</li>
+<li><strong>Train for symptoms.</strong> Workers should know that confusion, fainting, slurred speech, loss of coordination, and hot skin can signal an emergency.</li>
+<li><strong>Plan for language access.</strong> Heat instructions, emergency contacts, and break expectations should be clear to the whole crew, not only English-speaking managers.</li>
+</ul>
+
+<p>Acclimatization matters. New hires, returning seasonal workers, interns, and people coming from cooler jobs often need a gradual ramp-up. This is especially important at the start of a heat wave or after several days away from field work.</p>
+
+<h2>Harvest During the Quality Window</h2>
+
+<p>Heat does not only make harvest harder. It can change crop quality before, during, and after harvest. Leafy greens wilt quickly. Berries soften. Herbs lose freshness. Cucumbers, squash, tomatoes, peppers, cut flowers, and tender greens may need tighter harvest windows and faster cooling.</p>
+
+<p>For specialty farms, the summer harvest plan should answer five questions:</p>
+
+<ul>
+<li>Which crops lose quality fastest in heat?</li>
+<li>Which crops must be picked today, and which can wait?</li>
+<li>What is the earliest safe harvest start time?</li>
+<li>How quickly can product move from field heat into shade, wash water, forced air, or cooler space?</li>
+<li>Do we have enough trained hands to finish before the dangerous heat window?</li>
+</ul>
+
+<p>When labor is short, focus the crew on the crops with the narrowest quality window. It may be better to postpone weeding, mowing, pruning, or noncritical cleanup than to lose the crop that customers expect in CSA boxes, restaurant orders, farm stand bins, or wholesale deliveries.</p>
+
+<h2>Use Irrigation as a Heat Tool, Not Just a Drought Tool</h2>
+
+<p>During heat waves, irrigation decisions become more complicated. Plants may need water, but poorly timed irrigation can increase disease pressure, waste limited supply, or create muddy harvest conditions.</p>
+
+<p>A practical heat irrigation plan includes:</p>
+
+<ul>
+<li><strong>Check soil moisture before assuming.</strong> Wilting during the hottest part of the day can happen even when soil moisture is adequate. Check the root zone before overwatering.</li>
+<li><strong>Water deeply when appropriate.</strong> Shallow watering can encourage shallow roots and fast evaporation. Deep watering supports resilience when the crop and soil type allow it.</li>
+<li><strong>Water early.</strong> Morning irrigation often gives plants water before peak stress while reducing the leaf-wetness period that can encourage disease.</li>
+<li><strong>Prioritize young plants.</strong> Transplants, seedlings, fall starts, and shallow-rooted crops are often less forgiving than established crops.</li>
+<li><strong>Maintain lines before the heat hits.</strong> A clogged drip line or broken valve is easier to fix at 8 AM than in the peak of an advisory.</li>
+<li><strong>Mulch and soil cover matter.</strong> Straw, compost mulch, living cover, and crop residue can reduce soil temperature swings and moisture loss where they fit the system.</li>
+</ul>
+
+<p>Water planning also affects labor. If workers must move pipe, repair drip tape, or drag hoses, schedule that work outside the hottest period and account for the physical load.</p>
+
+<h2>Give Sensitive Crops Temporary Protection</h2>
+
+<p>Some crops need more than water. Heat can interfere with pollination, increase sunscald, speed bolting, reduce shelf life, and stress seedlings intended for fall production. Temporary protection can buy time.</p>
+
+<p>Useful options include:</p>
+
+<ul>
+<li><strong>Shade cloth for vulnerable crops.</strong> Use the lowest shade percentage that solves the problem, because too much shade can slow growth or reduce airflow.</li>
+<li><strong>Field tents or temporary shade.</strong> These can protect harvest crews and freshly picked crops during short, intense work windows.</li>
+<li><strong>Greenhouse ventilation.</strong> Fans, open sides, roll-up walls, shade cloth, and misting systems should be checked before the heat wave arrives.</li>
+<li><strong>Transplant timing shifts.</strong> Delay transplanting when root systems would hit extreme field stress immediately after planting.</li>
+<li><strong>Fast post-harvest cooling.</strong> Move produce into shade quickly, keep bins out of direct sun, and avoid letting packed product sit in a hot vehicle.</li>
+</ul>
+
+<p>Heat stress in vegetable crops often sounds like a crop problem only. In practice, it is a workflow problem. The shade plan, harvest timing, wash-pack process, cooler capacity, and crew size all determine whether a crop survives the heat with marketable quality.</p>
+
+<h2>Make a Livestock Heat Stress Plan</h2>
+
+<p>Livestock heat stress can build quickly, especially when humidity is high and nights stay warm. Cattle, dairy cows, poultry, pigs, sheep, goats, horses, and working dogs all need a heat plan that fits the species, facility, stocking density, and water system.</p>
+
+<p>At minimum, review:</p>
+
+<ul>
+<li><strong>Water access.</strong> Check flow rates, backup water, trough placement, algae, leaks, and whether lower-ranking animals can drink without being crowded out.</li>
+<li><strong>Shade and airflow.</strong> Shade structures, trees, barn openings, fans, and stocking density all affect body heat.</li>
+<li><strong>Feeding times.</strong> Some livestock eat better in cooler hours. Adjust feeding schedules with your veterinarian or nutrition adviser if heat is affecting intake.</li>
+<li><strong>Handling windows.</strong> Avoid moving, sorting, hauling, or working animals in peak heat unless it is urgent.</li>
+<li><strong>Emergency signs.</strong> Heavy panting, drooling, staggering, weakness, crowding around water, reduced feed intake, and sudden production drops deserve immediate attention.</li>
+</ul>
+
+<p>Do not wait for a heat emergency to learn whether every fan works or every trough fills fast enough. The best time to test the system is before the forecast turns red or magenta.</p>
+
+<h2>Adjust Seasonal Hiring for Hotter Summers</h2>
+
+<p>Extreme heat also changes staffing. Farms may need more people for shorter morning harvest windows, more cross-trained workers who can rotate out of high-heat tasks, or a dedicated wash-pack crew so field workers are not carrying the whole process through the hottest part of the day.</p>
+
+<p>If you are posting a summer farm job, be honest and specific. Candidates should know the schedule, physical demands, heat safety practices, housing conditions, and whether work starts early during hot weather. A strong job post might say:</p>
+
+<blockquote>
+<p>This is a seasonal vegetable harvest role from July through October. During heat advisories, our crew starts earlier, takes scheduled water and shade breaks, and rotates between harvest, wash-pack, and lighter tasks. Applicants should be comfortable working outdoors in summer conditions and should tell the crew lead immediately if heat symptoms appear.</p>
+</blockquote>
+
+<p>That kind of clarity helps serious applicants understand the job and signals that the farm has a plan. For more detail on hiring language, see our guide to <a href="/almanac/why-farm-job-posting-isnt-getting-applicants">why farm job postings get skipped</a>.</p>
+
+<h2>After the Heat Wave, Scout Before You Resume Normal Work</h2>
+
+<p>The first cooler day after a heat wave is not automatically a normal day. Crops, animals, and workers may still be recovering.</p>
+
+<p>After a hot stretch, walk the farm and check:</p>
+
+<ul>
+<li>Bolting, sunscald, blossom drop, poor fruit set, tipburn, wilting, and leaf scorch.</li>
+<li>New pest or disease pressure after hot, humid conditions.</li>
+<li>Seedling trays, fall transplants, greenhouse edges, and irrigation misses.</li>
+<li>Livestock feed intake, water intake, milk production, egg production, breathing, and behavior.</li>
+<li>Cooler performance, harvest loss, customer order quality, and rejected product.</li>
+<li>Worker fatigue, near misses, and whether break and water systems actually worked.</li>
+</ul>
+
+<p>Keep short notes. Which tasks were postponed? Which crop suffered first? Which field ran out of water pressure? Which crew rotation worked? Those notes become the farm's next heat plan.</p>
+
+<h2>Summer Farm Heat Checklist</h2>
+
+<ul>
+<li>Check HeatRisk, local advisories, heat index, humidity, wind, and overnight lows.</li>
+<li>Move heavy work into the coolest safe work period.</li>
+<li>Stage cool water near the field, barn, greenhouse, and packing area.</li>
+<li>Set mandatory rest and shade breaks before the shift starts.</li>
+<li>Assign a crew lead to watch for heat symptoms and water supply issues.</li>
+<li>Prioritize perishable crops and fast post-harvest cooling.</li>
+<li>Check irrigation, filters, pumps, valves, drip lines, and backup parts.</li>
+<li>Protect seedlings, leafy greens, herbs, berries, and cut flowers from direct heat where possible.</li>
+<li>Check livestock water, shade, fans, stocking density, and handling schedules.</li>
+<li>Update seasonal job posts with heat-related schedule and safety expectations.</li>
+</ul>
+
+<h2>Frequently Asked Questions About Extreme Heat Farming</h2>
+
+<p><strong>What is the best time of day to harvest during extreme heat?</strong><br />For many farms, early morning is the best harvest window because crops, workers, and equipment are cooler. Evening harvest can also work for some crops, but product may carry more field heat and workers may already be fatigued from the day.</p>
+
+<p><strong>How can farms protect workers during a heat wave?</strong><br />Use a written heat plan with cool water near the work, scheduled rest breaks, shade or cooled recovery areas, acclimatization for new workers, symptom training, and clear authority to stop work when heat risk becomes unsafe.</p>
+
+<p><strong>Does shade cloth help vegetable crops in summer?</strong><br />Shade cloth can help sensitive crops during intense heat, especially seedlings, greens, and some high-value specialty crops. The right shade percentage depends on crop, region, airflow, and production system.</p>
+
+<p><strong>What should livestock farms do before a heat advisory?</strong><br />Confirm that water systems can meet demand, check shade and ventilation, reduce stressful handling during peak heat, watch feed intake and breathing, and prepare backup plans for power, fans, pumps, and emergency veterinary support.</p>
+
+<p>Extreme heat is not going away from summer agriculture. Farms that plan around heat can protect crews, save more marketable crop, reduce livestock stress, and make better hiring decisions before the next high-risk week arrives.</p>
+`,
+  },
+  {
     slug: "why-farm-job-posting-isnt-getting-applicants",
     title: "Why Your Farm Job Posting Isn't Getting Applicants",
     category: "Hiring Advice",

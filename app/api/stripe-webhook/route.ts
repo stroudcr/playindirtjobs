@@ -1,13 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
-import { db } from "@/lib/db";
-import { sendJobConfirmationEmail, sendReceiptEmail } from "@/lib/email";
-import { headers } from "next/headers";
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
-  const headersList = await headers();
-  const signature = headersList.get("stripe-signature");
+  const signature = request.headers.get("stripe-signature");
 
   if (!signature) {
     return NextResponse.json(
@@ -19,6 +14,7 @@ export async function POST(request: NextRequest) {
   let event;
 
   try {
+    const { stripe } = await import("@/lib/stripe");
     event = stripe.webhooks.constructEvent(
       body,
       signature,
@@ -39,6 +35,11 @@ export async function POST(request: NextRequest) {
     const plan = session.metadata.plan;
 
     if (jobId) {
+      const { db } = await import("@/lib/db");
+      const { sendJobConfirmationEmail, sendReceiptEmail } = await import(
+        "@/lib/email"
+      );
+
       // Activate the job and store payment ID
       let job;
       try {

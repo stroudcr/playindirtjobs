@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { stripe } from "@/lib/stripe";
 import { PRICING } from "@/lib/constants";
-import { db } from "@/lib/db";
 import { slugify } from "@/lib/utils";
 import { jobSchema } from "@/lib/validations";
 
@@ -41,6 +39,9 @@ export async function POST(request: NextRequest) {
     const formattedLocation = jobData.remote
       ? `${jobData.city}, ${jobData.state} (Remote)`
       : `${jobData.city}, ${jobData.state}`;
+
+    const { db } = await import("@/lib/db");
+    const { stripe } = await import("@/lib/stripe");
 
     // Create draft job in database
     const job = await db.job.create({
