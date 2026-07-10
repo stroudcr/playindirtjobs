@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { notifyGoogleAboutJob } from "@/lib/google-indexing";
 
 export async function PATCH(
   request: NextRequest,
@@ -43,6 +44,8 @@ export async function PATCH(
         active: true,
       },
     });
+
+    after(() => notifyGoogleAboutJob(job.slug, "URL_UPDATED"));
 
     return NextResponse.json({
       success: true,

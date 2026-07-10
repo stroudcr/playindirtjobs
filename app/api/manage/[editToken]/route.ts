@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { notifyGoogleAboutJob } from "@/lib/google-indexing";
 import { jobUpdateSchema } from "@/lib/validations";
 
 export async function GET(
@@ -135,6 +136,10 @@ export async function PUT(
         applyEmail: updates.applyEmail || null,
       },
     });
+
+    if (job.active && job.expiresAt > new Date()) {
+      after(() => notifyGoogleAboutJob(job.slug, "URL_UPDATED"));
+    }
 
     return NextResponse.json({
       success: true,

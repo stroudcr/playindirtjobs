@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "jobs:notify-google": "node --env-file=.env --import tsx scripts/notify-google-indexing.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -18,6 +19,7 @@
     "@stripe/stripe-js": "^2.4.0",
     "@vercel/analytics": "^1.5.0",
     "clsx": "^2.1.1",
+    "google-auth-library": "^10.9.0",
     "lucide-react": "^0.468.0",
     "next": "^15.5.7",
     "react": "^19.2.1",

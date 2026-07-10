@@ -67,6 +67,14 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 # Job Pricing (in cents)
 BASIC_JOB_PRICE=1500
 FEATURED_JOB_PRICE=2500
+
+# Google Indexing API
+GOOGLE_INDEXING_CLIENT_EMAIL="indexing-service-account@example-project.iam.gserviceaccount.com"
+GOOGLE_INDEXING_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+GOOGLE_INDEXING_SITE_URL="https://www.playindirtjobs.com"
+
+# Vercel Cron authentication
+CRON_SECRET="replace-with-a-long-random-secret"
 \`\`\`
 
 ### 4. Set up the database
@@ -211,6 +219,21 @@ export const PRICING = {
 ### Environment Variables for Production
 
 Make sure to set all variables from \`.env.example\` in your Vercel dashboard, using production values for Stripe and Resend.
+
+### Google job indexing
+
+The app submits active job URLs to Google's Indexing API when jobs are activated,
+edited, reactivated, or imported. Deactivated and expired jobs are submitted with
+`URL_DELETED`.
+
+1. Enable the Google Indexing API in a Google Cloud project.
+2. Create a service account and add its email as an owner of the Search Console property.
+3. Add `GOOGLE_INDEXING_CLIENT_EMAIL` and `GOOGLE_INDEXING_PRIVATE_KEY` to Vercel.
+4. Add a long random `CRON_SECRET` to Vercel so the daily expiry job can authenticate.
+5. Run `npm run jobs:notify-google` once to notify Google about all currently active jobs.
+
+Publishing remains available if these variables are absent; only Google notifications
+are skipped.
 
 ## 📝 TODO / Future Enhancements
 

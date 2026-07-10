@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
+import type { Job } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
       );
 
       // Activate the job and store payment ID
-      let job;
+      let job: Job;
       try {
         job = await db.job.update({
           where: { id: jobId },
@@ -52,6 +53,10 @@ export async function POST(request: NextRequest) {
         });
 
         console.log(`Job ${jobId} activated successfully`);
+        after(async () => {
+          const { notifyGoogleAboutJob } = await import("@/lib/google-indexing");
+          await notifyGoogleAboutJob(job.slug, "URL_UPDATED");
+        });
       } catch (error) {
         console.error(`CRITICAL: Failed to activate job ${jobId}:`, error);
         return NextResponse.json({ received: true });
