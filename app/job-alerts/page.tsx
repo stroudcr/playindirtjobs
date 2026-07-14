@@ -86,8 +86,8 @@ export default function JobAlertsPage() {
             </h1>
             <p className="text-xl md:text-2xl text-forest-light mb-8 leading-relaxed">
               Get instant email alerts for farming, gardening, and ranching
-              opportunities that match your interests. Join hundreds of
-              passionate agricultural professionals finding their next role.
+              opportunities that match your interests, delivered directly to
+              your inbox.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-forest-light mb-8">
               <div className="flex items-center gap-2">

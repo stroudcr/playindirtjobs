@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { db } from "@/lib/db";
 import { notifyGoogleAboutJobs } from "@/lib/google-indexing";
 
@@ -40,6 +41,7 @@ export async function GET(request: NextRequest) {
       where: { id: { in: expiredJobs.map((job) => job.id) } },
       data: { active: false },
     });
+    revalidateTag("public-jobs");
   }
 
   const [deletionNotifications, updateNotifications] = await Promise.all([

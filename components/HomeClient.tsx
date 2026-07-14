@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { JobCard } from "@/components/JobCard";
+import { EmployerCTA } from "@/components/EmployerCTA";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterSidebar } from "@/components/FilterSidebar";
 import { MobileFilters } from "@/components/MobileFilters";
@@ -211,7 +212,7 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
 
           {/* Empty state */}
           {!loading && jobs.length === 0 && (
-            <div className="text-center py-20">
+            <div className="text-center py-14">
               <div className="text-6xl mb-4">🌾</div>
               <h3 className="text-2xl font-semibold text-forest mb-2">
                 No jobs found
@@ -232,6 +233,9 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
               >
                 Clear all filters
               </button>
+              <div className="mx-auto mt-10 max-w-2xl text-left">
+                <EmployerCTA source="search_empty_state" compact />
+              </div>
             </div>
           )}
 

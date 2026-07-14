@@ -96,7 +96,7 @@ export default async function AlmanacArticlePage({
 
   const cta = article.cta ?? {
     heading: "Ready to start your farm career?",
-    body: "Browse hundreds of farming, gardening, and ranching jobs across America.",
+    body: "Browse farming, gardening, and ranching jobs across America.",
     href: "/",
     label: "Browse Jobs",
   };

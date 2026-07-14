@@ -68,10 +68,10 @@ export default function PressPage() {
             </h2>
             <div className="prose prose-lg max-w-none text-forest-light space-y-4">
               <p>
-                PlayInDirtJobs is America&apos;s leading job board connecting passionate workers with sustainable farming, gardening, and ranching opportunities. We bridge the gap between dedicated agricultural professionals and the farms that need them.
+                PlayInDirtJobs is a nationwide job board connecting workers with sustainable farming, gardening, and ranching opportunities. We bridge the gap between agricultural professionals and the operations that need them.
               </p>
               <p>
-                Founded to honor the historical prominence of agriculture in American life, PlayInDirtJobs serves as the essential platform for organic farms, permaculture gardens, regenerative ranches, and sustainable agriculture operations seeking skilled team members.
+                Founded to honor the historical prominence of agriculture in American life, PlayInDirtJobs serves organic farms, permaculture gardens, regenerative ranches, and other agriculture operations seeking team members.
               </p>
               <p>
                 Our platform features opportunities across all agricultural sectors—from farm hand positions and ranch work to specialized roles in greenhouse management, vineyard operations, and agricultural technology.

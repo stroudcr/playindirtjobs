@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Loader2, CheckCircle } from "lucide-react";
+import { TrackedLink } from "@/components/TrackedLink";
 
 export function EmailSubscribe() {
   const [email, setEmail] = useState("");
@@ -96,6 +97,18 @@ export function EmailSubscribe() {
       <p className="text-xs text-forest-light mt-3">
         No spam, unsubscribe anytime. We respect your privacy.
       </p>
+
+      <div className="mt-5 border-t border-primary/15 pt-4 text-sm text-forest-light">
+        <p className="font-semibold text-forest">Know an operation that is hiring?</p>
+        <TrackedLink
+          href="/employers?utm_source=state_jobs&utm_medium=referral&utm_campaign=job_seeker_referral"
+          eventName="employer_cta_click"
+          eventParams={{ source: "state_jobs", placement: "job_alert_sidebar" }}
+          className="mt-2 inline-flex font-semibold text-primary hover:underline"
+        >
+          Share our employer posting guide →
+        </TrackedLink>
+      </div>
     </div>
   );
 }

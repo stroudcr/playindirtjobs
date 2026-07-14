@@ -5,6 +5,89 @@ const resend = new Resend(process.env.RESEND_API_KEY || "re_placeholder");
 
 const FROM_EMAIL = "PlayInDirtJobs <noreply@playindirtjobs.com>";
 
+function escapeEmailHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+export async function sendEmployerMessageEmail({
+  to,
+  subject,
+  heading,
+  message,
+  actionLabel,
+  actionUrl,
+}: {
+  to: string;
+  subject: string;
+  heading: string;
+  message: string;
+  actionLabel?: string;
+  actionUrl?: string;
+}) {
+  const safeHeading = escapeEmailHtml(heading);
+  const safeMessage = escapeEmailHtml(message).replace(/\n/g, "<br />");
+  const safeAction = actionLabel && actionUrl
+    ? `<a href="${escapeEmailHtml(actionUrl)}" style="display:inline-block;background:#10b981;color:#fff;padding:14px 24px;border-radius:6px;text-decoration:none;font-weight:700">${escapeEmailHtml(actionLabel)}</a>`
+    : "";
+
+  await resend.emails.send({
+    from: FROM_EMAIL,
+    to,
+    subject,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#166534">
+        <div style="background:#14532d;padding:28px 24px;text-align:center;border-radius:8px 8px 0 0">
+          <img src="${process.env.NEXT_PUBLIC_APP_URL}/images/PlayInDirtWord.PNG" alt="PlayInDirtJobs" style="max-width:260px;width:100%;height:auto" />
+        </div>
+        <div style="background:#fff;padding:34px 28px;border:1px solid #e5e7eb;border-top:0">
+          <h2 style="color:#14532d;margin-top:0">${safeHeading}</h2>
+          <p style="line-height:1.7">${safeMessage}</p>
+          ${safeAction ? `<div style="margin-top:28px">${safeAction}</div>` : ""}
+        </div>
+        <div style="background:#f3f4f6;padding:16px;text-align:center;color:#78716c;font-size:12px;border-radius:0 0 8px 8px">PlayInDirtJobs · One-time transactional message</div>
+      </div>`,
+  });
+}
+
+export async function sendOutreachEmail({
+  to,
+  subject,
+  message,
+  unsubscribeUrl,
+}: {
+  to: string;
+  subject: string;
+  message: string;
+  unsubscribeUrl: string;
+}) {
+  const postalAddress = process.env.OUTREACH_POSTAL_ADDRESS;
+  if (!postalAddress) throw new Error("OUTREACH_POSTAL_ADDRESS must be configured before outreach can be sent.");
+
+  await resend.emails.send({
+    from: process.env.OUTREACH_FROM_EMAIL || "PlayInDirtJobs <hello@playindirtjobs.com>",
+    to,
+    subject,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#166534">
+        <div style="background:#14532d;padding:24px;text-align:center;border-radius:8px 8px 0 0">
+          <img src="${process.env.NEXT_PUBLIC_APP_URL}/images/PlayInDirtWord.PNG" alt="PlayInDirtJobs" style="max-width:240px;width:100%;height:auto" />
+        </div>
+        <div style="background:#fff;padding:32px 28px;border:1px solid #e5e7eb;border-top:0;line-height:1.7">
+          ${escapeEmailHtml(message).replace(/\n/g, "<br />")}
+        </div>
+        <div style="background:#f3f4f6;padding:18px;text-align:center;color:#78716c;font-size:11px;border-radius:0 0 8px 8px">
+          ${escapeEmailHtml(postalAddress)}<br />
+          <a href="${escapeEmailHtml(unsubscribeUrl)}" style="color:#166534">Unsubscribe from employer outreach</a>
+        </div>
+      </div>`,
+  });
+}
+
 export async function sendJobConfirmationEmail(
   email: string,
   jobData: {
@@ -279,5 +362,37 @@ export async function sendJobAlertEmail(
     });
   } catch (error) {
     console.error("Error sending job alert email:", error);
+  }
+}
+
+export async function sendEmployerMagicLinkEmail(
+  email: string,
+  magicLink: string
+) {
+  const { error } = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: email,
+    subject: "Sign in to your PlayInDirtJobs employer workspace",
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #14532d;">
+        <h2>Sign in to PlayInDirtJobs</h2>
+        <p style="line-height: 1.6; color: #166534;">
+          Use the secure link below to sign in to your employer workspace. This link expires in 15 minutes and can only be used once.
+        </p>
+        <p style="margin: 28px 0;">
+          <a href="${magicLink}"
+             style="display: inline-block; background: #10b981; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+            Sign in to your workspace
+          </a>
+        </p>
+        <p style="line-height: 1.6; color: #78716c; font-size: 14px;">
+          If you did not request this email, you can safely ignore it. The link does not become a session until you confirm it on PlayInDirtJobs.
+        </p>
+      </div>
+    `,
+  });
+
+  if (error) {
+    throw new Error(`Unable to send employer sign-in email: ${error.message}`);
   }
 }

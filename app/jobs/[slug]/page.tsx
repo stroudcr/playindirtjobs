@@ -1,6 +1,5 @@
 import { cache } from "react";
 import { notFound, permanentRedirect } from "next/navigation";
-import { after } from "next/server";
 import { db } from "@/lib/db";
 import { MapPin, DollarSign, Briefcase, Calendar, ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -10,6 +9,9 @@ import type { Metadata } from "next";
 import { ShareButton } from "./share-button";
 import { getUrl, truncateMetaText } from "@/lib/metadata";
 import { isTransientPrismaReadError, logTransientPrismaReadError } from "@/lib/public-jobs";
+import { TrackedLink } from "@/components/TrackedLink";
+import { getPublicApplicationDestination } from "@/lib/public-application";
+import { TrackJobView } from "@/components/TrackJobView";
 
 interface JobPageProps {
   params: Promise<{
@@ -18,16 +20,146 @@ interface JobPageProps {
 }
 
 const getJob = cache(async (slug: string) => {
-  const job = await db.job.findUnique({
-    where: { slug },
+  const job = await db.job.findFirst({
+    where: {
+      slug,
+      active: true,
+      expiresAt: { gt: new Date() },
+    },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      company: true,
+      description: true,
+      city: true,
+      state: true,
+      postalCode: true,
+      remote: true,
+      location: true,
+      salaryMin: true,
+      salaryMax: true,
+      salaryType: true,
+      jobType: true,
+      farmType: true,
+      categories: true,
+      tags: true,
+      benefits: true,
+      companyLogo: true,
+      companyWebsite: true,
+      applyUrl: true,
+      applyEmail: true,
+      featured: true,
+      createdAt: true,
+      expiresAt: true,
+      origin: true,
+      employerId: true,
+    },
   });
-
-  if (!job || !job.active || job.expiresAt < new Date()) {
-    return null;
-  }
 
   return job;
 });
+
+function ApplicationCard({
+  slug,
+  applicationType,
+  compact = false,
+  className = "",
+}: {
+  slug: string;
+  applicationType: "url" | "email" | null;
+  compact?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={`card ${compact ? "p-4" : "p-6"} ${className}`}>
+      <h3 className={`${compact ? "text-lg mb-3" : "text-xl mb-4"} font-display text-forest`}>
+        Apply for this job
+      </h3>
+
+      {applicationType ? (
+        <>
+          <TrackedLink
+            href={`/jobs/${slug}/apply`}
+            eventName="apply_clicked"
+            eventParams={{
+              job_slug: slug,
+              destination_type: applicationType,
+            }}
+            className={`btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center ${compact ? "mb-2 py-3" : "mb-3"}`}
+          >
+            {applicationType === "url" ? "Apply Now" : "Email Application"}
+            <ExternalLink className="w-4 h-4" />
+          </TrackedLink>
+          <p className="text-xs text-forest-light text-center">
+            {applicationType === "url"
+              ? "You’ll be redirected to the company’s application page."
+              : "This will open your email application."}
+          </p>
+        </>
+      ) : (
+        <p className="rounded-lg bg-earth-cream px-4 py-3 text-sm text-forest-light">
+          Applications temporarily unavailable
+        </p>
+      )}
+    </div>
+  );
+}
+
+function EmployerActionCards({
+  slug,
+  company,
+  isClaimable,
+  compact = false,
+}: {
+  slug: string;
+  company: string;
+  isClaimable: boolean;
+  compact?: boolean;
+}) {
+  const cardPadding = compact ? "p-4" : "p-6";
+  const headingSize = compact ? "text-lg mb-2" : "text-xl mb-3";
+
+  return (
+    <>
+      {isClaimable ? (
+        <div className={`card ${cardPadding}`}>
+          <h3 className={`${headingSize} font-display text-forest`}>
+            Is this your listing?
+          </h3>
+          <p className="mb-4 text-sm leading-relaxed text-forest-light">
+            Claim {company}&apos;s listing to manage its details and application method.
+          </p>
+          <TrackedLink
+            href={`/jobs/${slug}/claim`}
+            eventName="claim_started"
+            eventParams={{ job_slug: slug, placement: "job_detail" }}
+            className="btn w-full justify-center border border-primary bg-white text-primary hover:bg-primary/5"
+          >
+            Claim this listing
+          </TrackedLink>
+        </div>
+      ) : null}
+
+      <div className={`card border-primary/20 bg-primary/5 ${cardPadding}`}>
+        <h3 className={`${headingSize} font-display text-forest`}>
+          Hiring for an agricultural role?
+        </h3>
+        <p className="mb-4 text-sm leading-relaxed text-forest-light">
+          Reach people actively looking for farm, ranch, greenhouse, and horticulture work.
+        </p>
+        <TrackedLink
+          href="/employers?utm_source=job_detail&utm_medium=referral&utm_campaign=employer_cta"
+          eventName="employer_cta_click"
+          eventParams={{ job_slug: slug, placement: "job_detail" }}
+          className="btn btn-primary w-full justify-center"
+        >
+          Post a job
+        </TrackedLink>
+      </div>
+    </>
+  );
+}
 
 function getLegacyJobRedirect(slug: string): string | null {
   const state = US_STATES_WITHOUT_DC.find((state) =>
@@ -176,22 +308,12 @@ export default async function JobPage({ params }: JobPageProps) {
     notFound();
   }
 
-  // Increment views only in the page component (not in generateMetadata).
-  after(async () => {
-    try {
-      await db.job.update({
-        where: { id: job.id },
-        data: { views: { increment: 1 } },
-      });
-    } catch (error) {
-      console.warn("Failed to increment job view count:", error);
-    }
-  });
-
   const categoryEmojis = job.categories
     .map(cat => JOB_CATEGORIES.find(c => c.id === cat)?.emoji)
     .filter(Boolean)
     .join(" ");
+  const isClaimable = job.origin === "IMPORTED" && !job.employerId;
+  const applicationDestination = getPublicApplicationDestination(job);
 
   // JobPosting Schema for Google Jobs
   const jobUrl = getUrl(`jobs/${job.slug}`);
@@ -273,6 +395,7 @@ export default async function JobPage({ params }: JobPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
       />
     <main className="min-h-screen bg-earth-cream">
+      <TrackJobView slug={job.slug} />
       <div className="container mx-auto px-4 py-4 sm:py-8">
         {/* Back button */}
         <Link
@@ -286,35 +409,12 @@ export default async function JobPage({ params }: JobPageProps) {
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Apply section - Mobile Only (at top) */}
           <div className="lg:hidden">
-            <div className="card p-4 sticky top-20 z-10">
-              <h3 className="text-lg font-display text-forest mb-3">Apply for this job</h3>
-
-              {job.applyUrl && (
-                <a
-                  href={job.applyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-2 py-3"
-                >
-                  Apply Now
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
-
-              {job.applyEmail && !job.applyUrl && (
-                <a
-                  href={`mailto:${job.applyEmail}`}
-                  className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-2 py-3"
-                >
-                  Email Application
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
-
-              <p className="text-xs text-forest-light text-center">
-                You&apos;ll be redirected to the company&apos;s application page
-              </p>
-            </div>
+            <ApplicationCard
+              slug={job.slug}
+              applicationType={applicationDestination?.type ?? null}
+              compact
+              className="sticky top-20 z-10"
+            />
           </div>
 
           {/* Main content */}
@@ -417,35 +517,10 @@ export default async function JobPage({ params }: JobPageProps) {
           <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-20 space-y-6">
               {/* Apply section */}
-              <div className="card p-6">
-                <h3 className="text-xl font-display text-forest mb-4">Apply for this job</h3>
-
-                {job.applyUrl && (
-                  <a
-                    href={job.applyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-3"
-                  >
-                    Apply Now
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-
-                {job.applyEmail && !job.applyUrl && (
-                  <a
-                    href={`mailto:${job.applyEmail}`}
-                    className="btn btn-primary bg-gradient-to-r from-primary to-primary-dark w-full justify-center mb-3"
-                  >
-                    Email Application
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-
-                <p className="text-xs text-forest-light text-center">
-                  You&apos;ll be redirected to the company&apos;s application page
-                </p>
-              </div>
+              <ApplicationCard
+                slug={job.slug}
+                applicationType={applicationDestination?.type ?? null}
+              />
 
               {/* Benefits */}
               {job.benefits.length > 0 && (
@@ -479,10 +554,13 @@ export default async function JobPage({ params }: JobPageProps) {
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 )}
-                <p className="text-sm text-forest-light">
-                  Contact: {job.companyEmail}
-                </p>
               </div>
+
+              <EmployerActionCards
+                slug={job.slug}
+                company={job.company}
+                isClaimable={isClaimable}
+              />
 
               {/* Share */}
               <div className="card p-6">
@@ -528,10 +606,14 @@ export default async function JobPage({ params }: JobPageProps) {
                   <ExternalLink className="w-3 h-3" />
                 </a>
               )}
-              <p className="text-sm text-forest-light">
-                Contact: {job.companyEmail}
-              </p>
             </div>
+
+            <EmployerActionCards
+              slug={job.slug}
+              company={job.company}
+              isClaimable={isClaimable}
+              compact
+            />
 
             {/* Share */}
             <div className="card p-4">

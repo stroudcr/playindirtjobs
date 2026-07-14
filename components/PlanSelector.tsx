@@ -24,13 +24,13 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
       id: "featured" as const,
       name: "Featured Listing",
       price: PRICING.FEATURED,
-      badge: "Most Popular",
+      badge: "Priority placement",
       features: [
         "60 day listing",
         "Featured badge & highlighting",
         "Top of search results",
-        "2x more visibility",
-        "Priority email support",
+        "Priority placement while active",
+        "Email support",
       ]
     }
   ];
@@ -39,11 +39,11 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
     <div className="card p-4 sm:p-6">
       <h3 className="text-lg sm:text-xl font-display text-forest mb-4">Choose Your Plan</h3>
 
-      <div className="space-y-3">
+      <fieldset className="space-y-3">
+        <legend className="sr-only">Job posting plan</legend>
         {plans.map((plan) => (
-          <div
+          <label
             key={plan.id}
-            onClick={() => onChange(plan.id)}
             className={`cursor-pointer rounded-lg border-2 p-4 transition-all ${
               selected === plan.id
                 ? "border-primary bg-primary/5"
@@ -51,6 +51,14 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
             }`}
           >
             <div className="flex items-start gap-3">
+              <input
+                type="radio"
+                name="posting-plan"
+                value={plan.id}
+                checked={selected === plan.id}
+                onChange={() => onChange(plan.id)}
+                className="mt-1 h-4 w-4 accent-primary"
+              />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2 mb-1">
                   <div>
@@ -79,12 +87,12 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
                 </ul>
               </div>
             </div>
-          </div>
+          </label>
         ))}
-      </div>
+      </fieldset>
 
       <p className="text-xs text-forest-light mt-4 text-center">
-        All plans include applicant tracking and job management
+        One payment. No subscription or automatic renewal.
       </p>
     </div>
   );

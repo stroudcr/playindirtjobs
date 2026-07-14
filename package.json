@@ -7,8 +7,12 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
     "postinstall": "prisma generate",
     "db:seed": "tsx prisma/seed.ts",
+    "jobs:import": "node --env-file=.env --import tsx scripts/import-jsearch-jobs.ts",
     "jobs:notify-google": "node --env-file=.env --import tsx scripts/notify-google-indexing.ts"
   },
   "prisma": {
@@ -16,30 +20,38 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "@stripe/stripe-js": "^2.4.0",
     "@vercel/analytics": "^1.5.0",
     "clsx": "^2.1.1",
     "google-auth-library": "^10.9.0",
     "lucide-react": "^0.468.0",
-    "next": "^15.5.7",
+    "next": "^15.5.20",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "resend": "^3.5.0",
-    "stripe": "^14.25.0",
+    "stripe": "^22.3.1",
     "tailwind-merge": "^2.5.4",
+    "tldts": "^6.1.86",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "eslint": "^8",
-    "eslint-config-next": "15.0.0",
-    "postcss": "^8",
+    "eslint-config-next": "15.5.20",
+    "jsdom": "^25.0.1",
+    "postcss": "8.5.19",
     "prisma": "^5.22.0",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.20.6",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "postcss": "8.5.19"
   }
 }

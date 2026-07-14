@@ -109,7 +109,7 @@ export default function AboutPage() {
                 For generations, agriculture has been the backbone of America. From the family farms that built this nation to the regenerative operations shaping its future, farming and ranching have always held a place of prominence in American life. Yet despite this rich heritage, a disconnect has grown between passionate individuals seeking agricultural careers and the farms desperately needing skilled, committed workers.
               </p>
               <p>
-                PlayInDirtJobs was created to bridge that gap. We recognized that across the country, organic farms, permaculture gardens, family ranches, and sustainable agriculture operations were struggling to find dedicated team members. At the same time, thousands of people—from experienced farm hands to eager apprentices—were searching for opportunities to work the land and contribute to a more sustainable food system.
+                PlayInDirtJobs was created to bridge that gap. Across the country, organic farms, permaculture gardens, family ranches, and sustainable agriculture operations need dedicated team members. At the same time, people—from experienced farm hands to eager apprentices—are searching for opportunities to work the land and contribute to a more sustainable food system.
               </p>
               <p>
                 We believe that working in agriculture is more than just a job. Whether you&apos;re planting seedlings in a nursery, managing livestock on a ranch, harvesting vegetables for a CSA, or tending vines in a vineyard, you&apos;re participating in something essential and timeless. Our platform celebrates this work and the people who do it.
@@ -209,7 +209,7 @@ export default function AboutPage() {
                 <ul className="space-y-3 text-forest-light">
                   <li className="flex items-start gap-3">
                     <span className="text-primary">✓</span>
-                    <span>Browse hundreds of farming, gardening, and ranching jobs across America—completely free</span>
+                    <span>Browse farming, gardening, and ranching jobs across America—completely free</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-primary">✓</span>
@@ -248,11 +248,11 @@ export default function AboutPage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-primary">✓</span>
-                    <span>Reach thousands of dedicated job seekers passionate about agricultural work</span>
+                    <span>Put your opening in front of people actively browsing agricultural work</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-primary">✓</span>
-                    <span>60-day visibility ensures your posting gets maximum exposure</span>
+                    <span>Keep one listing active for 60 days with no automatic renewal</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-primary">✓</span>

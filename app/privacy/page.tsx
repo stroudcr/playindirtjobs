@@ -4,7 +4,7 @@ import { getUrl } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | PlayInDirtJobs",
-  description: "Privacy Policy for PlayInDirtJobs - How we collect, use, and protect your personal information in compliance with CCPA, CPRA, and other privacy laws.",
+  description: "How PlayInDirtJobs collects, uses, shares, and protects information when people browse jobs or use employer services.",
   robots: {
     index: true,
     follow: true,
@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           <div className="prose prose-forest max-w-none">
             <p className="text-forest-light mb-6">
               <strong>Effective Date:</strong> January 1, 2025<br />
-              <strong>Last Updated:</strong> January 1, 2025
+              <strong>Last Updated:</strong> July 13, 2026
             </p>
 
             <p className="text-forest-light mb-6">
@@ -61,11 +61,11 @@ export default function PrivacyPage() {
                 We collect the following categories of personal information that you voluntarily provide:
               </p>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
-                <li><strong>Contact Information:</strong> Email address, company name, contact person name</li>
-                <li><strong>Job Posting Information:</strong> Job titles, descriptions, locations, salary ranges, company information, employment terms</li>
+                <li><strong>Contact Information:</strong> Management email address, public application email address, company name, and contact person name</li>
+                <li><strong>Employer Service Information:</strong> Job postings and drafts, company information, ownership claims, lead inquiries, and employer workspace activity</li>
                 <li><strong>Payment Information:</strong> Credit card information and billing details (processed and stored by Stripe, not by us)</li>
                 <li><strong>Communication Data:</strong> Information you provide when contacting us via email or our contact forms</li>
-                <li><strong>Subscription Data:</strong> Email addresses for job alert subscriptions</li>
+                <li><strong>Subscription and Outreach Data:</strong> Email addresses, consent choices, delivery status, and suppression or unsubscribe records</li>
               </ul>
 
               <h3 className="text-xl font-semibold text-forest mb-3">B. Information Automatically Collected</h3>
@@ -73,9 +73,9 @@ export default function PrivacyPage() {
                 When you visit our website, we automatically collect certain information:
               </p>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
-                <li><strong>Device Information:</strong> IP address, browser type, operating system, device identifiers</li>
+                <li><strong>Device and Server Information:</strong> Information ordinarily contained in server logs, such as IP address, browser type, and operating system</li>
                 <li><strong>Usage Data:</strong> Pages viewed, time spent on pages, links clicked, search queries, referral sources</li>
-                <li><strong>Location Data:</strong> General geographic location based on IP address</li>
+                <li><strong>Attribution Data:</strong> Referring page, campaign parameters, and landing page</li>
                 <li><strong>Cookies and Similar Technologies:</strong> Data collected through cookies and similar tracking technologies (see Section 7)</li>
               </ul>
             </section>
@@ -102,10 +102,11 @@ export default function PrivacyPage() {
               <h3 className="text-xl font-semibold text-forest mb-3">A. Service Delivery</h3>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
                 <li>Publishing and displaying job postings for 60 days</li>
-                <li>Sending job posting confirmation emails and management links</li>
+                <li>Saving posting drafts, operating passwordless employer workspaces, and reviewing listing ownership claims</li>
+                <li>Sending job posting confirmations, private management links, expiration reminders, and an unfinished-draft reminder only when requested</li>
                 <li>Processing payments through Stripe</li>
                 <li>Sending job alert emails to subscribers based on their preferences</li>
-                <li>Providing customer support and responding to inquiries</li>
+                <li>Providing customer support and responding to employer inquiries</li>
               </ul>
 
               <h3 className="text-xl font-semibold text-forest mb-3">B. Platform Operations</h3>
@@ -128,18 +129,17 @@ export default function PrivacyPage() {
             <section id="data-retention" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">4. Data Retention</h2>
               <p className="text-forest-light mb-4">
-                We retain your personal information for specific timeframes based on the purpose of collection:
+                We keep information only as long as reasonably necessary to provide the Service, maintain security, resolve disputes, and satisfy applicable recordkeeping obligations. Retention depends on the type of record:
               </p>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
-                <li><strong>Job Posting Data:</strong> Active for 60 days, then archived for 2 years for legal compliance and dispute resolution, after which it is deleted</li>
-                <li><strong>Payment Records:</strong> Retained for 7 years to comply with tax and financial regulations</li>
-                <li><strong>Email Subscription Data:</strong> Retained until you unsubscribe, then deleted within 30 days</li>
-                <li><strong>Customer Support Communications:</strong> Retained for 3 years to maintain service quality and handle follow-up inquiries</li>
-                <li><strong>Website Analytics Data:</strong> Aggregated data retained for 2 years; individual user data retained for 14 months</li>
-                <li><strong>Account Access Links:</strong> Magic links expire after 30 days; associated email addresses retained with job posting data</li>
+                <li><strong>Posting Drafts:</strong> Draft access expires after 30 days. An opted-in recovery reminder may be sent once while the draft remains available.</li>
+                <li><strong>Job Postings:</strong> Listings are normally active for 60 days. We may retain expired listing and management records for administration, support, fraud prevention, and dispute resolution.</li>
+                <li><strong>Purchases:</strong> We retain transaction records needed for accounting, support, refunds, and legal obligations; Stripe separately retains payment information under its policy.</li>
+                <li><strong>Email Preferences:</strong> We retain subscription, consent, unsubscribe, and suppression records as needed to honor your choices.</li>
+                <li><strong>Passwordless Access:</strong> Magic links expire after 15 minutes and can be used once. Employer sessions expire after 30 days unless ended sooner.</li>
               </ul>
               <p className="text-forest-light mb-4">
-                After these retention periods, we securely delete or anonymize your personal information unless longer retention is required by law.
+                You may request access, correction, or deletion using the contact details below. Some records may be retained where necessary for security, transactions, legal obligations, or to honor suppression requests.
               </p>
             </section>
 
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
 
               <h3 className="text-xl font-semibold text-forest mb-3">A. Public Job Listings</h3>
               <p className="text-forest-light mb-4">
-                Job posting information (company name, job details, location, salary range) is publicly displayed on our website and visible to all visitors. Email addresses and payment information are never publicly displayed.
+                Job posting information (company name, job details, location, salary range, and the application method selected by the employer) is publicly displayed. The private management email and payment information are not displayed. A public application email is displayed only when the employer chooses email as the application method.
               </p>
 
               <h3 className="text-xl font-semibold text-forest mb-3">B. Service Providers</h3>
@@ -196,7 +196,7 @@ export default function PrivacyPage() {
 
               <h3 className="text-xl font-semibold text-forest mb-3">Resend Email Services</h3>
               <p className="text-forest-light mb-4">
-                We use Resend to send transactional emails (job posting confirmations, magic links) and marketing emails (job alerts). Your email address and associated data are shared with Resend for this purpose.
+                We use Resend to send transactional emails (including posting confirmations, magic links, and reminders) and opted-in marketing messages. Your email address and the content needed to deliver the message are shared with Resend for this purpose.
               </p>
             </section>
 
@@ -210,10 +210,12 @@ export default function PrivacyPage() {
 
               <h3 className="text-xl font-semibold text-forest mb-3">Types of Cookies We Use</h3>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
-                <li><strong>Essential Cookies:</strong> Required for basic website functionality (e.g., maintaining your session)</li>
+                <li><strong>Essential Cookies:</strong> HttpOnly cookies used to maintain employer sessions and authorize access to an unfinished posting draft</li>
                 <li><strong>Analytics Cookies:</strong> Help us understand how visitors use our website and improve performance</li>
-                <li><strong>Preference Cookies:</strong> Remember your settings and preferences (e.g., search filters)</li>
               </ul>
+              <p className="text-forest-light mb-4">
+                Third-party analytics components are not rendered on pages whose URLs can contain sign-in, management, Checkout, or unsubscribe credentials. First-party funnel events store campaign fields, page paths, referrer hostnames, and opaque identifiers rather than raw IP addresses.
+              </p>
 
               <h3 className="text-xl font-semibold text-forest mb-3">Managing Cookies</h3>
               <p className="text-forest-light mb-4">
@@ -329,10 +331,9 @@ export default function PrivacyPage() {
                 We implement reasonable technical, administrative, and physical security measures to protect your personal information from unauthorized access, disclosure, alteration, and destruction:
               </p>
               <ul className="list-disc ml-6 space-y-2 text-forest-light mb-4">
-                <li><strong>Encryption:</strong> HTTPS encryption for data transmission; encrypted storage for sensitive data</li>
-                <li><strong>Payment Security:</strong> PCI-DSS compliant payment processing through Stripe</li>
+                <li><strong>Access Tokens:</strong> Magic-link, session, and draft tokens are stored as one-way hashes; sensitive access cookies are HttpOnly</li>
+                <li><strong>Payment Security:</strong> Card details are collected and processed by Stripe rather than stored by us</li>
                 <li><strong>Access Controls:</strong> Limited access to personal information on a need-to-know basis</li>
-                <li><strong>Regular Security Audits:</strong> Periodic review of security practices and vulnerabilities</li>
                 <li><strong>Secure Development:</strong> Following security best practices in code and infrastructure</li>
               </ul>
               <p className="text-forest-light mb-4">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { X as XIcon } from "lucide-react";
+import { TrackedLink } from "./TrackedLink";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -80,9 +81,19 @@ export function Footer() {
             <h4 className="font-display text-forest mb-4">For Employers</h4>
             <ul className="space-y-2 text-sm text-forest-light">
               <li>
-                <Link href="/post-job" className="hover:text-primary transition-colors">
-                  Post a Job
+                <Link href="/employers" className="hover:text-primary transition-colors">
+                  Employer Overview
                 </Link>
+              </li>
+              <li>
+                <TrackedLink
+                  href="/post-job?plan=basic&source=footer"
+                  eventName="employer_cta_click"
+                  eventParams={{ source: "footer", placement: "employer_links", plan: "basic" }}
+                  className="hover:text-primary transition-colors"
+                >
+                  Post a Job
+                </TrackedLink>
               </li>
               <li>
                 <Link href="/pricing" className="hover:text-primary transition-colors">

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { EmployerCTA } from "@/components/EmployerCTA";
 import { Beef } from "lucide-react";
 import { getUrl } from "@/lib/metadata";
 
@@ -92,6 +93,7 @@ export default async function RanchJobsPage() {
           ))}
         </div>
       </section>
+      <EmployerCTA source="ranch_jobs" />
     </main>
     </>
   );

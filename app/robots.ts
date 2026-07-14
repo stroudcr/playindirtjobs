@@ -3,9 +3,12 @@ import { getBaseUrl } from '@/lib/metadata'
 
 const DISALLOWED_PATHS = [
   '/api/',
+  '/admin/',
+  '/employer/',
   '/manage/',
   '/post-job/preview',
   '/success',
+  '/unsubscribe',
 ]
 
 export default function robots(): MetadataRoute.Robots {

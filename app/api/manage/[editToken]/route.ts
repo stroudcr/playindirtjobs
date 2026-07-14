@@ -1,4 +1,5 @@
 import { after, NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { db } from "@/lib/db";
 import { notifyGoogleAboutJob } from "@/lib/google-indexing";
 import { jobUpdateSchema } from "@/lib/validations";
@@ -22,7 +23,7 @@ export async function GET(
       );
     }
 
-    // Return job data (excluding sensitive fields)
+    // The private fields below are available only to the opaque management URL.
     return NextResponse.json({
       job: {
         id: job.id,
@@ -130,6 +131,7 @@ export async function PUT(
         tags: updates.tags || [],
         benefits: updates.benefits || [],
         companyEmail: updates.companyEmail,
+        managementEmail: updates.companyEmail,
         companyWebsite: updates.companyWebsite || null,
         companyLogo: updates.companyLogo || null,
         applyUrl: updates.applyUrl || null,
@@ -138,6 +140,7 @@ export async function PUT(
     });
 
     if (job.active && job.expiresAt > new Date()) {
+      revalidateTag("public-jobs");
       after(() => notifyGoogleAboutJob(job.slug, "URL_UPDATED"));
     }
 

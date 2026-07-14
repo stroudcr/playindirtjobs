@@ -29,7 +29,8 @@ npx prisma studio                                # Open database GUI
 npm run db:seed                                  # Seed database with sample data
 
 # Build and production
-npm run build                                     # Builds: prisma generate → prisma migrate deploy → next build
+npm run build                                     # Builds: prisma generate → next build
+npx prisma migrate deploy                         # Explicit production migration step
 npm start                                         # Start production server
 
 # Linting
@@ -78,8 +79,11 @@ Validation schemas in `lib/validations.ts` using Zod.
 
 ### API Routes
 
-- `POST /api/create-checkout`: Creates Stripe session + inactive Job record
-- `POST /api/stripe-webhook`: Handles payment completion, activates jobs
+- `POST /api/drafts`: Creates a recoverable server-side posting draft
+- `POST /api/create-checkout`: Creates Stripe Checkout for a validated draft; it does not publish a job
+- `POST /api/stripe-webhook`: Idempotently records payment and publishes or renews jobs
+- `GET /api/checkout/status`: Returns minimal payment/publication status for the success page
+- `POST /api/auth/magic-link/request`: Sends passwordless employer sign-in
 - `GET /api/jobs`: Lists jobs with filtering/sorting
 - `GET /api/jobs/[id]`: Individual job details
 - `POST /api/subscribe`: Email subscription signup (Zod validated)
@@ -99,11 +103,11 @@ Required in `.env`:
 DATABASE_URL              # PostgreSQL connection string
 STRIPE_SECRET_KEY         # Stripe secret key
 STRIPE_WEBHOOK_SECRET     # From Stripe CLI or dashboard
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 RESEND_API_KEY
 NEXT_PUBLIC_APP_URL       # e.g., http://localhost:3000
-BASIC_JOB_PRICE=500       # In cents ($5)
-FEATURED_JOB_PRICE=1500   # In cents ($15)
+ADMIN_EMAILS              # comma-separated passwordless admin allowlist
+OUTREACH_POSTAL_ADDRESS   # required before employer outreach can send
+OUTREACH_UNSUBSCRIBE_SECRET
 ```
 
 See `.env.example` for full reference.
@@ -150,16 +154,12 @@ Professional design system in `tailwind.config.ts`:
 Jobs use slugified titles for URLs. Ensure unique slugs when creating jobs (append random string if needed).
 
 ### Magic Link Authentication
-No traditional auth system. Job management URLs include `editToken` query param:
-```
-/manage/[editToken]
-```
-**Note:** Management UI is in TODO list and not yet implemented.
+Employers request a one-use, 15-minute sign-in link at `/employer/login`, then manage owned listings in `/employer`. Hashed sessions are stored in an HttpOnly cookie. The legacy `/manage/[editToken]` flow remains available for older listings.
 
 ### Server vs Client Components
 - Most pages are Server Components for SEO
 - Homepage uses a **hybrid SSR pattern**: `app/page.tsx` is a server component that fetches initial jobs via Prisma, then passes them to `HomeClient` (client component) for interactive filtering. This ensures job listings appear in initial HTML for SEO while preserving snappy client-side filter UX.
-- Job detail page uses React `cache()` on `getJob()` to deduplicate the Prisma query between `generateMetadata` and the page component. View increment runs only in the page component (not metadata).
+- Job detail pages use React `cache()` on `getJob()` to deduplicate the Prisma query between `generateMetadata` and the page component. Deduplicated first-party view events are posted from the rendered page; metadata generation never records a view.
 - Forms and interactive UI use `"use client"` directive
 - API routes handle all mutations
 - `formatSalary()` in `lib/utils.ts` takes `number | undefined` (not `null`) — use `?? undefined` when passing Prisma nullable fields
@@ -223,8 +223,6 @@ When adding new pages or components, follow these patterns:
 ## Known Limitations / TODOs
 
 From README:
-- Job management dashboard (edit/deactivate via magic link) - not yet implemented
-- Advanced analytics for job posters
 - Map view for job locations
 - Saved jobs for job seekers
 - Company profiles
@@ -235,10 +233,12 @@ From README:
 Recommended: Vercel
 - Push to GitHub
 - Import to Vercel
-- Set all environment variables from `.env`
-- Vercel auto-runs build command which includes Prisma migrations
+- Set all environment variables from `.env.example`
+- Run `npx prisma migrate deploy` against the production database before deploying code that uses a new migration
+- Register the production Stripe webhook after the deployment URL is available
 
-Build process automatically runs:
+The build process runs:
 1. `prisma generate`
-2. `prisma migrate deploy`
-3. `next build`
+2. `next build`
+
+Database migrations are an explicit deployment step; the build command does not apply them.

@@ -3,8 +3,7 @@ import { Inter, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/next";
-import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { SiteAnalytics } from "@/components/SiteAnalytics";
 import { getUrl } from "@/lib/metadata";
 
 const inter = Inter({
@@ -87,7 +86,7 @@ export default function RootLayout({
     "name": "PlayInDirtJobs",
     "url": getUrl(),
     "logo": getUrl("images/PlayInDirtLogo.PNG"),
-    "description": "America's leading job board for sustainable agriculture, organic farming, and regenerative ranching careers. Connect farms with passionate workers.",
+    "description": "A nationwide job board for sustainable agriculture, organic farming, gardening, and ranching careers.",
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Customer Service",
@@ -123,11 +122,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>
-        <GoogleAnalytics />
         <Header />
         {children}
         <Footer />
-        <Analytics />
+        <SiteAnalytics />
       </body>
     </html>
   );

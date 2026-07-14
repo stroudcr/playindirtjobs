@@ -6,7 +6,8 @@ A modern job board for farming, gardening, and ranching opportunities. Built wit
 
 - **Beautiful Solarpunk Design** - Vibrant greens, earthy tones, and nature-themed emojis
 - **Advanced Filtering** - Search by category, job type, farm type, benefits, and more
-- **No Authentication Required** - Post jobs and manage them via magic links
+- **Passwordless Employer Workspace** - Secure one-time sign-in links, ownership claims, editing, duplication, and manual renewals
+- **Recoverable Posting Wizard** - Server-saved drafts, safe job-page import, preview, and a guided four-step flow
 - **Stripe Integration** - Secure payment processing for job postings ($15 basic, $25 featured)
 - **Email Notifications** - Job alerts and management links via Resend
 - **SEO Optimized** - Server-side rendering for better search visibility
@@ -25,7 +26,7 @@ A modern job board for farming, gardening, and ranching opportunities. Built wit
 
 ## 📋 Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 20+ and npm
 - PostgreSQL database
 - Stripe account
 - Resend account (for emails)
@@ -55,18 +56,17 @@ DATABASE_URL="postgresql://user:password@localhost:5432/playindirtjobs?schema=pu
 
 # Stripe
 STRIPE_SECRET_KEY="sk_test_..."
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
 STRIPE_WEBHOOK_SECRET="whsec_..."
 
 # Email
 RESEND_API_KEY="re_..."
+ADMIN_EMAILS="owner@example.com"
+OUTREACH_FROM_EMAIL="PlayInDirtJobs <hello@playindirtjobs.com>"
+OUTREACH_POSTAL_ADDRESS="Your legal mailing address"
+OUTREACH_UNSUBSCRIBE_SECRET="replace-with-a-different-long-random-secret"
 
 # App
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
-
-# Job Pricing (in cents)
-BASIC_JOB_PRICE=1500
-FEATURED_JOB_PRICE=2500
 
 # Google Indexing API
 GOOGLE_INDEXING_CLIENT_EMAIL="indexing-service-account@example-project.iam.gserviceaccount.com"
@@ -80,8 +80,11 @@ CRON_SECRET="replace-with-a-long-random-secret"
 ### 4. Set up the database
 
 \`\`\`bash
-# Run Prisma migrations
-npx prisma migrate dev --name init
+# Apply the checked-in migrations in development
+npx prisma migrate dev
+
+# Use this in a deployed environment
+npx prisma migrate deploy
 
 # (Optional) Open Prisma Studio to view your database
 npx prisma studio
@@ -113,7 +116,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 1. Get your live API keys from [Stripe Dashboard](https://dashboard.stripe.com/apikeys)
 2. Create a webhook endpoint in Stripe Dashboard:
    - URL: \`https://yourdomain.com/api/stripe-webhook\`
-   - Events: \`checkout.session.completed\`
+   - Events: \`checkout.session.completed\`, \`checkout.session.async_payment_succeeded\`, \`checkout.session.async_payment_failed\`, \`checkout.session.expired\`, and \`charge.refunded\`
 3. Copy the webhook signing secret to your production environment variables
 
 ## 📧 Email Setup (Resend)
@@ -121,14 +124,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 1. Sign up at [Resend](https://resend.com)
 2. Verify your domain (or use their test domain for development)
 3. Get your API key and add it to \`.env\`
-4. Update the \`FROM_EMAIL\` in \`lib/email.ts\` to match your verified domain
+4. Verify the transactional sender in \`lib/email.ts\` and set \`OUTREACH_FROM_EMAIL\` to an approved sender for employer outreach
 
 ## 🗄️ Database Schema
 
-The app uses two main models:
-
-- **Job** - Job postings with all details, payment info, and management tokens
-- **Subscriber** - Email subscribers for job alerts
+The core schema includes jobs and subscribers plus employers, passwordless auth tokens and sessions, recoverable drafts, purchases, funnel events, listing claims, leads, approved outreach, suppression records, and a retryable email outbox.
 
 See \`prisma/schema.prisma\` for the complete schema.
 
@@ -211,10 +211,12 @@ export const PRICING = {
 
 ### Vercel (Recommended)
 
-1. Push your code to GitHub
-2. Import your repository in [Vercel](https://vercel.com)
-3. Add environment variables in Vercel dashboard
-4. Deploy!
+1. Push your code to GitHub.
+2. Import your repository in [Vercel](https://vercel.com).
+3. Add the production environment variables in Vercel.
+4. Apply the checked-in database migration with `npx prisma migrate deploy` against the production database.
+5. Deploy the application.
+6. Register the signed Stripe webhook endpoint and the events listed above.
 
 ### Environment Variables for Production
 
@@ -237,8 +239,6 @@ are skipped.
 
 ## 📝 TODO / Future Enhancements
 
-- [ ] Job management dashboard (edit/deactivate via magic link)
-- [ ] Advanced analytics for job posters
 - [ ] Social sharing for job posts
 - [ ] Map view for job locations
 - [ ] Saved jobs for job seekers

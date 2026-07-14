@@ -10,6 +10,11 @@ export const dynamic = "force-dynamic";
 const STATIC_PATHS = [
   "",
   "/post-job",
+  "/employers",
+  "/employers/hire-greenhouse-nursery-workers",
+  "/employers/hire-orchard-vineyard-workers",
+  "/employers/hire-vegetable-csa-workers",
+  "/employers/hire-farm-workers",
   "/farming-jobs",
   "/gardening-jobs",
   "/ranch-jobs",

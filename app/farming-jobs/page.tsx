@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { EmployerCTA } from "@/components/EmployerCTA";
 import { Sprout, ArrowRight } from "lucide-react";
 import { getUrl } from "@/lib/metadata";
 
@@ -142,6 +143,8 @@ export default async function FarmingJobsPage() {
             </div>
           )}
         </section>
+
+        <EmployerCTA source="farming_jobs" />
 
         {/* SEO Content */}
         <section className="bg-white border-t border-border py-12">

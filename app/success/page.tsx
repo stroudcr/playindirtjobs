@@ -1,133 +1,92 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { AlertTriangle, CheckCircle, Loader2 } from "lucide-react";
 
-const MAX_ATTEMPTS = 15;
-
-interface SuccessJob {
-  slug: string;
-}
+type CheckoutState = "loading" | "invalid" | "pending" | "processing" | "published" | "recovery" | "canceled" | "refunded";
 
 function SuccessContent() {
   const searchParams = useSearchParams();
-  const [job, setJob] = useState<SuccessJob | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [timedOut, setTimedOut] = useState(false);
+  const sessionId = searchParams.get("session_id");
+  const [state, setState] = useState<CheckoutState>(sessionId ? "loading" : "invalid");
+  const [jobSlug, setJobSlug] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const jobId = searchParams.get("job_id");
+    if (!sessionId) return;
+    let canceled = false;
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
-    if (jobId) {
-      let attempts = 0;
-
-      // Poll for job activation (webhooks can take a moment)
-      const checkJob = async () => {
-        attempts++;
-
-        try {
-          const response = await fetch(`/api/jobs/${jobId}`);
-          const data = await response.json();
-
-          if (data.job) {
-            setJob(data.job);
-            setLoading(false);
-          } else if (attempts >= MAX_ATTEMPTS) {
-            setTimedOut(true);
-            setLoading(false);
-          } else {
-            // If job not active yet, check again in 2 seconds
-            setTimeout(checkJob, 2000);
-          }
-        } catch (error) {
-          console.error("Error fetching job:", error);
-          if (attempts >= MAX_ATTEMPTS) {
-            setTimedOut(true);
-          }
-          setLoading(false);
+    const check = async () => {
+      attempts += 1;
+      try {
+        const response = await fetch(`/api/checkout/status?session_id=${encodeURIComponent(sessionId)}`, { cache: "no-store" });
+        const body = await response.json();
+        if (canceled) return;
+        const nextState = body.state as CheckoutState;
+        setState(nextState);
+        setMessage(body.message || "");
+        if (nextState === "published") {
+          setJobSlug(body.job?.slug || null);
+          return;
         }
-      };
+        if (["invalid", "recovery", "canceled", "refunded"].includes(nextState)) return;
+        if (attempts < 20) {
+          timer = setTimeout(check, 1_500);
+        } else {
+          setState("recovery");
+          setMessage("Your payment is still being reconciled. Your draft and payment record are safe.");
+        }
+      } catch {
+        if (attempts < 20) timer = setTimeout(check, 1_500);
+        else {
+          setState("recovery");
+          setMessage("We could not confirm publication yet. Your payment record and draft are safe.");
+        }
+      }
+    };
+    void check();
+    return () => {
+      canceled = true;
+      if (timer) clearTimeout(timer);
+    };
+  }, [sessionId]);
 
-      checkJob();
-    } else {
-      setLoading(false);
-    }
-  }, [searchParams]);
-
-  if (loading) {
-    return (
-      <main className="min-h-screen bg-earth-cream flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-forest-light">Processing your payment...</p>
-        </div>
-      </main>
-    );
-  }
+  const waiting = ["loading", "pending", "processing"].includes(state);
+  const published = state === "published";
 
   return (
-    <main className="min-h-screen bg-earth-cream flex items-center justify-center py-12">
-      <div className="container mx-auto px-4 max-w-2xl text-center">
-        <CheckCircle className="w-20 h-20 text-primary mx-auto mb-6" />
-
-        <h1 className="text-4xl md:text-5xl font-display text-forest mb-4">
-          {timedOut ? "Payment Received!" : "Job Posted Successfully!"} 🌱
+    <main className="flex min-h-screen items-center bg-earth-cream py-12">
+      <div className="container mx-auto max-w-2xl px-4 text-center">
+        {waiting ? <Loader2 className="mx-auto h-16 w-16 animate-spin text-primary" /> : published ? <CheckCircle className="mx-auto h-20 w-20 text-primary" /> : <AlertTriangle className="mx-auto h-16 w-16 text-amber-600" />}
+        <h1 className="mt-6 text-4xl font-display text-forest sm:text-5xl">
+          {published ? "Your job is live" : waiting ? "Confirming your posting" : state === "invalid" ? "Checkout confirmation missing" : "Your posting needs attention"}
         </h1>
-
-        <p className="text-xl text-forest-light mb-8">
-          {timedOut
-            ? "Your posting is being processed and you'll receive a confirmation email shortly."
-            : "Your job posting is now live and visible to job seekers."}
+        <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-forest-light" aria-live="polite">
+          {published
+            ? "Payment is confirmed and the listing is visible to job seekers. We’re sending your receipt and management link now."
+            : message || (state === "processing" ? "Payment is confirmed. We’re publishing your listing now." : "Waiting for Stripe to confirm payment.")}
         </p>
 
-        <div className="card p-8 mb-8 text-left">
-          <h2 className="text-2xl font-display text-forest mb-4">What&apos;s next?</h2>
-          <ul className="space-y-3 text-forest-light">
-            <li className="flex items-start gap-3">
-              <span className="text-primary font-bold">📧</span>
-              <span>
-                Check your email for a confirmation and a magic link to manage your posting
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-primary font-bold">👀</span>
-              <span>
-                Your job will appear in search results and be visible for 60 days
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-primary font-bold">✏️</span>
-              <span>
-                Use the magic link in your email to edit or deactivate your listing anytime
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-primary font-bold">📊</span>
-              <span>
-                Track views and engagement from your management dashboard
-              </span>
-            </li>
+        <div className="card mt-8 p-6 text-left sm:p-8">
+          <h2 className="text-xl font-display text-forest">What happens next</h2>
+          <ul className="mt-4 space-y-3 text-sm leading-relaxed text-forest-light">
+            <li>• Your private management email is never shown on the public listing.</li>
+            <li>• The listing remains active for 60 days and does not renew automatically.</li>
+            <li>• Your employer workspace reports job views and application-link clicks.</li>
           </ul>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {job && (
-            <Link href={`/jobs/${job.slug}`} className="btn btn-primary">
-              View Your Posting
-            </Link>
-          )}
-          <Link href="/" className="btn bg-white border border-border hover:bg-gray-50 text-forest">
-            Browse All Jobs
+        <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+          {published && jobSlug ? <Link href={`/jobs/${jobSlug}`} className="btn btn-primary justify-center">View live posting</Link> : null}
+          <Link href={published ? "/employer" : "/post-job"} className="btn btn-outline justify-center">
+            {published ? "Open employer workspace" : "Return to your draft"}
           </Link>
         </div>
-
-        <div className="mt-12 p-6 bg-accent-yellow/10 rounded-lg border border-accent-yellow/30">
-          <p className="text-sm text-forest-light">
-            Thank you for supporting agriculture and helping connect people with meaningful farm work!
-          </p>
-        </div>
+        {!published && !waiting ? <p className="mt-5 text-sm text-forest-light">If Stripe charged the payment, do not submit it again. The recovery record lets us safely retry publication.</p> : null}
       </div>
     </main>
   );
@@ -135,11 +94,7 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense fallback={
-      <main className="min-h-screen bg-earth-cream flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </main>
-    }>
+    <Suspense fallback={<main className="min-h-screen bg-earth-cream" />}>
       <SuccessContent />
     </Suspense>
   );

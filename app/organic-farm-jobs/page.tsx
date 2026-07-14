@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { getCachedPublicJobs } from "@/lib/public-jobs";
 import { JobCard } from "@/components/JobCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { EmployerCTA } from "@/components/EmployerCTA";
 import { getUrl } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
@@ -82,6 +83,7 @@ export default async function OrganicFarmJobsPage() {
           ))}
         </div>
       </section>
+      <EmployerCTA source="organic_farm_jobs" />
     </main>
     </>
   );

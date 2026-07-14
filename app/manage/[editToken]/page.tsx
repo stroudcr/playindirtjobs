@@ -556,7 +556,7 @@ export default function ManageJobPage() {
             {/* Company Info */}
             <div>
               <label className="block text-sm font-medium text-forest mb-2">
-                Company Email *
+                Private Management Email *
               </label>
               <input
                 type="email"
@@ -566,6 +566,9 @@ export default function ManageJobPage() {
                 className="input w-full"
                 placeholder="contact@farm.com"
               />
+              <p className="mt-2 text-xs text-forest-light">
+                Used for receipts and listing management. It is not displayed publicly unless you also enter it as the application email below.
+              </p>
             </div>
 
             <div>

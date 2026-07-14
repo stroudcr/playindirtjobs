@@ -183,7 +183,7 @@ export default function AlmanacPage() {
               Looking for farm work?
             </h2>
             <p className="text-forest-light mb-6">
-              Browse hundreds of farming, gardening, and ranching jobs across
+              Browse farming, gardening, and ranching jobs across
               America.
             </p>
             <Link href="/" className="btn btn-primary">

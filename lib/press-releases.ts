@@ -20,7 +20,7 @@ export const pressReleases: PressRelease[] = [
     title: "Agriculture's Worker Shortage Meets Office Burnout: New Platform Bridges the Gap",
     subtitle: "PlayInDirtJobs.com Helps Screen-Fatigued Workers Trade Cubicles for Crops While Solving Agriculture's Labor Crisis",
     date: "2025-10-24",
-    excerpt: "PlayInDirtJobs, a platform dedicated to connecting workers with sustainable farming, gardening, and ranching careers, officially launched today to address a critical disconnect in American farming: thousands of passionate individuals seeking agricultural work, and farms desperately needing skilled, committed workers.",
+    excerpt: "PlayInDirtJobs, a platform dedicated to connecting workers with sustainable farming, gardening, and ranching careers, launched to address the disconnect between people seeking agricultural work and operations looking for committed workers.",
     author: "Chad Stroud",
     contact: {
       name: "Chad Stroud",
@@ -29,7 +29,7 @@ export const pressReleases: PressRelease[] = [
       website: "www.playindirtjobs.com"
     },
     content: `
-<p><strong>Atlanta, Georgia – October 24, 2025</strong> – PlayInDirtJobs, a platform dedicated to connecting workers with sustainable farming, gardening, and ranching careers, officially launched today to address a critical disconnect in American farming: thousands of passionate individuals seeking agricultural work, and farms desperately needing skilled, committed workers.</p>
+<p><strong>Atlanta, Georgia – October 24, 2025</strong> – PlayInDirtJobs, a platform dedicated to connecting workers with sustainable farming, gardening, and ranching careers, officially launched today to address the disconnect between people seeking agricultural work and operations looking for committed workers.</p>
 
 <p>The platform connects job seekers with farming, gardening, and ranching opportunities across the United States, focusing on organic farms, regenerative agriculture operations, permaculture gardens, family ranches, and other sustainable operations that are the backbone of America's evolving food system.</p>
 
@@ -47,11 +47,11 @@ export const pressReleases: PressRelease[] = [
 
 <p>Unlike general employment platforms, PlayInDirtJobs understands what makes agricultural work unique. Many listings include benefits specific to farm life: housing in rural settings, fresh organic meals, hands-on learning from experienced farmers, and the satisfaction of producing real food for real communities.</p>
 
-<p>The platform serves job seekers completely free, allowing them to browse hundreds of positions, filter by farm type and location, and receive email alerts for new opportunities. For employers, posting is designed to be simple and affordable for farms of all sizes, with 60-day listing visibility to maximize exposure.</p>
+<p>The platform serves job seekers free of charge, allowing them to browse positions, filter by farm type and location, and receive email alerts for new opportunities. For employers, posting is designed to be simple and affordable for farms of all sizes, with listings active for 60 days.</p>
 
 <h2>Commitment to Quality and Authenticity</h2>
 
-<p>PlayInDirtJobs verifies every listing to ensure each represents a genuine opportunity from a real farm, garden, nursery, or ranch. The platform maintains compliance with labor laws while fostering authentic connections between employers and job seekers.</p>
+<p>PlayInDirtJobs may review or remove listings that appear fraudulent, misleading, or inconsistent with its posting terms. Employers remain responsible for the accuracy and legal compliance of their listings and hiring practices.</p>
 
 <p>"When you're planting crops, managing livestock, or grafting cultivars of trees, you're participating in something essential and timeless," Stroud added. "We celebrate that work and the people who do it."</p>
 
@@ -59,7 +59,7 @@ export const pressReleases: PressRelease[] = [
 
 <h2>About PlayInDirtJobs</h2>
 
-<p>PlayInDirtJobs is America's premier job board for sustainable agriculture, connecting passionate workers with farming, gardening, and ranching opportunities nationwide. The platform champions organic farming, regenerative agriculture, permaculture, and sustainable ranching practices while honoring the historical prominence of agriculture in American life. For more information, visit <a href="https://www.playindirtjobs.com" target="_blank" rel="noopener noreferrer">www.playindirtjobs.com</a>.</p>
+<p>PlayInDirtJobs is a nationwide job board for sustainable agriculture, connecting workers with farming, gardening, and ranching opportunities. The platform highlights organic farming, regenerative agriculture, permaculture, and sustainable ranching while honoring the historical prominence of agriculture in American life. For more information, visit <a href="https://www.playindirtjobs.com" target="_blank" rel="noopener noreferrer">www.playindirtjobs.com</a>.</p>
 `
   }
 ];

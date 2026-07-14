@@ -11,59 +11,76 @@ datasource db {
 }
 
 model Job {
-  id          String   @id @default(cuid())
-  slug        String   @unique
+  id          String @id @default(cuid())
+  slug        String @unique
   title       String
   company     String
-  description String   @db.Text
+  description String @db.Text
 
   // Location (structured for SEO and schema.org)
-  city        String
-  state       String
-  postalCode  String?
-  remote      Boolean  @default(false)
-  location    String   // Auto-generated display string (kept for backward compatibility)
+  city       String
+  state      String
+  postalCode String?
+  remote     Boolean @default(false)
+  location   String // Auto-generated display string (kept for backward compatibility)
 
   // Salary
-  salaryMin   Int?
-  salaryMax   Int?
-  salaryType  String?  @default("annual") // "annual" or "hourly"
+  salaryMin  Int?
+  salaryMax  Int?
+  salaryType String? @default("annual") // "annual" or "hourly"
 
   // Job details
-  jobType     String[] // ["full-time", "part-time", "seasonal", etc.]
-  farmType    String[] // ["organic", "conventional", "permaculture", etc.]
-  categories  String[] // ["farm-hand", "gardener", "ranch-hand", etc.]
-  tags        String[] // ["sustainable", "animal-care", etc.]
-  benefits    String[] // ["housing", "meals", "equipment", etc.]
+  jobType    String[] // ["full-time", "part-time", "seasonal", etc.]
+  farmType   String[] // ["organic", "conventional", "permaculture", etc.]
+  categories String[] // ["farm-hand", "gardener", "ranch-hand", etc.]
+  tags       String[] // ["sustainable", "animal-care", etc.]
+  benefits   String[] // ["housing", "meals", "equipment", etc.]
 
   // Company info
-  companyEmail String
-  companyLogo  String?
-  companyWebsite String?
+  companyEmail    String
+  managementEmail String?
+  companyLogo     String?
+  companyWebsite  String?
 
   // Application
-  applyUrl    String?
-  applyEmail  String?
+  applyUrl   String?
+  applyEmail String?
 
   // Status and metrics
-  featured    Boolean  @default(false)
-  active      Boolean  @default(false)
-  views       Int      @default(0)
+  featured    Boolean   @default(false)
+  active      Boolean   @default(false)
+  views       Int       @default(0)
+  origin      JobOrigin @default(EMPLOYER)
+  publishedAt DateTime?
+  closedAt    DateTime?
+  closeReason String?
+  hireSource  String?
 
   // Payment and management
   stripePaymentId String?
   editToken       String  @unique @default(cuid())
 
+  // Employer ownership and funnel records
+  employerId    String?
+  employer      Employer?      @relation(fields: [employerId], references: [id], onDelete: SetNull)
+  purchases     Purchase[]
+  funnelEvents  FunnelEvent[]
+  listingClaims ListingClaim[]
+  sourceDrafts  JobDraft[]     @relation("SourceJobDrafts")
+
   // Timestamps
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  expiresAt   DateTime // Jobs expire after 60 days
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime // Jobs expire after 60 days
 
   @@index([active, expiresAt, createdAt])
   @@index([active, createdAt])
   @@index([slug])
   @@index([featured])
   @@index([companyEmail])
+  @@index([managementEmail])
+  @@index([employerId, active])
+  @@index([origin, active])
 }
 
 model Subscriber {
@@ -75,4 +92,327 @@ model Subscriber {
 
   @@index([email])
   @@index([active])
+}
+
+enum EmployerRole {
+  EMPLOYER
+  ADMIN
+}
+
+enum AuthTokenPurpose {
+  SIGN_IN
+}
+
+enum JobOrigin {
+  EMPLOYER
+  IMPORTED
+}
+
+enum JobDraftStatus {
+  DRAFT
+  CHECKOUT
+  CONVERTED
+  ABANDONED
+}
+
+enum PurchaseKind {
+  POSTING
+  RENEWAL
+}
+
+enum PurchaseStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELED
+}
+
+enum ListingClaimStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DISPUTED
+}
+
+enum EmployerLeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  WON
+  LOST
+  UNSUBSCRIBED
+}
+
+enum OutreachMessageStatus {
+  DRAFT
+  APPROVED
+  SCHEDULED
+  SENDING
+  SENT
+  FAILED
+  CANCELED
+}
+
+enum EmailOutboxStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+}
+
+model Employer {
+  id              String       @id @default(cuid())
+  email           String       @unique
+  role            EmployerRole @default(EMPLOYER)
+  name            String?
+  company         String?
+  emailVerifiedAt DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  authTokens       AuthToken[]
+  authSessions     AuthSession[]
+  jobs             Job[]
+  drafts           JobDraft[]
+  purchases        Purchase[]
+  funnelEvents     FunnelEvent[]
+  listingClaims    ListingClaim[]    @relation("ClaimOwner")
+  reviewedClaims   ListingClaim[]    @relation("ClaimReviewer")
+  leads            EmployerLead[]
+  outreachMessages OutreachMessage[] @relation("OutreachEmployer")
+  approvedOutreach OutreachMessage[] @relation("OutreachApprover")
+
+  @@index([role])
+  @@index([createdAt])
+}
+
+model AuthToken {
+  id         String           @id @default(cuid())
+  employerId String
+  employer   Employer         @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  tokenHash  String           @unique
+  purpose    AuthTokenPurpose @default(SIGN_IN)
+  returnTo   String?
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime         @default(now())
+
+  @@index([employerId, purpose, createdAt])
+  @@index([expiresAt])
+}
+
+model AuthSession {
+  id                     String    @id @default(cuid())
+  employerId             String
+  employer               Employer  @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  tokenHash              String    @unique
+  previousTokenHash      String?   @unique
+  previousTokenExpiresAt DateTime?
+  expiresAt              DateTime
+  lastUsedAt             DateTime  @default(now())
+  rotatedAt              DateTime  @default(now())
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  @@index([employerId, expiresAt])
+  @@index([expiresAt])
+}
+
+model JobDraft {
+  id              String         @id @default(cuid())
+  employerId      String?
+  employer        Employer?      @relation(fields: [employerId], references: [id], onDelete: SetNull)
+  sourceJobId     String?
+  sourceJob       Job?           @relation("SourceJobDrafts", fields: [sourceJobId], references: [id], onDelete: SetNull)
+  accessTokenHash String         @unique
+  email           String?
+  status          JobDraftStatus @default(DRAFT)
+  data            Json
+  plan            String         @default("basic")
+  currentStep     Int            @default(1)
+  importUrl       String?
+  attribution     Json?
+  recoveryOptIn   Boolean        @default(false)
+  expiresAt       DateTime
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  purchase     Purchase?
+  funnelEvents FunnelEvent[]
+
+  @@index([employerId, status, updatedAt])
+  @@index([sourceJobId])
+  @@index([status, expiresAt])
+  @@index([email])
+}
+
+model Purchase {
+  id                      String         @id @default(cuid())
+  draftId                 String?        @unique
+  draft                   JobDraft?      @relation(fields: [draftId], references: [id], onDelete: SetNull)
+  employerId              String?
+  employer                Employer?      @relation(fields: [employerId], references: [id], onDelete: SetNull)
+  jobId                   String?
+  job                     Job?           @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  kind                    PurchaseKind   @default(POSTING)
+  plan                    String
+  amount                  Int
+  currency                String         @default("usd")
+  status                  PurchaseStatus @default(PENDING)
+  stripeCheckoutSessionId String?        @unique
+  stripePaymentIntentId   String?        @unique
+  paidAt                  DateTime?
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  funnelEvents FunnelEvent[]
+
+  @@index([employerId, status, createdAt])
+  @@index([jobId])
+  @@index([status, createdAt])
+}
+
+model StripeEvent {
+  id          String    @id
+  type        String
+  payload     Json?
+  attempts    Int       @default(0)
+  processedAt DateTime?
+  lastError   String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([processedAt, createdAt])
+  @@index([type, createdAt])
+}
+
+model FunnelEvent {
+  id           String    @id @default(cuid())
+  eventName    String
+  jobId        String?
+  job          Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  employerId   String?
+  employer     Employer? @relation(fields: [employerId], references: [id], onDelete: SetNull)
+  draftId      String?
+  draft        JobDraft? @relation(fields: [draftId], references: [id], onDelete: SetNull)
+  purchaseId   String?
+  purchase     Purchase? @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
+  anonymousId  String?
+  source       String?
+  landingPath  String?
+  referrerHost String?
+  properties   Json?
+  createdAt    DateTime  @default(now())
+
+  @@index([eventName, jobId, anonymousId, createdAt])
+  @@index([jobId])
+  @@index([employerId, eventName, createdAt])
+  @@index([draftId, eventName, createdAt])
+  @@index([purchaseId])
+  @@index([createdAt])
+}
+
+model ListingClaim {
+  id           String             @id @default(cuid())
+  jobId        String
+  job          Job                @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  employerId   String
+  employer     Employer           @relation("ClaimOwner", fields: [employerId], references: [id], onDelete: Cascade)
+  workEmail    String
+  status       ListingClaimStatus @default(PENDING)
+  evidence     Json?
+  notes        String?            @db.Text
+  reviewedById String?
+  reviewedBy   Employer?          @relation("ClaimReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedAt   DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@index([jobId, status, createdAt])
+  @@index([employerId, status])
+  @@index([reviewedById])
+  @@index([workEmail])
+}
+
+model EmployerLead {
+  id           String             @id @default(cuid())
+  employerId   String?
+  employer     Employer?          @relation(fields: [employerId], references: [id], onDelete: SetNull)
+  email        String?
+  name         String?
+  company      String?
+  source       String?
+  sourceUrl    String?
+  status       EmployerLeadStatus @default(NEW)
+  notes        String?            @db.Text
+  metadata     Json?
+  nextActionAt DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  outreachMessages OutreachMessage[]
+
+  @@index([employerId])
+  @@index([email])
+  @@index([status, nextActionAt])
+  @@index([source, createdAt])
+}
+
+model OutreachMessage {
+  id                String                @id @default(cuid())
+  leadId            String?
+  lead              EmployerLead?         @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  employerId        String?
+  employer          Employer?             @relation("OutreachEmployer", fields: [employerId], references: [id], onDelete: SetNull)
+  recipient         String
+  template          String
+  subject           String
+  payload           Json?
+  status            OutreachMessageStatus @default(DRAFT)
+  scheduledAt       DateTime?
+  approvedAt        DateTime?
+  approvedById      String?
+  approvedBy        Employer?             @relation("OutreachApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  providerMessageId String?               @unique
+  sentAt            DateTime?
+  lastError         String?               @db.Text
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  @@index([leadId])
+  @@index([employerId])
+  @@index([approvedById])
+  @@index([status, scheduledAt])
+  @@index([recipient, createdAt])
+}
+
+model EmailOutbox {
+  id               String            @id @default(cuid())
+  template         String
+  recipient        String
+  payload          Json
+  status           EmailOutboxStatus @default(PENDING)
+  attempts         Int               @default(0)
+  nextAttemptAt    DateTime          @default(now())
+  sentAt           DateTime?
+  lastError        String?           @db.Text
+  deduplicationKey String?           @unique
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([status, nextAttemptAt])
+  @@index([recipient, createdAt])
+}
+
+model SuppressionEntry {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  reason    String
+  source    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
 }

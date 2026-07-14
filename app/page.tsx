@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import type { Prisma } from "@prisma/client";
 import { HomeClient } from "@/components/HomeClient";
+import { EmployerCTA } from "@/components/EmployerCTA";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
 import { findPublicJobs, getCachedPublicJobs } from "@/lib/public-jobs";
 
@@ -212,6 +213,8 @@ export default async function Home({ searchParams }: HomeProps) {
         <HomeClient initialJobs={serializedJobs} initialFilters={filters} />
       </Suspense>
 
+      <EmployerCTA source="homepage_jobs" />
+
       {/* Browse by Category Section */}
       <section id="categories" className="bg-gray-50 border-y border-border py-12">
         <div className="container mx-auto px-4">
@@ -273,7 +276,7 @@ export default async function Home({ searchParams }: HomeProps) {
             <div>
               <h3 className="text-xl font-display text-forest mb-4">About PlayInDirtJobs</h3>
               <p className="text-forest-light leading-relaxed">
-                PlayInDirtJobs is the premier job board connecting agriculture professionals with sustainable farming, gardening, and ranching opportunities nationwide. Whether you&apos;re seeking organic farm positions, ranch hand work, or agricultural apprenticeships, we help you build a meaningful career in sustainable agriculture.
+                PlayInDirtJobs is a nationwide job board connecting agriculture professionals with sustainable farming, gardening, and ranching opportunities. Whether you&apos;re seeking organic farm positions, ranch hand work, or agricultural apprenticeships, we help you explore meaningful work in sustainable agriculture.
               </p>
             </div>
           </div>

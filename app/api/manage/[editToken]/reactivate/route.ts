@@ -1,4 +1,5 @@
 import { after, NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { db } from "@/lib/db";
 import { notifyGoogleAboutJob } from "@/lib/google-indexing";
 
@@ -45,6 +46,7 @@ export async function PATCH(
       },
     });
 
+    revalidateTag("public-jobs");
     after(() => notifyGoogleAboutJob(job.slug, "URL_UPDATED"));
 
     return NextResponse.json({

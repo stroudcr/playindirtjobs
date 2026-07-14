@@ -1,333 +1,290 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight, CalendarDays, Check, CreditCard, FileCheck, MapPin } from "lucide-react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Check, HelpCircle } from "lucide-react";
+import { TrackedLink } from "@/components/TrackedLink";
 import { PRICING } from "@/lib/constants";
 import { getUrl } from "@/lib/metadata";
 
+const basicPrice = PRICING.BASIC / 100;
+const featuredPrice = PRICING.FEATURED / 100;
+
 export const metadata: Metadata = {
-  title: "Pricing | Post Farm, Garden & Ranch Jobs | PlayInDirtJobs",
-  description: "Simple pricing for agricultural job postings: $15 basic listings and $25 featured listings with 60 days of visibility.",
+  title: "Agricultural Job Posting Pricing | PlayInDirtJobs",
+  description:
+    "Post one agricultural job for 60 days. Basic listings cost $15 and Featured listings cost $25, with no subscription or automatic renewal.",
   keywords: [
     "farm job posting cost",
     "agricultural job board pricing",
     "post farm jobs",
-    "ranch job listing price",
-    "agriculture recruitment cost",
-    "farming job board rates",
+    "agriculture recruitment pricing",
   ],
+  alternates: { canonical: getUrl("pricing") },
   openGraph: {
-    title: "Pricing | Post Agricultural Jobs | PlayInDirtJobs",
-    description: "Simple, transparent pricing for agricultural job postings. Find qualified workers for your farm, garden, or ranch starting at $15.",
+    title: "Agricultural Job Posting Pricing | PlayInDirtJobs",
+    description:
+      "Choose a $15 Basic or $25 Featured agricultural job listing. Both plans stay active for 60 days.",
     url: getUrl("pricing"),
+    siteName: "PlayInDirtJobs",
+    type: "website",
+    images: [
+      {
+        url: "/images/PlayInDirtX.png",
+        width: 1200,
+        height: 630,
+        alt: "PlayInDirtJobs agricultural job posting pricing",
+      },
+    ],
   },
-  alternates: {
-    canonical: getUrl("pricing"),
+  twitter: {
+    card: "summary_large_image",
+    title: "Agricultural Job Posting Pricing | PlayInDirtJobs",
+    description:
+      "Choose a $15 Basic or $25 Featured agricultural job listing. Both plans stay active for 60 days.",
+    images: ["/images/PlayInDirtX.png"],
   },
 };
 
-export default function PricingPage() {
-  const pricingSchema = {
+const faqs = [
+  {
+    question: "How long does a listing stay active?",
+    answer:
+      "Basic and Featured listings remain active for 60 days from publication. You can deactivate a listing earlier if the position is filled.",
+  },
+  {
+    question: "Is this a subscription?",
+    answer:
+      "No. Each purchase covers one 60-day job listing. There are no recurring charges or automatic renewals.",
+  },
+  {
+    question: "Can I edit the listing after it is published?",
+    answer:
+      "Yes. Use the secure management link sent to the employer email to edit or deactivate an active listing.",
+  },
+  {
+    question: "What does Featured placement mean?",
+    answer:
+      "Featured listings have a highlighted treatment and Featured label and are displayed ahead of Basic listings in job result lists.",
+  },
+  {
+    question: "How do applicants contact me?",
+    answer:
+      "Choose an application email address or an application page on your website. The job listing directs candidates to that destination.",
+  },
+  {
+    question: "Are hiring results guaranteed?",
+    answer:
+      "No. PlayInDirtJobs provides the listing and application path but does not guarantee a number of views, applications, or hiring outcomes.",
+  },
+];
+
+function JsonLd() {
+  const schema = {
     "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "PlayInDirtJobs Job Posting",
-    "description": "Post agricultural job listings on PlayInDirtJobs",
-    "offers": [
+    "@graph": [
       {
-        "@type": "Offer",
-        "name": "Basic Listing",
-        "price": (PRICING.BASIC / 100).toFixed(2),
-        "priceCurrency": "USD",
-        "description": "60-day job listing with standard visibility"
+        "@type": "Product",
+        "@id": `${getUrl("pricing")}#job-posting`,
+        name: "PlayInDirtJobs job posting",
+        description: "A 60-day agricultural job listing on PlayInDirtJobs.",
+        offers: [
+          {
+            "@type": "Offer",
+            name: "Basic job listing",
+            price: basicPrice.toFixed(2),
+            priceCurrency: "USD",
+            url: getUrl("post-job?plan=basic&source=pricing_schema"),
+          },
+          {
+            "@type": "Offer",
+            name: "Featured job listing",
+            price: featuredPrice.toFixed(2),
+            priceCurrency: "USD",
+            url: getUrl("post-job?plan=featured&source=pricing_schema"),
+          },
+        ],
       },
       {
-        "@type": "Offer",
-        "name": "Featured Listing",
-        "price": (PRICING.FEATURED / 100).toFixed(2),
-        "priceCurrency": "USD",
-        "description": "60-day featured job listing with enhanced visibility"
-      }
-    ]
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
-      />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
 
-      <main className="min-h-screen bg-earth-cream">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-12 sm:py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <Breadcrumbs items={[
-                { label: "Home", href: "/" },
-                { label: "Pricing" }
-              ]} />
+export default function PricingPage() {
+  return (
+    <main className="min-h-screen bg-earth-cream">
+      <JsonLd />
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-forest mb-6 mt-6">
-                Simple, Transparent Pricing
+      <section className="border-b border-border bg-gradient-to-b from-white to-earth-sand py-10 sm:py-14 lg:py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Pricing" }]} />
+            <div className="mt-7 max-w-4xl">
+              <h1 className="text-balance font-display text-4xl leading-[1.06] text-forest sm:text-5xl lg:text-6xl">
+                One job. One payment. 60 days.
               </h1>
-              <p className="text-xl md:text-2xl text-forest-light leading-relaxed">
-                Reach thousands of qualified agricultural workers with 60-day job listings. No hidden fees, no subscriptions—just results.
+              <p className="mt-6 max-w-3xl text-lg leading-relaxed text-forest-light sm:text-xl">
+                Choose standard or Featured placement for one agricultural job. There is no subscription, recurring charge, or automatic renewal.
               </p>
             </div>
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-forest-light">
+              <span className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4 text-primary" aria-hidden="true" />60-day listing</span>
+              <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" aria-hidden="true" />Visible nationwide</span>
+              <span className="inline-flex items-center gap-2"><CreditCard className="h-4 w-4 text-primary" aria-hidden="true" />Checkout powered by Stripe</span>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Pricing Cards */}
-        <section className="container mx-auto px-4 py-12 md:py-16">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Basic Plan */}
-              <div className="card p-8 flex flex-col">
-                <div className="mb-6">
-                  <h2 className="text-2xl font-display text-forest mb-2">Basic Listing</h2>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-bold text-primary">${(PRICING.BASIC / 100).toFixed(0)}</span>
-                    <span className="text-forest-light">/ 60 days</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">60-day active listing</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Standard visibility in search results</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Email support</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Applicant tracking</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Job management via magic link</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Edit listing anytime</span>
-                  </li>
-                </ul>
-
-                <Link href="/post-job" className="btn btn-primary justify-center w-full">
-                  Get Started
-                </Link>
+      <section className="container mx-auto px-4 py-14 md:py-20">
+        <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-2">
+          <article className="card flex flex-col p-7 sm:p-9">
+            <div className="flex items-start justify-between gap-6 border-b border-border pb-7">
+              <div>
+                <h2 className="font-display text-3xl text-forest">Basic</h2>
+                <p className="mt-2 text-sm text-forest-light">Standard placement for one opening</p>
               </div>
-
-              {/* Featured Plan */}
-              <div className="card p-8 flex flex-col border-2 border-primary relative overflow-hidden lg:scale-105">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-light to-accent-yellow" />
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 mt-1">
-                  <span className="inline-flex items-center gap-1.5 bg-primary text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    <span className="w-1.5 h-1.5 bg-white rounded-full" />
-                    Most Popular
-                  </span>
-                </div>
-
-                <div className="mb-6">
-                  <h2 className="text-2xl font-display text-forest mb-2">Featured Listing</h2>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-bold text-primary">${(PRICING.FEATURED / 100).toFixed(0)}</span>
-                    <span className="text-forest-light">/ 60 days</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Everything in Basic, plus:</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light"><strong>Featured badge</strong> & highlighted listing</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light"><strong>Top placement</strong> in search results</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light"><strong>2x more visibility</strong> to job seekers</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Priority email support</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-forest-light">Increased application rates</span>
-                  </li>
-                </ul>
-
-                <Link href="/post-job" className="btn btn-primary justify-center w-full">
-                  Get Started
-                </Link>
+              <div className="text-right">
+                <p className="text-5xl font-bold text-primary">${basicPrice}</p>
+                <p className="mt-1 text-xs text-forest-light">one payment</p>
               </div>
             </div>
+            <ul className="mt-7 flex-1 space-y-4 text-forest-light">
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Active for 60 days</span></li>
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Standard placement in job results</span></li>
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Application email address or application URL</span></li>
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Edit or deactivate during the active period</span></li>
+            </ul>
+            <TrackedLink
+              href="/post-job?plan=basic&source=pricing_basic"
+              eventName="employer_cta_click"
+              eventParams={{ source: "pricing", placement: "plan_card", plan: "basic" }}
+              className="btn btn-primary mt-9 w-full justify-center"
+            >
+              Choose Basic — ${basicPrice}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </TrackedLink>
+          </article>
 
-            <p className="text-center text-forest-light mt-8">
-              All plans include a full 60 days of visibility and easy job management. No recurring charges.
-            </p>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="bg-white border-y border-border py-12 md:py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-display text-forest mb-10 text-center">
-                Frequently Asked Questions
-              </h2>
-
-              <div className="space-y-6">
-                <div className="card p-6">
-                  <div className="flex gap-4">
-                    <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="text-xl font-display text-forest mb-2">
-                        How long do job postings stay active?
-                      </h3>
-                      <p className="text-forest-light leading-relaxed">
-                        All job postings remain active for 60 days from the date of posting. This gives you two full months to find the perfect candidate for your agricultural position. Your listing will automatically expire after 60 days, with no recurring charges.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card p-6">
-                  <div className="flex gap-4">
-                    <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="text-xl font-display text-forest mb-2">
-                        Can I edit my job posting after it&apos;s published?
-                      </h3>
-                      <p className="text-forest-light leading-relaxed">
-                        Yes! After your payment is processed, you&apos;ll receive a magic link via email that allows you to manage your job posting. You can edit the job details, update the description, or deactivate the listing at any time during the 60-day period.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card p-6">
-                  <div className="flex gap-4">
-                    <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="text-xl font-display text-forest mb-2">
-                        What payment methods do you accept?
-                      </h3>
-                      <p className="text-forest-light leading-relaxed">
-                        We accept all major credit cards (Visa, Mastercard, American Express, Discover) through our secure payment processor, Stripe. All transactions are encrypted and secure. Payment is required before your job listing goes live.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card p-6">
-                  <div className="flex gap-4">
-                    <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="text-xl font-display text-forest mb-2">
-                        Do you offer refunds?
-                      </h3>
-                      <p className="text-forest-light leading-relaxed">
-                        We do not offer refunds at this time. All sales are final once your job posting is published and payment is processed. Please review your listing carefully before submitting payment.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card p-6">
-                  <div className="flex gap-4">
-                    <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="text-xl font-display text-forest mb-2">
-                        How do applicants contact me about the position?
-                      </h3>
-                      <p className="text-forest-light leading-relaxed">
-                        When creating your job posting, you&apos;ll provide either an application email address or an application URL where candidates can apply. Job seekers will contact you directly through the method you specify. We don&apos;t act as an intermediary—you maintain full control over your hiring process.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card p-6">
-                  <div className="flex gap-4">
-                    <HelpCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="text-xl font-display text-forest mb-2">
-                        What&apos;s the difference between Basic and Featured listings?
-                      </h3>
-                      <p className="text-forest-light leading-relaxed">
-                        Featured listings receive premium placement at the top of search results and category pages, include a distinctive featured badge, and receive approximately 2x more visibility than basic listings. If you&apos;re looking to fill a position quickly or attract top-tier candidates, Featured is the best option. Basic listings still receive excellent visibility and are perfect for budget-conscious employers.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+          <article className="card flex flex-col overflow-hidden border-2 border-primary/40 p-7 sm:p-9">
+            <div className="-mx-9 -mt-9 mb-8 h-1 bg-gradient-to-r from-primary via-primary-light to-accent-yellow" aria-hidden="true" />
+            <div className="flex items-start justify-between gap-6 border-b border-border pb-7">
+              <div>
+                <h2 className="font-display text-3xl text-forest">Featured</h2>
+                <p className="mt-2 text-sm text-forest-light">More prominent placement for one opening</p>
+              </div>
+              <div className="text-right">
+                <p className="text-5xl font-bold text-primary">${featuredPrice}</p>
+                <p className="mt-1 text-xs text-forest-light">one payment</p>
               </div>
             </div>
-          </div>
-        </section>
+            <ul className="mt-7 flex-1 space-y-4 text-forest-light">
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Everything included with Basic</span></li>
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Featured label and highlighted listing treatment</span></li>
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Displayed ahead of Basic listings in job result lists</span></li>
+              <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Active for the same 60-day period</span></li>
+            </ul>
+            <TrackedLink
+              href="/post-job?plan=featured&source=pricing_featured"
+              eventName="employer_cta_click"
+              eventParams={{ source: "pricing", placement: "plan_card", plan: "featured" }}
+              className="btn btn-primary mt-9 w-full justify-center"
+            >
+              Choose Featured — ${featuredPrice}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </TrackedLink>
+          </article>
+        </div>
 
-        {/* SEO-Rich Content */}
-        <section className="container mx-auto px-4 py-12 md:py-16">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-display text-forest mb-6">
-              Invest in Quality Agricultural Recruitment
-            </h2>
-            <div className="prose prose-lg max-w-none text-forest-light space-y-6">
-              <p>
-                Finding the right employees for your farm, garden, nursery, or ranch is one of the most important investments you can make. Quality workers who understand sustainable agriculture, care about the land, and share your values are essential to your operation&apos;s success. PlayInDirtJobs offers affordable, effective job posting solutions designed specifically for the agricultural community.
-              </p>
-              <p>
-                Unlike general job boards that charge hundreds of dollars for 30-day listings, PlayInDirtJobs provides 60-day postings starting at just $15. Our platform is built exclusively for agricultural employers, which means every job seeker browsing our site is specifically interested in farming, gardening, ranching, and sustainable agriculture careers. You&apos;re not competing with retail jobs or tech positions—your listing reaches a focused audience of passionate agricultural workers.
-              </p>
-              <p>
-                Whether you&apos;re a small organic farm seeking seasonal harvest workers, a permaculture operation looking for long-term apprentices, a livestock ranch hiring experienced ranch hands, or a nursery needing skilled horticulturists, our pricing structure makes professional recruitment accessible. The Featured listing option at $25 is particularly valuable for positions that are difficult to fill or require specialized skills, offering enhanced visibility and placement that can significantly reduce your time-to-hire.
-              </p>
-              <p>
-                Every dollar invested in effective job postings saves time and resources in the long run. Poor hiring decisions, extended vacancy periods, and high turnover all cost far more than a quality job listing. PlayInDirtJobs helps you connect with candidates who are genuinely committed to agricultural work, reducing turnover and building stronger farm teams. Our 60-day listing period gives you ample time to review applications, conduct interviews, and find the perfect fit for your operation.
-              </p>
-              <p>
-                We understand that agricultural operations work on tight margins, which is why our pricing is straightforward and affordable. There are no hidden fees, no subscription requirements, and no automatic renewals. You pay once and receive 60 full days of visibility to thousands of qualified job seekers across America. Join hundreds of farms, ranches, and agricultural businesses that have successfully filled positions through PlayInDirtJobs.
-              </p>
-            </div>
-          </div>
-        </section>
+        <p className="mx-auto mt-7 max-w-3xl text-center text-sm leading-relaxed text-forest-light">
+          PlayInDirtJobs does not guarantee a number of views, applications, or hiring outcomes.
+        </p>
+      </section>
 
-        {/* CTA Section */}
-        <section className="container mx-auto px-4 py-12 md:py-16">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="card p-8 md:p-12 bg-gradient-to-br from-primary/5 to-accent-yellow/5">
-              <h2 className="text-3xl md:text-4xl font-display text-forest mb-4">
-                Ready to Find Your Next Team Member?
-              </h2>
-              <p className="text-xl text-forest-light mb-8">
-                Post your job today and connect with passionate agricultural workers across America.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/post-job" className="btn btn-primary text-lg px-8 py-3">
-                  Post a Job
-                </Link>
-                <Link href="/" className="btn bg-white border border-border hover:bg-gray-50 text-forest text-lg px-8 py-3">
-                  Browse Jobs
-                </Link>
+      <section className="border-y border-border bg-white py-14 md:py-20">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-16">
+              <div>
+                <FileCheck className="h-9 w-9 text-primary" aria-hidden="true" />
+                <h2 className="mt-5 font-display text-3xl text-forest sm:text-4xl">What happens after checkout</h2>
+                <p className="mt-4 leading-relaxed text-forest-light">
+                  Your application destination stays under your control, and the employer email receives the secure management link.
+                </p>
               </div>
-              <p className="text-sm text-forest-light mt-8">
-                Questions? Contact us at playindirtjobs@welldiem.com
-              </p>
+              <ol className="divide-y divide-border border-y border-border">
+                {[
+                  ["Payment completes", "Checkout is processed by Stripe."],
+                  ["The listing is published", "The job becomes available in PlayInDirtJobs results."],
+                  ["Candidates follow your application path", "They use the email address or website you provided."],
+                  ["You manage the listing", "Use the secure link sent to the employer email to edit or deactivate it."],
+                ].map(([title, body], index) => (
+                  <li key={title} className="flex gap-5 py-5">
+                    <span className="font-display text-xl text-primary">0{index + 1}</span>
+                    <div>
+                      <h3 className="font-semibold text-forest">{title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-forest-light">{body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
-        </section>
-      </main>
-    </>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-14 md:py-20">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="font-display text-3xl text-forest sm:text-4xl">Pricing questions</h2>
+          <div className="mt-9 divide-y divide-border border-y border-border">
+            {faqs.map((faq) => (
+              <article key={faq.question} className="py-6 sm:grid sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] sm:gap-10">
+                <h3 className="font-semibold text-forest">{faq.question}</h3>
+                <p className="mt-3 leading-relaxed text-forest-light sm:mt-0">{faq.answer}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-forest-light">
+            For payment and refund terms, review the <Link href="/terms" className="font-medium text-primary hover:underline">Terms of Service</Link>.
+          </p>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 pb-16 md:pb-20">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-7 rounded-lg bg-forest px-7 py-10 text-center text-white sm:px-10 lg:flex-row lg:text-left">
+          <div>
+            <h2 className="font-display text-3xl">Ready to post this opening?</h2>
+            <p className="mt-3 text-white/75">Start a Basic listing for ${basicPrice} and review everything before checkout.</p>
+          </div>
+          <TrackedLink
+            href="/post-job?plan=basic&source=pricing_final"
+            eventName="employer_cta_click"
+            eventParams={{ source: "pricing", placement: "final", plan: "basic" }}
+            className="btn flex-shrink-0 justify-center bg-white text-forest hover:bg-earth-sand"
+          >
+            Start a listing
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </TrackedLink>
+        </div>
+      </section>
+    </main>
   );
 }

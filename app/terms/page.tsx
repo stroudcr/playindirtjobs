@@ -43,7 +43,7 @@ export default function TermsPage() {
           <div className="prose prose-forest max-w-none">
             <p className="text-forest-light mb-6">
               <strong>Effective Date:</strong> January 1, 2025<br />
-              <strong>Last Updated:</strong> January 1, 2025
+              <strong>Last Updated:</strong> July 13, 2026
             </p>
 
             {/* Table of Contents */}
@@ -121,7 +121,9 @@ export default function TermsPage() {
                 <li><strong>Accuracy:</strong> All information provided is accurate, truthful, and not misleading</li>
                 <li><strong>Legitimate Opportunities:</strong> Postings represent genuine employment opportunities</li>
                 <li><strong>Legal Compliance:</strong> Your posting complies with all applicable employment laws, including anti-discrimination laws</li>
-                <li><strong>Management:</strong> You can edit or deactivate your listing using the magic link sent to your email</li>
+                <li><strong>Management:</strong> You can use a passwordless employer workspace or a private management link to edit, duplicate, close, or manually renew an eligible listing</li>
+                <li><strong>Application Contact:</strong> You choose the public application email or application URL shown to candidates. Your private management email is not an application method unless you explicitly enter it as one.</li>
+                <li><strong>Ownership Claims:</strong> Imported listings may be claimed through domain verification or manual review. We may deny or reverse a claim when ownership cannot be established.</li>
                 <li><strong>No Guarantees:</strong> We do not guarantee any specific number of views, applications, or hiring outcomes</li>
               </ul>
             </section>
@@ -158,7 +160,7 @@ export default function TermsPage() {
             <section id="payment" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">7. Payment Terms</h2>
               <p className="text-forest-light mb-4">
-                <strong>Job Posting Fees:</strong> Certain services, such as posting job listings, require payment. Current pricing is displayed on our website before checkout.
+                <strong>Job Posting Fees:</strong> Publishing or renewing a listing requires a one-time payment. Current pricing and the selected placement are displayed before checkout. We do not automatically renew listings or charge a subscription.
               </p>
               <p className="text-forest-light mb-4">
                 <strong>Payment Processing:</strong> All payments are processed securely through Stripe, a third-party payment processor. We do not store your credit card information. By making a payment, you agree to Stripe&rsquo;s terms and conditions.
