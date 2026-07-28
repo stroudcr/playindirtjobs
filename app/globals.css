@@ -71,6 +71,106 @@
   min-height: 44px;
 }
 
+/* Almanac long-form typography */
+.almanac-article {
+  @apply text-forest-light;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.almanac-article > p {
+  max-width: 68ch;
+  margin: 0 0 1.5rem;
+}
+
+.almanac-article > p:first-child {
+  @apply text-forest;
+  font-size: 1.2em;
+  line-height: 1.65;
+}
+
+.almanac-article h2 {
+  @apply font-display text-forest border-t border-border;
+  margin: 3.25rem 0 1.25rem;
+  padding-top: 2rem;
+  font-size: 1.75rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  scroll-margin-top: 7rem;
+}
+
+.almanac-article ul,
+.almanac-article ol {
+  max-width: 68ch;
+  margin: 0.5rem 0 2rem;
+  padding-left: 1.5rem;
+}
+
+.almanac-article ul {
+  list-style: disc;
+}
+
+.almanac-article ol {
+  list-style: decimal;
+}
+
+.almanac-article li {
+  margin: 0.65rem 0;
+  padding-left: 0.35rem;
+}
+
+.almanac-article li::marker {
+  @apply text-primary;
+}
+
+.almanac-article ol li::marker {
+  font-weight: 700;
+}
+
+.almanac-article strong {
+  @apply text-forest;
+  font-weight: 700;
+}
+
+.almanac-article a {
+  @apply text-green-700 font-medium;
+  text-decoration: underline;
+  text-decoration-color: rgb(16 185 129 / 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 150ms ease, text-decoration-color 150ms ease;
+}
+
+.almanac-article a:hover {
+  @apply text-forest;
+  text-decoration-color: currentColor;
+}
+
+.almanac-article blockquote {
+  @apply bg-primary/5 border-l-4 border-primary rounded-r-lg text-forest;
+  max-width: 68ch;
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+}
+
+.almanac-article blockquote p {
+  margin: 0;
+}
+
+.almanac-article > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .almanac-article {
+    font-size: 1.125rem;
+  }
+
+  .almanac-article h2 {
+    font-size: 2rem;
+  }
+}
+
 /* Entrance animations */
 @keyframes fadeInUp {
   from {

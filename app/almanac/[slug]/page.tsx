@@ -207,7 +207,7 @@ export default async function AlmanacArticlePage({
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-10">
           {/* Article Body */}
           <article
-            className="prose prose-lg max-w-3xl text-forest-light prose-headings:font-display prose-headings:text-forest prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-forest prose-li:marker:text-primary/50"
+            className="almanac-article min-w-0 flex-1 max-w-3xl"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
 

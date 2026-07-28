@@ -30,16 +30,18 @@ export function Breadcrumbs({ items, variant = "default" }: BreadcrumbsProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <nav className={`mb-6 text-sm ${variant === "light" ? "text-white/70" : "text-forest-light"}`} aria-label="Breadcrumb">
-        <ol className="flex items-center gap-2">
+        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
           {items.map((item, index) => (
-            <li key={index} className="flex items-center gap-2">
+            <li key={index} className="flex min-w-0 items-center gap-2">
               {index > 0 && <span>/</span>}
               {item.href ? (
                 <Link href={item.href} className={variant === "light" ? "hover:text-white" : "hover:text-primary"}>
                   {item.label}
                 </Link>
               ) : (
-                <span className={`font-medium ${variant === "light" ? "text-white" : "text-forest"}`}>{item.label}</span>
+                <span className={`max-w-[60vw] truncate font-medium sm:max-w-md ${variant === "light" ? "text-white" : "text-forest"}`}>
+                  {item.label}
+                </span>
               )}
             </li>
           ))}
