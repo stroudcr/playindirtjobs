@@ -35,6 +35,176 @@ export function formatAlmanacDate(
 
 export const almanacArticles: AlmanacArticle[] = [
   {
+    slug: "farm-labor-market-2026",
+    title: "The Farm Labor Market in 2026: 7 Numbers Every Farmer Should Know",
+    category: "Industry Insights",
+    excerpt: "A plain-English look at the latest farm labor data, what rising wages and H-2A growth mean on the ground, and practical ways to budget, recruit, and keep a reliable crew.",
+    metaTitle: "2026 Farm Labor Market: 7 Key Numbers | PlayInDirtJobs",
+    metaDescription: "Understand the 2026 farm labor market with seven useful numbers on wages, hiring, labor costs, H-2A growth, and practical farm workforce planning.",
+    date: "2026-07-28",
+    author: "PlayInDirtJobs",
+    readTime: 11,
+    featured: false,
+    audience: "employer",
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1769420246413-cf1531018fb4?w=1200&h=630&fit=crop&auto=format&q=80",
+      alt: "Farm workers harvesting together in a large green field",
+      credit: "Bemnet Mesfin",
+      creditUrl: "https://unsplash.com/photos/farmers-working-in-a-vast-green-agricultural-field-p6_OkAYuU5w",
+    },
+    relatedSlugs: [
+      "why-farm-job-posting-isnt-getting-applicants",
+      "how-much-do-farm-jobs-pay",
+      "farm-jobs-with-housing",
+    ],
+    cta: {
+      heading: "Hiring for your next season?",
+      body: "Post your farm, ranch, nursery, greenhouse, orchard, or harvest job on PlayInDirtJobs and show candidates exactly what makes the role worth taking.",
+      href: "/post-job",
+      label: "Post a Job",
+    },
+    content: `
+<p>It is easy to describe the farm labor market with one word: tight. That word is not wrong, but it is not useful enough to build a hiring plan.</p>
+
+<p>The latest federal data tell a more complete story. Agricultural employment has grown in some parts of the industry. Farm wages are rising in real terms. Most crop workers now live close to their work instead of following harvests across the country. The workforce is getting older. The H-2A program has reached another record. At the same time, labor still takes a much bigger bite out of the budget on a nursery, orchard, or vegetable farm than it does on a grain operation.</p>
+
+<p>This guide turns seven national numbers into practical decisions for the 2026 season. The figures will not tell you exactly what to pay in your county, but they can help you decide when to recruit, what to put in a job post, where to reduce wasted labor, and how much attention to give retention.</p>
+
+<h2>1. U.S. Agricultural Employment Reached 1.18 Million Jobs</h2>
+
+<p>According to the <a href="https://www.ers.usda.gov/topics/farm-economy/farm-labor">USDA Economic Research Service farm labor overview</a>, wage and salary employment in agriculture and agricultural support industries increased from 1.07 million jobs in 2010 to 1.18 million in 2024. That is a 10 percent increase.</p>
+
+<p>The growth was not even across the industry. Crop-support services added about 48,400 jobs from 2010 to 2024, an increase of 17 percent. Livestock operations added about 42,000 jobs, an increase of 19 percent. The figures include full-time and part-time jobs recorded in the Quarterly Census of Employment and Wages, and USDA notes that some small farm employers are not covered by that data set.</p>
+
+<p><strong>What it means on the farm:</strong> A tight labor market does not mean agricultural work is disappearing. It means farms are competing with other farms, labor contractors, custom operators, nurseries, landscapers, warehouses, construction companies, and other local employers for people who can handle physical and skilled work.</p>
+
+<p>When you write a job post, do not rely on the appeal of “working outdoors” alone. Spell out the actual offer: pay range, expected weekly hours, season length, days off, housing, overtime rules, equipment used, training, and the path to more responsibility. The farm down the road may be hiring, but so is the warehouse near town.</p>
+
+<h2>2. Real Farm Wages Grew 1.9 Percent a Year Over the Past Decade</h2>
+
+<p>USDA reports that inflation-adjusted wages for nonsupervisory crop and livestock workers rose an average of 1.9 percent per year over the 10 years ending in 2024. In 2024, average hourly wages were $18.24 for crop, nursery, and greenhouse workers, $17.23 for livestock workers, and $19.07 for agricultural equipment operators. Those are national averages from USDA's Farm Labor Survey, not mandatory wage rates.</p>
+
+<p>More recent 2025 occupational data from the <a href="https://www.bls.gov/iag/tgs/iag11.htm">U.S. Bureau of Labor Statistics agriculture industry profile</a> show a median of $16.95 per hour for crop, nursery, and greenhouse laborers and $18.10 for agricultural equipment operators. The USDA and BLS figures use different surveys and measures, so they should not be treated as conflicting quotes for the same job. Together, they show the same practical pattern: equipment skill, supervision, and added responsibility tend to command more pay.</p>
+
+<p><strong>What it means on the farm:</strong> Build a wage ladder before you advertise. A simple structure might separate:</p>
+
+<ul>
+<li><strong>Entry crew:</strong> learns harvest standards, wash-pack flow, animal routines, safety, and recordkeeping.</li>
+<li><strong>Experienced crew:</strong> works independently, catches quality problems, operates selected equipment, and trains new people.</li>
+<li><strong>Lead:</strong> assigns work, checks quality, communicates changes, tracks harvest or production, and helps keep the crew safe.</li>
+</ul>
+
+<p>Publish the pay range for each level and explain what moves a worker upward. A visible ladder gives an experienced applicant a reason to apply and gives a new worker a reason to stay.</p>
+
+<h2>3. Agriculture Is Expected to Have 116,200 Openings Each Year</h2>
+
+<p>The <a href="https://www.bls.gov/ooh/farming-fishing-and-forestry/agricultural-workers.htm">BLS Occupational Outlook Handbook</a> projects agricultural worker employment to decline 3 percent from 2024 to 2034. That headline can be misleading for a farmer who is trying to fill a crew. BLS still expects about 116,200 openings each year, on average, mostly because existing workers will change occupations, retire, or leave the labor force.</p>
+
+<p><strong>What it means on the farm:</strong> Replacement is the real hiring problem. If a dependable irrigator, milker, equipment operator, crew lead, or harvest worker leaves, the cost is not only another job ad. It is also lost knowledge, time spent training, slower work, more mistakes, and extra pressure on everyone who remains.</p>
+
+<p>Track turnover the same way you track packout or feed cost. At the end of each season, write down:</p>
+
+<ul>
+<li>How many people started, finished, quit, or were let go.</li>
+<li>When each departure happened and what work was affected.</li>
+<li>The reason the worker gave, if they shared one.</li>
+<li>How many hours a lead or owner spent recruiting and retraining.</li>
+<li>Whether housing, transportation, scheduling, supervision, or unclear expectations played a part.</li>
+</ul>
+
+<p>You do not need a human resources department to see a pattern. A one-page season review can show whether the farm has a recruiting problem, an onboarding problem, or a day-to-day management problem.</p>
+
+<h2>4. Eighty-Three Percent of Hired Crop Workers Are Settled</h2>
+
+<p>The old picture of a large workforce following crops from region to region no longer describes most hired crop workers. USDA reports that 83 percent are “settled,” meaning they work at one location within 75 miles of home. In 1996–98, that share was only 41 percent.</p>
+
+<p><strong>What it means on the farm:</strong> Local reputation matters. Workers talk to relatives, neighbors, former co-workers, and people at other farms. A farm known for accurate paychecks, decent supervision, reliable hours, safe equipment, and clear communication has a recruiting advantage that no clever job title can replace.</p>
+
+<p>It also means local barriers deserve attention. A job may pay reasonably but still be hard to take if the start time does not line up with childcare, if the farm is unreachable without a car, if the schedule changes without notice, or if a part-time worker cannot predict weekly hours. Ask returning workers what makes the job hard to keep. The answer may be cheaper to fix than another round of recruiting.</p>
+
+<h2>5. The Foreign-Born Farm Workforce Aged Nearly Seven Years</h2>
+
+<p>Between 2006 and 2022, the average age of foreign-born farmworkers rose by almost seven years, according to USDA. The change reflects fewer young, newly arrived immigrants entering agriculture. The average age of U.S.-born farmworkers stayed roughly level over the same period.</p>
+
+<p><strong>What it means on the farm:</strong> Retaining experienced people also means designing work that people can perform safely for more seasons. Small changes can protect backs, knees, shoulders, and hands while improving speed and consistency.</p>
+
+<ul>
+<li>Use harvest carts, bin trailers, mobile conveyors, lift tables, or platforms where the crop and budget allow.</li>
+<li>Reduce unnecessary carries and stage supplies close to the job.</li>
+<li>Rotate repetitive tasks instead of leaving one person bent, lifting, or reaching all day.</li>
+<li>Keep tools sharp, sized correctly, and stored where workers can reach them.</li>
+<li>Ask the experienced crew where motion is being wasted. They usually know.</li>
+</ul>
+
+<p>USDA specifically points to hydraulic orchard platforms and mobile conveyor belts as mechanical aids that can make jobs accessible to a broader range of workers. The lesson is bigger than those two tools: good mechanization removes the hardest motion while keeping worker judgment where it matters.</p>
+
+<h2>6. Labor Can Consume More Than 40 Percent of Production Expenses</h2>
+
+<p>A national average hides enormous differences between farm types. A 2025 <a href="https://www.ers.usda.gov/publications/113431">USDA report on farm labor expenses</a>, using the 2022 Census of Agriculture, found that labor represented 12.2 percent of total production expenses across U.S. agriculture. But the shares were 42.5 percent for nursery, greenhouse, and floriculture operations; 40.4 percent for fruit and tree nut farms; and 29.2 percent for vegetable and melon farms.</p>
+
+<p>For 2026, USDA's <a href="https://www.ers.usda.gov/data-products/chart-gallery/82241">farm production expense forecast</a> puts total cash labor expense at $53.9 billion, up 2.2 percent from the expected 2025 level.</p>
+
+<p><strong>What it means on the farm:</strong> Labor planning belongs at the crop, enterprise, or production-stage level, not only in the annual farm budget. Start with a simple calculation:</p>
+
+<blockquote>
+<p><strong>Labor cost per marketable unit = total labor dollars for the job ÷ marketable units produced</strong></p>
+</blockquote>
+
+<p>Include payroll taxes, workers' compensation, benefits, housing costs, contractor charges, and paid supervision when they apply. Then compare blocks, varieties, enterprises, or pack styles. A crop with strong sales can still lose money if it requires repeated hand work and has a low packout.</p>
+
+<p>The goal is not to squeeze more from every hour. It is to find avoidable work: walking back for supplies, waiting for a tractor, re-sorting poor-quality product, moving bins twice, repairing neglected equipment during harvest, or redoing a task because the standard was unclear.</p>
+
+<h2>7. Nearly 400,000 H-2A Positions Were Certified in Fiscal 2025</h2>
+
+<p>The H-2A temporary agricultural worker program continues to grow. The <a href="https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/H-2A_Selected_Statistics_FY2025_Q4.pdf">U.S. Department of Labor's fiscal 2025 program statistics</a> show 398,258 positions certified, up from about 385,000 in fiscal 2024. Crop, nursery, and greenhouse laborers accounted for 82 percent of the 2025 certified positions.</p>
+
+<p>A certification is not the same as a worker arriving on a farm, and H-2A is not a quick replacement for ordinary recruiting. The program carries detailed rules for recruitment, wages, housing, transportation, recordkeeping, and the treatment of U.S. workers in corresponding employment. Requirements and wage rates can change.</p>
+
+<p><strong>What it means on the farm:</strong> The scale of the program is evidence that seasonal labor scarcity is structural, especially in labor-intensive crop production. If H-2A is part of your plan, work backward from the date of need, use current Department of Labor guidance, and get qualified legal or program help. If it is not part of your plan, do not wait until harvest to test the local labor market.</p>
+
+<p>The H-2A numbers also do not excuse a weak domestic job post. Clear pay, dates, duties, housing details, and work expectations help U.S. applicants evaluate the role and help the farm document what it is actually hiring for.</p>
+
+<h2>A Practical 2026 Farm Hiring Plan</h2>
+
+<p>The seven numbers point to five moves that fit farms of many sizes.</p>
+
+<ol>
+<li><strong>Budget labor by enterprise.</strong> Know which crops, herds, or production stages consume the most paid and unpaid time.</li>
+<li><strong>Post the complete offer.</strong> Include pay range, schedule, season dates, housing, physical demands, equipment, overtime expectations, and what a successful first month looks like.</li>
+<li><strong>Recruit before the emergency.</strong> Leave time to interview, check references, solve housing or transportation questions, and train before the busiest week.</li>
+<li><strong>Make the job easier to keep.</strong> Improve supervision, schedule reliability, tools, workflow, rest, and communication before assuming a higher wage alone will solve turnover.</li>
+<li><strong>Create a return path.</strong> Ask strong seasonal workers whether they want to return, confirm timing early, and tell them what added skill or responsibility could raise their pay.</li>
+</ol>
+
+<h2>Questions to Ask Before Your Next Job Post Goes Live</h2>
+
+<ul>
+<li>Is the pay range competitive for this exact job and location, not just for “farm work” in general?</li>
+<li>Can an applicant see the normal schedule and the busy-season schedule?</li>
+<li>Have we separated required skills from skills we can teach?</li>
+<li>Does the role offer a reason for an experienced worker to choose us?</li>
+<li>What caused good workers to leave last season?</li>
+<li>Which physical bottleneck could a cart, platform, layout change, or better tool remove?</li>
+<li>Who owns onboarding, daily instructions, feedback, and safety?</li>
+<li>How will we know after 30 days whether the hire is working for both sides?</li>
+</ul>
+
+<h2>Frequently Asked Questions About the Farm Labor Market</h2>
+
+<p><strong>Are farmworker wages going up?</strong><br />Yes. USDA reports that inflation-adjusted wages for nonsupervisory crop and livestock workers rose an average of 1.9 percent per year over the decade ending in 2024. Local wages still vary by State, crop, skill, season, housing, overtime rules, and competition from other employers.</p>
+
+<p><strong>Is agricultural employment declining?</strong><br />It depends on the measure and the part of agriculture. BLS projects a 3 percent decline in agricultural worker employment from 2024 to 2034, but still expects about 116,200 openings per year because workers must be replaced. USDA data also show agriculture and support employment grew 10 percent from 2010 to 2024.</p>
+
+<p><strong>Does mechanization eliminate the need to hire?</strong><br />Sometimes it reduces the number of hours needed for a task. Often it changes the skills the farm needs. Equipment still needs operators, setup, maintenance, judgment, quality control, and people who can adjust when field conditions change.</p>
+
+<p><strong>Should a small farm publish pay in a job post?</strong><br />Yes. A clear range helps candidates decide whether the job is realistic and reduces time spent on poor-fit applications. Explain what experience or responsibility determines the starting point within the range.</p>
+
+<p><strong>Is H-2A right for every seasonal farm?</strong><br />No. It can be important for farms that cannot find enough domestic workers, but it has specific eligibility, timing, wage, housing, transportation, recruitment, and recordkeeping requirements. Use current official guidance and qualified help before treating it as part of the labor budget.</p>
+
+<p>The farm labor market will keep changing, but the basic management advantage is durable: know what the work truly costs, make the offer clear, remove wasted motion, train supervisors, and give good people a reason to return.</p>
+`,
+  },
+  {
     slug: "extreme-heat-farming-summer-guide",
     title: "Extreme Heat Farming Guide: Protect Crops, Livestock, and Crews This Summer",
     category: "Seasonal Guide",
