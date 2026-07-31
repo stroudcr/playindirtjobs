@@ -48,9 +48,9 @@ export function JobCard({ job }: JobCardProps) {
   const avatarColor = getAvatarColor(job.company);
 
   return (
-    <Link href={`/jobs/${job.slug}`}>
+    <Link href={`/jobs/${job.slug}`} className="block min-w-0">
       <div
-        className={`group card p-3 sm:p-4 hover:shadow-soft-lg hover:border-gray-300 transition-all cursor-pointer active:scale-[0.98] relative ${
+        className={`group card min-w-0 p-3 sm:p-4 hover:shadow-soft-lg hover:border-gray-300 transition-all cursor-pointer active:scale-[0.98] relative ${
           job.featured
             ? "ring-1 ring-primary/20 shadow-soft-lg"
             : ""
