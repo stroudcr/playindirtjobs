@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import type { Prisma } from "@prisma/client";
-import { Search } from "lucide-react";
 import { HomeClient } from "@/components/HomeClient";
 import { EmployerCTA } from "@/components/EmployerCTA";
+import { SearchBar } from "@/components/SearchBar";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
+import { buildPublicJobWhere, normalizeSearchQuery, type PublicJobFilters } from "@/lib/job-search";
 import { findPublicJobs, getCachedPublicJobs } from "@/lib/public-jobs";
 
 export const dynamic = "force-dynamic";
@@ -13,16 +14,7 @@ interface HomeProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-type JobFilters = {
-  search: string;
-  categories: string[];
-  jobTypes: string[];
-  farmTypes: string[];
-  benefits: string[];
-  sortBy: string;
-};
-
-function hasDefaultFilters(filters: JobFilters) {
+function hasDefaultFilters(filters: PublicJobFilters) {
   return (
     !filters.search &&
     filters.categories.length === 0 &&
@@ -33,37 +25,8 @@ function hasDefaultFilters(filters: JobFilters) {
   );
 }
 
-async function getJobs(filters: JobFilters) {
-  const where: Prisma.JobWhereInput = {
-    active: true,
-    expiresAt: { gt: new Date() },
-  };
-
-  if (filters.search) {
-    where.OR = [
-      { title: { contains: filters.search, mode: "insensitive" } },
-      { company: { contains: filters.search, mode: "insensitive" } },
-      { location: { contains: filters.search, mode: "insensitive" } },
-      { description: { contains: filters.search, mode: "insensitive" } },
-    ];
-  }
-
-  if (filters.categories.length > 0) {
-    where.categories = { hasSome: filters.categories };
-  }
-
-  if (filters.jobTypes.length > 0) {
-    where.jobType = { hasSome: filters.jobTypes };
-  }
-
-  if (filters.farmTypes.length > 0) {
-    where.farmType = { hasSome: filters.farmTypes };
-  }
-
-  if (filters.benefits.length > 0) {
-    where.benefits = { hasSome: filters.benefits };
-  }
-
+async function getJobs(filters: PublicJobFilters) {
+  const where = buildPublicJobWhere(filters);
   let orderBy: Prisma.JobOrderByWithRelationInput = { createdAt: "desc" };
   if (filters.sortBy === "highest-paid") {
     orderBy = { salaryMax: "desc" };
@@ -149,7 +112,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
 
   const filters = {
-    search: (typeof params.search === "string" ? params.search : "") || "",
+    search: normalizeSearchQuery(typeof params.search === "string" ? params.search : ""),
     categories: (typeof params.categories === "string" ? params.categories.split(",").filter(Boolean) : []),
     jobTypes: (typeof params.jobTypes === "string" ? params.jobTypes.split(",").filter(Boolean) : []),
     farmTypes: (typeof params.farmTypes === "string" ? params.farmTypes.split(",").filter(Boolean) : []),
@@ -188,36 +151,7 @@ export default async function Home({ searchParams }: HomeProps) {
                 nurseries, and ranches nationwide.
               </p>
 
-              <form
-                action="/"
-                method="get"
-                role="search"
-                className="mt-8 flex w-full flex-col overflow-hidden rounded-lg border border-[#d8d5cb] bg-white sm:flex-row"
-              >
-                <label htmlFor="hero-job-search" className="sr-only">
-                  Search by job title, skill, or location
-                </label>
-                <div className="relative min-w-0 flex-1">
-                  <Search
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-forest-light"
-                  />
-                  <input
-                    id="hero-job-search"
-                    name="search"
-                    type="search"
-                    defaultValue={filters.search}
-                    placeholder="Job title, skill, or location"
-                    className="h-14 w-full bg-transparent pl-12 pr-4 text-base text-forest outline-none placeholder:text-gray-400 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/60"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="min-h-14 bg-primary px-7 font-semibold text-white transition-colors hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white sm:min-w-[164px]"
-                >
-                  Search jobs
-                </button>
-              </form>
+              <SearchBar initialQuery={filters.search} />
 
               <a
                 href="#jobs"

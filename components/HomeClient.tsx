@@ -46,9 +46,21 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>(initialFilters.benefits);
   const [sortBy, setSortBy] = useState(initialFilters.sortBy);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [error, setError] = useState("");
 
-  const fetchJobs = useCallback(async () => {
+  useEffect(() => {
+    if (!initialFilters.search || window.location.hash !== "#jobs") return;
+
+    const frameId = window.requestAnimationFrame(() => {
+      document.getElementById("jobs")?.scrollIntoView({ block: "start" });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [initialFilters.search]);
+
+  const fetchJobs = useCallback(async (signal?: AbortSignal) => {
     setLoading(true);
+    setError("");
     try {
       const params = new URLSearchParams();
       if (searchQuery) params.append("search", searchQuery);
@@ -58,17 +70,22 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
       if (selectedBenefits.length) params.append("benefits", selectedBenefits.join(","));
       if (sortBy) params.append("sortBy", sortBy);
 
-      const response = await fetch(`/api/jobs?${params.toString()}`);
+      const response = await fetch(`/api/jobs?${params.toString()}`, { signal });
+      if (!response.ok) throw new Error(`Job search failed with status ${response.status}`);
+
       const data = await response.json();
+      if (!Array.isArray(data.jobs)) throw new Error("Job search returned an invalid response");
 
       setJobs(data.jobs.map((job: Job & { createdAt: string }) => ({
         ...job,
         createdAt: new Date(job.createdAt),
       })));
     } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Error fetching jobs:", error);
+      setError("We couldn’t refresh the results. Please try again.");
     } finally {
-      setLoading(false);
+      if (!signal?.aborted) setLoading(false);
     }
   }, [searchQuery, selectedCategories, selectedJobTypes, selectedFarmTypes, selectedBenefits, sortBy]);
 
@@ -91,7 +108,13 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
   // Fetch jobs client-side when filters change (after first interaction)
   useEffect(() => {
     if (!hasInteracted) return;
-    fetchJobs();
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => fetchJobs(controller.signal), 150);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      controller.abort();
+    };
   }, [hasInteracted, fetchJobs]);
 
   const handleFilterChange = (filters: {
@@ -138,12 +161,26 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
         {/* Job Listings */}
         <div className="flex-1 min-w-0">
           {/* Active filters */}
-          {(selectedCategories.length > 0 ||
+          {(searchQuery ||
+            selectedCategories.length > 0 ||
             selectedJobTypes.length > 0 ||
             selectedFarmTypes.length > 0 ||
             selectedBenefits.length > 0) && (
             <div className="mb-6 flex items-center gap-2 flex-wrap">
               <span className="text-sm text-forest-light">Active filters:</span>
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setHasInteracted(true);
+                    setSearchQuery("");
+                  }}
+                  aria-label={`Remove search ${searchQuery}`}
+                  className="px-3 py-1 bg-primary/20 text-primary text-sm font-medium rounded-full hover:bg-primary/30"
+                >
+                  “{searchQuery}” <span aria-hidden="true">×</span>
+                </button>
+              )}
               {[
                 ...selectedCategories,
                 ...selectedJobTypes,
@@ -168,6 +205,15 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
                 className="text-sm text-primary hover:underline"
               >
                 Clear all
+              </button>
+            </div>
+          )}
+
+          {error && (
+            <div role="alert" className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+              <span>{error}</span>
+              <button type="button" onClick={() => void fetchJobs()} className="font-semibold underline underline-offset-2">
+                Try again
               </button>
             </div>
           )}
@@ -206,7 +252,9 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
                 No jobs found
               </h3>
               <p className="text-forest-light mb-6">
-                Try adjusting your filters or search query
+                {searchQuery
+                  ? <>We couldn’t find a match for “{searchQuery}”. Try another role or location.</>
+                  : "Try adjusting your filters or search query"}
               </p>
               <button
                 onClick={() => {
@@ -230,8 +278,9 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
           {/* Job grid */}
           {!loading && jobs.length > 0 && (
             <div className="space-y-4">
-              <p className="text-sm text-forest-light mb-4">
+              <p role="status" aria-live="polite" className="text-sm text-forest-light mb-4">
                 Showing <span className="font-semibold text-forest">{jobs.length}</span> job{jobs.length !== 1 ? "s" : ""} found
+                {searchQuery ? <> for <span className="font-semibold text-forest">“{searchQuery}”</span></> : null}
               </p>
               <div className="grid gap-4 animate-stagger">
                 {jobs.map((job) => (
