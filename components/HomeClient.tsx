@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { JobCard } from "@/components/JobCard";
 import { EmployerCTA } from "@/components/EmployerCTA";
-import { SearchBar } from "@/components/SearchBar";
 import { FilterSidebar } from "@/components/FilterSidebar";
 import { MobileFilters } from "@/components/MobileFilters";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
@@ -37,7 +36,6 @@ interface HomeClientProps {
 
 export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [loading, setLoading] = useState(false);
@@ -96,11 +94,6 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
     fetchJobs();
   }, [hasInteracted, fetchJobs]);
 
-  const handleSearch = (query: string) => {
-    setHasInteracted(true);
-    setSearchQuery(query);
-  };
-
   const handleFilterChange = (filters: {
     categories?: string[];
     jobTypes?: string[];
@@ -117,7 +110,7 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div id="jobs" className="container mx-auto scroll-mt-24 px-4 py-8">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Filters Sidebar - Desktop Only */}
         <div className="hidden lg:block w-64 flex-shrink-0 space-y-6">
@@ -144,11 +137,6 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
 
         {/* Job Listings */}
         <div className="flex-1 min-w-0">
-          {/* Search bar within the listings area */}
-          <div className="mb-6">
-            <SearchBar onSearch={handleSearch} initialQuery={initialFilters.search} />
-          </div>
-
           {/* Active filters */}
           {(selectedCategories.length > 0 ||
             selectedJobTypes.length > 0 ||

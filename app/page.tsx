@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import type { Prisma } from "@prisma/client";
+import { Search } from "lucide-react";
 import { HomeClient } from "@/components/HomeClient";
 import { EmployerCTA } from "@/components/EmployerCTA";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
@@ -168,42 +169,74 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <main className="min-h-screen bg-earth-cream">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border">
-        <div className="container mx-auto px-4 py-6 md:py-12">
-          <div className="max-w-3xl mx-auto text-center mb-4 md:mb-8">
-            <div className="flex justify-center mb-4 md:mb-6">
-              <Image
-                src="/images/PlayInDirtLogo.PNG"
-                alt="PlayInDirtJobs - Farm, Garden & Ranch Jobs"
-                width={800}
-                height={800}
-                className="h-16 sm:h-20 md:h-24 w-auto max-w-full"
-                priority
-              />
-            </div>
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-forest mb-3 md:mb-4">
-              Find Farming, Gardening & Ranch Jobs
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-forest-light mb-6 md:mb-8 px-4">
-              Discover sustainable agriculture careers, organic farming positions, and ranch work opportunities across America.
-              <span className="hidden sm:inline"> Build a sustainable future, one job at a time.</span>
-            </p>
+      <section className="overflow-hidden border-b border-[#dedbd1] bg-[#faf9f2]">
+        <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="flex items-center px-5 py-12 sm:px-8 sm:py-16 lg:min-h-[620px] lg:py-20 lg:pl-14 lg:pr-6 xl:pl-16 xl:pr-8">
+            <div className="w-full max-w-[560px]">
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.15em] text-secondary-dark sm:text-sm">
+                Work outdoors. Build something real.
+              </p>
 
-            {/* Social proof pills */}
-            <div className="flex flex-wrap justify-center gap-3">
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm text-forest-light shadow-soft border border-border">
-                <span className="w-2 h-2 bg-primary rounded-full" />
-                Free for job seekers
-              </span>
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm text-forest-light shadow-soft border border-border">
-                <span className="w-2 h-2 bg-accent-yellow rounded-full" />
-                60-day listings
-              </span>
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm text-forest-light shadow-soft border border-border">
-                <span className="w-2 h-2 bg-accent-blue rounded-full" />
-                Nationwide opportunities
-              </span>
+              <h1 className="font-display text-[2.8rem] leading-[0.98] tracking-[-0.025em] text-forest sm:text-6xl lg:text-[4.5rem]">
+                <span className="block">Find Farming,</span>
+                <span className="block">Gardening &amp;</span>
+                <span className="block">Ranch Jobs</span>
+              </h1>
+
+              <p className="mt-7 max-w-[500px] text-base leading-relaxed text-forest-light sm:text-lg">
+                Search hands-on work across farms, gardens, greenhouses,
+                nurseries, and ranches nationwide.
+              </p>
+
+              <form
+                action="/"
+                method="get"
+                role="search"
+                className="mt-8 flex w-full flex-col overflow-hidden rounded-lg border border-[#d8d5cb] bg-white sm:flex-row"
+              >
+                <label htmlFor="hero-job-search" className="sr-only">
+                  Search by job title, skill, or location
+                </label>
+                <div className="relative min-w-0 flex-1">
+                  <Search
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-forest-light"
+                  />
+                  <input
+                    id="hero-job-search"
+                    name="search"
+                    type="search"
+                    defaultValue={filters.search}
+                    placeholder="Job title, skill, or location"
+                    className="h-14 w-full bg-transparent pl-12 pr-4 text-base text-forest outline-none placeholder:text-gray-400 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/60"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="min-h-14 bg-primary px-7 font-semibold text-white transition-colors hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white sm:min-w-[164px]"
+                >
+                  Search jobs
+                </button>
+              </form>
+
+              <a
+                href="#jobs"
+                className="mt-5 inline-flex min-h-11 items-center text-sm font-medium text-forest underline decoration-forest/45 underline-offset-4 transition-colors hover:text-primary-dark"
+              >
+                Browse every opening
+              </a>
             </div>
+          </div>
+
+          <div className="relative h-[360px] min-h-0 sm:h-[480px] lg:h-auto lg:min-h-[620px]">
+            <Image
+              src="/images/home-hero-linocut-field.png"
+              alt="Linocut illustration of farm rows, a greenhouse, garden workers, and ranch land"
+              fill
+              priority
+              sizes="(min-width: 1024px) 59vw, 100vw"
+              className="object-cover object-center"
+            />
           </div>
         </div>
       </section>
