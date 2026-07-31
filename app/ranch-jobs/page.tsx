@@ -6,7 +6,7 @@ import { EmployerCTA } from "@/components/EmployerCTA";
 import { Beef } from "lucide-react";
 import { getUrl } from "@/lib/metadata";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Ranch Jobs | Ranch Hand & Livestock Work | PlayInDirtJobs",

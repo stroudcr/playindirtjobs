@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EmployerCTA } from "@/components/EmployerCTA";
 import { getUrl } from "@/lib/metadata";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Organic Farm Jobs | Sustainable Ag Work | PlayInDirtJobs",

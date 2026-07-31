@@ -17,10 +17,11 @@ export function Footer() {
           <div>
             <Link href="/" className="inline-block mb-3">
               <Image
-                src="/images/PlayInDirtWord.PNG"
+                src="/images/PlayInDirtWord-header.webp"
                 alt="PlayInDirtJobs"
                 width={360}
-                height={96}
+                height={105}
+                sizes="137px"
                 className="h-10 w-auto"
               />
             </Link>

@@ -11,7 +11,7 @@ import { getUrl } from "@/lib/metadata";
 import { getStateContent } from "@/lib/state-content";
 import { getStateImage } from "@/lib/state-images";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 const STATE_CODE = 'VA';
 const stateContent = getStateContent(STATE_CODE)!;
@@ -67,7 +67,9 @@ export default async function VirginiaJobsPage() {
             alt={stateImage.alt}
             fill
             className="object-cover"
-            priority
+            loading="eager"
+            fetchPriority="high"
+            quality={65}
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20" />

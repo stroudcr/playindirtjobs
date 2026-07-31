@@ -7,7 +7,7 @@ import { EmployerCTA } from "@/components/EmployerCTA";
 import { Sprout, ArrowRight } from "lucide-react";
 import { getUrl } from "@/lib/metadata";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Farming Jobs | Farm Hand Roles | PlayInDirtJobs",

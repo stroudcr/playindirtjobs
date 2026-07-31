@@ -11,12 +11,12 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
             <Image
-              src="/images/PlayInDirtWord.PNG"
+              src="/images/PlayInDirtWord-header.webp"
               alt="PlayInDirtJobs"
               width={360}
-              height={96}
+              height={105}
+              sizes="(min-width: 768px) 165px, 124px"
               className="h-9 md:h-12 w-auto"
-              priority
             />
           </Link>
 

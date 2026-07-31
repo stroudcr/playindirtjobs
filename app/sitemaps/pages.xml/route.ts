@@ -4,8 +4,9 @@ import { getStateCode, getStateSlug, US_STATES_WITHOUT_DC } from "@/lib/constant
 import { getBaseUrl } from "@/lib/metadata";
 import { pressReleases } from "@/lib/press-releases";
 import { createSitemapXml, type SitemapEntry, xmlResponse } from "@/lib/sitemap-xml";
+import { unstable_cache } from "next/cache";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 const STATIC_PATHS = [
   "",
@@ -32,8 +33,8 @@ const STATIC_PATHS = [
   "/almanac",
 ];
 
-async function getStateModificationDates() {
-  const jobs = await db.job.findMany({
+const getStateModificationRows = unstable_cache(async () => {
+  return db.job.findMany({
     where: {
       active: true,
       expiresAt: { gte: new Date() },
@@ -43,6 +44,13 @@ async function getStateModificationDates() {
       updatedAt: true,
     },
   });
+}, ["sitemap-state-modification-dates"], {
+  revalidate: 3600,
+  tags: ["public-jobs"],
+});
+
+async function getStateModificationDates() {
+  const jobs = await getStateModificationRows();
 
   const dates = new Map<string, Date>();
 

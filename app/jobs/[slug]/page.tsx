@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { notFound, permanentRedirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { MapPin, DollarSign, Briefcase, Calendar, ArrowLeft, ExternalLink } from "lucide-react";
@@ -19,7 +20,7 @@ interface JobPageProps {
   }>;
 }
 
-const getJob = cache(async (slug: string) => {
+const getCachedJob = unstable_cache(async (slug: string) => {
   const job = await db.job.findFirst({
     where: {
       slug,
@@ -58,7 +59,12 @@ const getJob = cache(async (slug: string) => {
   });
 
   return job;
+}, ["public-job"], {
+  revalidate: 300,
+  tags: ["public-jobs"],
 });
+
+const getJob = cache(getCachedJob);
 
 function ApplicationCard({
   slug,
@@ -214,10 +220,12 @@ function JobTemporarilyUnavailable() {
   );
 }
 
-// Skip static generation - render job pages dynamically at request time
-// This ensures the build succeeds even when the database is unreachable
 export const dynamicParams = true;
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  return [];
+}
 
 export async function generateMetadata({ params }: JobPageProps): Promise<Metadata> {
   try {

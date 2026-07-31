@@ -164,10 +164,12 @@ export default async function Home({ searchParams }: HomeProps) {
 
           <div className="relative h-[360px] min-h-0 sm:h-[480px] lg:h-auto lg:min-h-[620px]">
             <Image
-              src="/images/home-hero-linocut-field.png"
+              src="/images/home-hero-linocut-field.webp"
               alt="Linocut illustration of farm rows, a greenhouse, garden workers, and ranch land"
               fill
-              priority
+              loading="eager"
+              fetchPriority="high"
+              quality={60}
               sizes="(min-width: 1024px) 59vw, 100vw"
               className="object-cover object-center"
             />
