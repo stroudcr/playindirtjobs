@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { JobCard } from "@/components/JobCard";
 import { EmployerCTA } from "@/components/EmployerCTA";
@@ -24,6 +24,7 @@ interface Job {
 
 interface HomeClientProps {
   initialJobs: Job[];
+  initialTotal: number;
   initialFilters: {
     search: string;
     categories: string[];
@@ -34,11 +35,13 @@ interface HomeClientProps {
   };
 }
 
-export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
+export function HomeClient({ initialJobs, initialTotal, initialFilters }: HomeClientProps) {
   const router = useRouter();
 
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
+  const [totalJobs, setTotalJobs] = useState(Math.max(initialTotal, initialJobs.length));
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState(initialFilters.search);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialFilters.categories);
   const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>(initialFilters.jobTypes);
@@ -58,8 +61,19 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
     return () => window.cancelAnimationFrame(frameId);
   }, [initialFilters.search]);
 
-  const fetchJobs = useCallback(async (signal?: AbortSignal) => {
-    setLoading(true);
+  const fetchJobs = useCallback(async ({
+    signal,
+    offset = 0,
+  }: {
+    signal?: AbortSignal;
+    offset?: number;
+  } = {}) => {
+    const appending = offset > 0;
+    if (appending) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
+    }
     setError("");
     try {
       const params = new URLSearchParams();
@@ -69,23 +83,43 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
       if (selectedFarmTypes.length) params.append("farmTypes", selectedFarmTypes.join(","));
       if (selectedBenefits.length) params.append("benefits", selectedBenefits.join(","));
       if (sortBy) params.append("sortBy", sortBy);
+      if (offset > 0) params.append("offset", String(offset));
 
       const response = await fetch(`/api/jobs?${params.toString()}`, { signal });
       if (!response.ok) throw new Error(`Job search failed with status ${response.status}`);
 
       const data = await response.json();
       if (!Array.isArray(data.jobs)) throw new Error("Job search returned an invalid response");
+      if (!Number.isSafeInteger(data.total) || data.total < 0) {
+        throw new Error("Job search returned an invalid total");
+      }
 
-      setJobs(data.jobs.map((job: Job & { createdAt: string }) => ({
+      const nextJobs = data.jobs.map((job: Job & { createdAt: string }) => ({
         ...job,
         createdAt: new Date(job.createdAt),
-      })));
+      }));
+
+      if (appending) {
+        setJobs((currentJobs) => {
+          const existingIds = new Set(currentJobs.map((job) => job.id));
+          return [
+            ...currentJobs,
+            ...nextJobs.filter((job: Job) => !existingIds.has(job.id)),
+          ];
+        });
+      } else {
+        setJobs(nextJobs);
+      }
+      setTotalJobs(Math.max(data.total, offset + nextJobs.length));
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Error fetching jobs:", error);
       setError("We couldn’t refresh the results. Please try again.");
     } finally {
-      if (!signal?.aborted) setLoading(false);
+      if (!signal?.aborted) {
+        setLoading(false);
+        setLoadingMore(false);
+      }
     }
   }, [searchQuery, selectedCategories, selectedJobTypes, selectedFarmTypes, selectedBenefits, sortBy]);
 
@@ -109,7 +143,7 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
   useEffect(() => {
     if (!hasInteracted) return;
     const controller = new AbortController();
-    const timeoutId = window.setTimeout(() => fetchJobs(controller.signal), 150);
+    const timeoutId = window.setTimeout(() => fetchJobs({ signal: controller.signal }), 150);
 
     return () => {
       window.clearTimeout(timeoutId);
@@ -279,7 +313,8 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
           {!loading && jobs.length > 0 && (
             <div className="space-y-4">
               <p role="status" aria-live="polite" className="text-sm text-forest-light mb-4">
-                Showing <span className="font-semibold text-forest">{jobs.length}</span> job{jobs.length !== 1 ? "s" : ""} found
+                Showing <span className="font-semibold text-forest">{jobs.length}</span> of{" "}
+                <span className="font-semibold text-forest">{totalJobs}</span> active job{totalJobs !== 1 ? "s" : ""}
                 {searchQuery ? <> for <span className="font-semibold text-forest">“{searchQuery}”</span></> : null}
               </p>
               <div className="grid gap-4 animate-stagger">
@@ -287,6 +322,18 @@ export function HomeClient({ initialJobs, initialFilters }: HomeClientProps) {
                   <JobCard key={job.id} job={job} />
                 ))}
               </div>
+              {jobs.length < totalJobs && (
+                <div className="flex justify-center pt-4">
+                  <button
+                    type="button"
+                    onClick={() => void fetchJobs({ offset: jobs.length })}
+                    disabled={loadingMore}
+                    className="btn btn-primary min-w-44 justify-center disabled:cursor-wait disabled:opacity-70"
+                  >
+                    {loadingMore ? "Loading more jobs…" : "Load more jobs"}
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

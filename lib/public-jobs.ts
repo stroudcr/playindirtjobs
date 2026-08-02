@@ -49,6 +49,10 @@ async function runPublicJobFindMany<T extends Prisma.JobFindManyArgs>(
   return jobs as Prisma.JobGetPayload<T>[];
 }
 
+async function runPublicJobCount(args: Prisma.JobCountArgs) {
+  return db.job.count(args);
+}
+
 export async function findPublicJobs<T extends Prisma.JobFindManyArgs>(
   context: string,
   args: T
@@ -59,6 +63,22 @@ export async function findPublicJobs<T extends Prisma.JobFindManyArgs>(
     if (isTransientPrismaReadError(error)) {
       logTransientPrismaReadError(context, error);
       return [];
+    }
+
+    throw error;
+  }
+}
+
+export async function countPublicJobs(
+  context: string,
+  args: Prisma.JobCountArgs
+) {
+  try {
+    return await runPublicJobCount(args);
+  } catch (error) {
+    if (isTransientPrismaReadError(error)) {
+      logTransientPrismaReadError(context, error);
+      return 0;
     }
 
     throw error;
@@ -83,6 +103,30 @@ export function getCachedPublicJobs<T extends Prisma.JobFindManyArgs>(
     if (isTransientPrismaReadError(error)) {
       logTransientPrismaReadError(context, error);
       return [] as Prisma.JobGetPayload<T>[];
+    }
+
+    throw error;
+  });
+}
+
+export function getCachedPublicJobCount(
+  context: string,
+  args: Prisma.JobCountArgs,
+  revalidate = PUBLIC_JOBS_REVALIDATE_SECONDS
+) {
+  const getCount = unstable_cache(
+    () => runPublicJobCount(args),
+    ["public-job-count", context],
+    {
+      revalidate,
+      tags: ["public-jobs"],
+    }
+  );
+
+  return getCount().catch((error) => {
+    if (isTransientPrismaReadError(error)) {
+      logTransientPrismaReadError(context, error);
+      return 0;
     }
 
     throw error;

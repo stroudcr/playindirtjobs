@@ -5,8 +5,14 @@ import { HomeClient } from "@/components/HomeClient";
 import { EmployerCTA } from "@/components/EmployerCTA";
 import { SearchBar } from "@/components/SearchBar";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
+import { PUBLIC_JOBS_PAGE_SIZE } from "@/lib/job-pagination";
 import { buildPublicJobWhere, normalizeSearchQuery, type PublicJobFilters } from "@/lib/job-search";
-import { findPublicJobs, getCachedPublicJobs } from "@/lib/public-jobs";
+import {
+  countPublicJobs,
+  findPublicJobs,
+  getCachedPublicJobCount,
+  getCachedPublicJobs,
+} from "@/lib/public-jobs";
 
 export const dynamic = "force-dynamic";
 
@@ -39,6 +45,7 @@ async function getJobs(filters: PublicJobFilters) {
     orderBy: [
       { featured: "desc" },
       orderBy,
+      { id: "asc" },
     ],
     select: {
       id: true,
@@ -53,14 +60,24 @@ async function getJobs(filters: PublicJobFilters) {
       featured: true,
       createdAt: true,
     },
-    take: 50,
+    take: PUBLIC_JOBS_PAGE_SIZE,
   } satisfies Prisma.JobFindManyArgs;
 
+  const countQuery = { where } satisfies Prisma.JobCountArgs;
+
   if (hasDefaultFilters(filters)) {
-    return getCachedPublicJobs("home-default-jobs", query);
+    const [jobs, total] = await Promise.all([
+      getCachedPublicJobs("home-default-jobs", query),
+      getCachedPublicJobCount("home-default-count", countQuery),
+    ]);
+    return { jobs, total: Math.max(total, jobs.length) };
   }
 
-  return findPublicJobs("home-filtered-jobs", query);
+  const [jobs, total] = await Promise.all([
+    findPublicJobs("home-filtered-jobs", query),
+    countPublicJobs("home-filtered-count", countQuery),
+  ]);
+  return { jobs, total: Math.max(total, jobs.length) };
 }
 
 function SkeletonCard() {
@@ -120,7 +137,7 @@ export default async function Home({ searchParams }: HomeProps) {
     sortBy: (typeof params.sortBy === "string" ? params.sortBy : "latest") || "latest",
   };
 
-  const jobs = await getJobs(filters);
+  const { jobs, total } = await getJobs(filters);
 
   const serializedJobs = jobs.map(job => ({
     ...job,
@@ -179,7 +196,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
       {/* Main Content */}
       <Suspense fallback={<LoadingSkeleton />}>
-        <HomeClient initialJobs={serializedJobs} initialFilters={filters} />
+        <HomeClient initialJobs={serializedJobs} initialTotal={total} initialFilters={filters} />
       </Suspense>
 
       <EmployerCTA source="homepage_jobs" />

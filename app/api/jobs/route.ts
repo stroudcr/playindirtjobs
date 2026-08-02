@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
+import { normalizePublicJobOffset, PUBLIC_JOBS_PAGE_SIZE } from "@/lib/job-pagination";
 import { buildPublicJobWhere, normalizeSearchQuery } from "@/lib/job-search";
-import { findPublicJobs } from "@/lib/public-jobs";
+import { countPublicJobs, findPublicJobs } from "@/lib/public-jobs";
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
     const farmTypes = searchParams.get("farmTypes")?.split(",").filter(Boolean) || [];
     const benefits = searchParams.get("benefits")?.split(",").filter(Boolean) || [];
     const sortBy = searchParams.get("sortBy") || "latest";
+    const offset = normalizePublicJobOffset(searchParams.get("offset"));
 
     const where = buildPublicJobWhere({
       search,
@@ -34,30 +36,40 @@ export async function GET(request: NextRequest) {
       orderBy = { views: "desc" };
     }
 
-    // Fetch jobs
-    const jobs = await findPublicJobs("api-jobs", {
-      where,
-      orderBy: [
-        { featured: "desc" }, // Featured jobs first
-        orderBy,
-      ],
-      select: {
-        id: true,
-        slug: true,
-        title: true,
-        company: true,
-        location: true,
-        salaryMin: true,
-        salaryMax: true,
-        categories: true,
-        jobType: true,
-        featured: true,
-        createdAt: true,
-      },
-      take: 50, // Limit results
-    });
+    const [jobs, total] = await Promise.all([
+      findPublicJobs("api-jobs", {
+        where,
+        orderBy: [
+          { featured: "desc" }, // Featured jobs first
+          orderBy,
+          { id: "asc" },
+        ],
+        select: {
+          id: true,
+          slug: true,
+          title: true,
+          company: true,
+          location: true,
+          salaryMin: true,
+          salaryMax: true,
+          categories: true,
+          jobType: true,
+          featured: true,
+          createdAt: true,
+        },
+        skip: offset,
+        take: PUBLIC_JOBS_PAGE_SIZE,
+      }),
+      countPublicJobs("api-jobs-count", { where }),
+    ]);
 
-    return NextResponse.json({ jobs });
+    const resultTotal = Math.max(total, offset + jobs.length);
+
+    return NextResponse.json({
+      jobs,
+      total: resultTotal,
+      hasMore: offset + jobs.length < resultTotal,
+    });
   } catch (error) {
     console.error("Error fetching jobs:", error);
     return NextResponse.json(
