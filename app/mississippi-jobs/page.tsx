@@ -61,7 +61,7 @@ export default async function MississippiJobsPage() {
     <>
       <main className="min-h-screen bg-earth-cream">
         {/* Hero Section - Full-Bleed Image */}
-        <section className="relative h-[50vh] md:h-[60vh] min-h-[400px] max-h-[700px] overflow-hidden">
+        <section className="relative min-h-[400px] overflow-hidden md:h-[60vh] md:max-h-[700px]">
           <Image
             src={stateImage.src}
             alt={stateImage.alt}
@@ -73,7 +73,7 @@ export default async function MississippiJobsPage() {
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20" />
-          <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-10 md:pb-14">
+          <div className="relative container mx-auto flex min-h-[400px] flex-col justify-end px-4 pb-14 pt-8 md:h-full md:min-h-0 md:pb-14 md:pt-0">
             <Breadcrumbs
               variant="light"
               items={[
