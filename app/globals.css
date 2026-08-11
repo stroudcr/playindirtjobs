@@ -99,6 +99,13 @@
   scroll-margin-top: 7rem;
 }
 
+.almanac-article h3 {
+  @apply font-display text-forest;
+  margin: 2rem 0 0.75rem;
+  font-size: 1.3rem;
+  line-height: 1.35;
+}
+
 .almanac-article ul,
 .almanac-article ol {
   max-width: 68ch;
@@ -168,6 +175,10 @@
 
   .almanac-article h2 {
     font-size: 2rem;
+  }
+
+  .almanac-article h3 {
+    font-size: 1.45rem;
   }
 }
 

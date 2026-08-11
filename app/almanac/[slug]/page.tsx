@@ -117,10 +117,26 @@ export default async function AlmanacArticlePage({
       url: getUrl(),
     },
     url: getUrl(`almanac/${article.slug}`),
+    mainEntityOfPage: getUrl(`almanac/${article.slug}`),
     ...(article.heroImage && {
       image: article.heroImage.src,
     }),
   };
+
+  const faqSchema = article.faq
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: article.faq.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      }
+    : null;
 
   return (
     <main className="min-h-screen bg-earth-cream">
@@ -128,6 +144,12 @@ export default async function AlmanacArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       {/* Hero */}
       <section className="bg-gradient-to-b from-white to-earth-sand border-b border-border py-10 sm:py-14">

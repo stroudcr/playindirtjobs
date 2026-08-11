@@ -24,6 +24,10 @@ export interface AlmanacArticle {
     href: string;
     label: string;
   };
+  faq?: {
+    question: string;
+    answer: string;
+  }[];
 }
 
 export function formatAlmanacDate(
@@ -34,6 +38,223 @@ export function formatAlmanacDate(
 }
 
 export const almanacArticles: AlmanacArticle[] = [
+  {
+    slug: "farm-hand-job-description",
+    title: "Farm Hand Job Description: Duties, Skills, Pay, and How to Get Hired",
+    category: "Getting Started",
+    excerpt: "What does a farm hand actually do? Learn the common duties, skills, schedule, pay, qualifications, and practical steps that can help you get hired.",
+    metaTitle: "Farm Hand Job Description, Duties & Pay | PlayInDirtJobs",
+    metaDescription: "What does a farm hand do? Learn common duties, skills, pay, schedules, qualifications, and how to get hired for farm work with no experience.",
+    date: "2026-08-11",
+    author: "PlayInDirtJobs",
+    readTime: 12,
+    featured: true,
+    audience: "worker",
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1746014929708-fcb859fd3185?w=1200&h=630&fit=crop&auto=format&q=80",
+      alt: "Two farm workers harvesting leafy greens by hand in a field",
+      credit: "Richard Nyoni",
+      creditUrl: "https://unsplash.com/photos/farmers-harvest-leafy-greens-in-the-field-HzdCcbUDCbo",
+    },
+    relatedSlugs: [
+      "how-to-get-a-farm-job-with-no-experience",
+      "what-to-expect-your-first-week-on-a-farm",
+      "how-much-do-farm-jobs-pay",
+    ],
+    cta: {
+      heading: "Ready to find farm hand jobs?",
+      body: "Browse farm, ranch, greenhouse, nursery, orchard, and harvest jobs from employers across the United States.",
+      href: "/",
+      label: "Browse Farm Jobs",
+    },
+    faq: [
+      {
+        question: "What does a farm hand do?",
+        answer: "A farm hand helps with the daily work of producing crops or caring for animals. Depending on the farm, duties may include planting, weeding, harvesting, packing produce, feeding livestock, cleaning pens, checking irrigation, repairing fences, maintaining tools, or operating equipment after training.",
+      },
+      {
+        question: "Do you need experience to become a farm hand?",
+        answer: "Many entry-level farm hand jobs do not require previous farm experience or a formal educational credential. Employers commonly provide short-term, on-the-job training. Reliability, careful listening, physical readiness, and a willingness to learn can matter more than an agriculture degree for a first job.",
+      },
+      {
+        question: "How much does a farm hand make?",
+        answer: "The U.S. Bureau of Labor Statistics reported a median wage of $17.30 per hour, or $35,980 per year, for agricultural workers in May 2024. Actual farm hand pay varies by location, duties, experience, season, overtime rules, and benefits such as housing or meals.",
+      },
+      {
+        question: "What skills make a good farm hand?",
+        answer: "Useful farm hand skills include reliability, listening, safe tool use, physical stamina, attention to detail, teamwork, basic mechanical ability, animal awareness, and the judgment to ask questions when instructions or conditions are unclear.",
+      },
+      {
+        question: "Is farm hand work seasonal or year-round?",
+        answer: "It can be either. Crop and harvest jobs are often seasonal, while dairy, livestock, greenhouse, nursery, maintenance, and diversified farm roles are more likely to continue throughout the year. Every listing should state its approximate start date, end date, and expected weekly hours.",
+      },
+    ],
+    content: `
+<p>A farm hand is the person who helps turn a farm plan into a finished day of work. One morning that might mean harvesting lettuce before the heat arrives. The next might involve repairing a fence, cleaning a calf pen, packing produce, checking an irrigation line, or learning to operate a tractor. It is a broad job title, and that is exactly why people searching for their first farm job often have trouble knowing what to expect.</p>
+
+<p>This guide explains the farm hand job description in plain language: the duties, skills, schedule, qualifications, pay, safety questions, and practical steps that can help you get hired. It focuses on paid agricultural work in the United States, but the day-to-day examples apply to many small farms, ranches, orchards, nurseries, greenhouses, and larger production operations.</p>
+
+<h2>What Is a Farm Hand?</h2>
+
+<p>A <strong>farm hand</strong> is a general agricultural worker who helps grow, harvest, pack, or care for a farm's products. Employers may advertise the same kind of role as farm worker, farm laborer, ranch hand, field crew member, harvest worker, greenhouse worker, nursery worker, livestock worker, or agricultural equipment operator.</p>
+
+<p>“Farm hand” is an everyday job title rather than one single federal occupation. The <a href="https://www.bls.gov/ooh/farming-fishing-and-forestry/agricultural-workers.htm">U.S. Bureau of Labor Statistics agricultural worker profile</a> groups the work into several occupations, including crop, nursery, and greenhouse laborers; farm and ranch animal workers; and agricultural equipment operators. The title on a job post matters less than its actual list of duties.</p>
+
+<p>A small diversified farm may need one person who switches between vegetables, chickens, deliveries, and repairs. A large orchard may hire a worker for one part of the production cycle, such as pruning or harvest. Before you apply, read the complete description and look for the crop or animals involved, the season dates, the normal schedule, the equipment used, the physical demands, and whether housing is included.</p>
+
+<h2>Common Farm Hand Duties</h2>
+
+<p>No farm hand performs every task below. Weather, farm type, season, experience, and safety training determine the work. These are the most common groups of duties.</p>
+
+<h3>Crop, Orchard, Nursery, and Greenhouse Work</h3>
+
+<ul>
+<li>Prepare beds, trays, soil, or growing areas.</li>
+<li>Seed, transplant, thin, weed, prune, trellis, and irrigate crops.</li>
+<li>Inspect plants and report pest, disease, water, or quality problems.</li>
+<li>Harvest fruits, vegetables, flowers, herbs, nuts, or field crops to the farm's quality standard.</li>
+<li>Wash, grade, sort, bunch, weigh, label, pack, and load products.</li>
+<li>Clean harvest bins, tools, greenhouse spaces, and packing areas.</li>
+<li>Help install or repair drip tape, pipe, pumps, row cover, fencing, or trellises.</li>
+</ul>
+
+<p>The <a href="https://www.onetonline.org/link/details/45-2092.00">O*NET profile for crop, nursery, and greenhouse farmworkers</a>, updated in 2026, describes work that ranges from manual planting and harvesting to irrigation, packing, fence repair, and use of hand tools such as shovels, hoes, shears, and knives.</p>
+
+<h3>Livestock and Ranch Work</h3>
+
+<ul>
+<li>Feed and water cattle, sheep, goats, pigs, poultry, horses, bees, or other animals.</li>
+<li>Clean stalls, pens, barns, troughs, bedding, and animal-handling areas.</li>
+<li>Move or herd animals safely between pastures, pens, milking areas, or trailers.</li>
+<li>Watch for changes in appetite, movement, behavior, illness, or injury and report them quickly.</li>
+<li>Help with milking, egg collection, weighing, tagging, recordkeeping, or routine health tasks when trained.</li>
+<li>Repair fences, gates, water systems, shelters, and pasture equipment.</li>
+</ul>
+
+<p>Animal work is less tied to a harvest calendar because livestock need care every day. Early mornings, weekends, holidays, and split shifts can be normal. If that is the work you want, explore current <a href="/ranch-jobs">ranch jobs</a> and ask exactly how the farm rotates weekend and holiday coverage.</p>
+
+<h3>Equipment, Maintenance, and General Farm Work</h3>
+
+<ul>
+<li>Inspect, clean, fuel, grease, and store tools or equipment.</li>
+<li>Operate tractors, mowers, cultivators, loaders, balers, harvest equipment, or utility vehicles after authorization and training.</li>
+<li>Make basic repairs or tell a supervisor when something sounds, feels, or performs differently.</li>
+<li>Mow, clear brush, maintain roads, organize supplies, and keep work areas safe.</li>
+<li>Load vehicles, prepare orders, make deliveries, or help at a farm stand.</li>
+<li>Record harvest weights, animal checks, temperatures, inventory, or completed jobs.</li>
+</ul>
+
+<p>Do not assume that “general farm work” means you will be expected to operate every machine on day one. BLS says equipment operators may need more training than other entry-level agricultural workers. A responsible employer explains the machine, demonstrates the task, checks that you understand it, and does not ask an untrained worker to improvise.</p>
+
+<h2>What Does a Typical Farm Hand Schedule Look Like?</h2>
+
+<p>Farm schedules follow living things and weather, not a perfectly fixed office clock. BLS reports that most agricultural workers are full time, some work more than 40 hours a week, and schedules may include early mornings, weekends, and holidays. Seasonal workers may have longer weeks during planting or harvest.</p>
+
+<p>A vegetable farm hand might begin early with harvest, move produce into a wash-pack area, take a midday break, and spend the afternoon transplanting or preparing orders. A livestock worker may start with feed and health checks, complete fencing or cleaning jobs during the day, and return for evening chores. A greenhouse worker may seed, water, prune, move plants, fill orders, and monitor temperature and ventilation.</p>
+
+<p>The schedule should be discussed before you accept an offer. Ask:</p>
+
+<ul>
+<li>What are the normal start and finish times?</li>
+<li>How many hours are typical, and how do those hours change in peak season?</li>
+<li>Which weekends or holidays are required?</li>
+<li>Are hours guaranteed, weather-dependent, or likely to fluctuate?</li>
+<li>How are meal periods, rest breaks, and overtime handled?</li>
+<li>If the role is seasonal, what are the expected start and end dates?</li>
+</ul>
+
+<h2>Do You Need Qualifications or Farm Experience?</h2>
+
+<p>For many first farm hand jobs, no. BLS says most agricultural workers need no formal educational credential and usually learn on the job. Many receive short-term training lasting up to one month. Certain jobs are different: an equipment role may require a valid driver's license or previous machine experience, pesticide application may require a license, and specialized animal or technical work may require education or certification.</p>
+
+<p>If you are new, look for words such as <em>entry level</em>, <em>will train</em>, <em>field crew</em>, <em>harvest crew</em>, <em>general farm hand</em>, or <em>farm apprentice</em>. Our guide to <a href="/almanac/how-to-get-a-farm-job-with-no-experience">getting a farm job with no experience</a> explains how to translate experience from construction, landscaping, kitchens, warehouses, customer service, sports, gardening, and volunteer work into a strong application. A structured <a href="/farm-apprenticeships">farm apprenticeship</a> can also combine work with more deliberate instruction.</p>
+
+<h2>Seven Skills That Make a Good Farm Hand</h2>
+
+<ol>
+<li><strong>Reliability.</strong> Crops, animals, and crews depend on people arriving when promised. A history of dependable attendance is valuable even if it comes from another industry.</li>
+<li><strong>Careful listening.</strong> Farms have precise standards for harvest size, tool use, animal movement, food safety, and equipment. Repeat instructions back when the cost of a misunderstanding is high.</li>
+<li><strong>Physical stamina and safe movement.</strong> Bending, crouching, walking, lifting, carrying, and repetitive hand work are common. Good technique and steady pacing matter more than trying to prove strength.</li>
+<li><strong>Attention to detail.</strong> A strong farm hand notices a leaking line, damaged plant, sick animal, loose guard, incorrect label, or quality problem before it becomes expensive or dangerous.</li>
+<li><strong>Tool and mechanical awareness.</strong> You do not need to be a mechanic, but it helps to use basic tools safely, follow a checklist, and stop a machine when something is wrong.</li>
+<li><strong>Teamwork.</strong> Harvest, animal moves, loading, and many maintenance jobs depend on clear communication and a shared pace.</li>
+<li><strong>Willingness to learn.</strong> Every farm has its own systems. Ask useful questions, accept correction, take notes, and improve the next time you repeat a task.</li>
+</ol>
+
+<p>BLS also highlights dexterity, listening, mechanical skill, physical stamina, and physical strength. Those abilities grow with practice. A beginner who works carefully and improves every day can be more useful than an experienced applicant who ignores instructions.</p>
+
+<h2>How Much Does a Farm Hand Make?</h2>
+
+<p>The best national benchmark is the BLS figure for agricultural workers: a median of <strong>$17.30 per hour, or $35,980 per year, in May 2024</strong>. In the same data, median annual wages were $35,690 for crop, nursery, and greenhouse laborers; $36,150 for farm, ranch, and aquacultural animal workers; and $42,580 for agricultural equipment operators.</p>
+
+<p>Those are national medians, not a guaranteed starting wage. Farm hand pay changes with location, crop or animal type, experience, season length, responsibility, equipment skill, licenses, schedule, and local labor law. Housing, meals, produce, transportation, health benefits, or an end-of-season bonus can change the value of an offer, but they should be described clearly. Read our full guide to <a href="/almanac/how-much-do-farm-jobs-pay">farm job pay and agricultural salaries</a> before comparing offers.</p>
+
+<p>Federal and state wage rules can be complicated in agriculture. The <a href="https://www.dol.gov/agencies/whd/compliance-assistance/toolkits/agriculture">U.S. Department of Labor agriculture toolkit</a> says farm workers must receive the wages promised and written information about wages and working conditions in a language they understand. It also notes that state laws may provide additional protections. Ask how your hours are recorded, when payday occurs, which deductions apply, and whether the position is eligible for overtime under the laws where you will work.</p>
+
+<h2>How to Get Hired as a Farm Hand</h2>
+
+<ol>
+<li><strong>Choose the kind of work you can realistically do.</strong> Compare vegetable farms, orchards, greenhouses, nurseries, ranches, dairies, and equipment roles. Decide whether you want seasonal or year-round work and whether you can relocate.</li>
+<li><strong>Make a simple, honest resume.</strong> Put reliability and relevant work near the top. Useful examples include outdoor labor, safe tool use, lifting, cleaning, driving, customer service, animal care, mechanical projects, gardening, and early-morning or weekend work.</li>
+<li><strong>Use concrete language.</strong> “Maintained landscaping tools and completed outdoor jobs in all weather” says more than “hard worker.” “Opened a kitchen at 5:30 AM and followed food-safety checklists” shows schedule discipline and careful process.</li>
+<li><strong>Apply for the full season.</strong> If a post lists dates, say clearly whether you can work all of them. Farms invest time in training and need to know when you are available.</li>
+<li><strong>Write a short, specific note.</strong> Name the crop, animals, or skill that interests you. Explain what proves you are ready for the schedule and physical work.</li>
+<li><strong>Ask informed questions.</strong> A good applicant wants to understand the job, not just win it. Ask about training, crew size, busiest weeks, housing, transportation, performance standards, and what success looks like after 30 days.</li>
+<li><strong>Follow up once.</strong> If the listing does not give a timeline, a brief message after five to seven business days is reasonable. Keep applying elsewhere while you wait.</li>
+</ol>
+
+<p>You can search <a href="/farming-jobs">farming jobs</a>, <a href="/gardening-jobs">gardening jobs</a>, <a href="/ranch-jobs">ranch jobs</a>, and other hands-on agricultural roles on PlayInDirtJobs. Use location and category filters, read the entire listing, and sign up for <a href="/job-alerts">job alerts</a> if the right position is not open today.</p>
+
+<h2>Safety Questions to Ask Before You Say Yes</h2>
+
+<p>A real farm job can be physically hard without being careless. The <a href="https://www.osha.gov/agricultural-operations/hazards">OSHA agricultural hazards guide</a> covers machinery, vehicles, heat, noise, chemicals, animals, grain bins, repetitive motion, and other risks. A strong employer takes questions about training and protective equipment seriously.</p>
+
+<ul>
+<li>Who trains new workers, and which tasks require authorization?</li>
+<li>What boots, gloves, hearing protection, eye protection, or other gear does the employer provide?</li>
+<li>Where are drinking water, handwashing facilities, toilets, first-aid supplies, and emergency contacts?</li>
+<li>What is the heat, smoke, lightning, severe-weather, and injury plan?</li>
+<li>How are tractors, power take-off shafts, guards, ladders, knives, animals, and chemicals handled safely?</li>
+<li>Which fields or greenhouses have restricted entry after pesticide use?</li>
+</ul>
+
+<p>The <a href="https://www.epa.gov/pesticide-worker-safety/agricultural-worker-protection-standard-wps">EPA Agricultural Worker Protection Standard</a> requires covered agricultural employers to provide protections such as pesticide safety training, application information, decontamination supplies, emergency assistance, and restrictions on entry into treated areas. Never guess about a chemical, reentry sign, unguarded machine, confined space, or unfamiliar animal. Stop and ask.</p>
+
+<h2>Red Flags in a Farm Hand Job Posting</h2>
+
+<ul>
+<li>No clear employer, farm location, duties, pay basis, or season dates.</li>
+<li>A request to pay a fee before you can interview or start work.</li>
+<li>Pressure to accept immediately without time to review the terms.</li>
+<li>Housing that is offered but not described, photographed, or available for questions.</li>
+<li>Promises of unusually high pay with vague work or no verifiable farm presence.</li>
+<li>An employer who will not explain training, safety equipment, payroll, deductions, or how hours are tracked.</li>
+<li>A job labeled “volunteer” or “independent contractor” even though it functions like regular supervised employment.</li>
+</ul>
+
+<p>If housing is part of the offer, use our <a href="/almanac/farm-jobs-with-housing">farm jobs with housing checklist</a> to ask about cost, utilities, privacy, internet, transportation, guests, pets, deposits, and what happens to housing if the job ends.</p>
+
+<h2>Where Can Farm Hand Experience Lead?</h2>
+
+<p>A first farm hand job can lead to crew lead, irrigation specialist, livestock lead, greenhouse grower, equipment operator, mechanic, harvest manager, packhouse manager, farm manager, or an agricultural apprenticeship or degree. BLS projects agricultural equipment operator employment to grow 8 percent from 2024 to 2034 as farms use more advanced machinery and irrigation systems.</p>
+
+<p>The best way to move forward is to keep a record of what you learn. Note the crops, animals, tools, machines, safety training, licenses, acreage, team size, and responsibilities involved. Ask what skill would make you more useful next season. Progress in agriculture often comes from becoming the person who can do a job safely, teach it clearly, notice problems early, and be trusted when the plan changes.</p>
+
+<h2>Frequently Asked Questions About Farm Hand Jobs</h2>
+
+<p><strong>What does a farm hand do?</strong><br />A farm hand helps with the daily work of producing crops or caring for animals. Depending on the farm, duties may include planting, weeding, harvesting, packing produce, feeding livestock, cleaning pens, checking irrigation, repairing fences, maintaining tools, or operating equipment after training.</p>
+
+<p><strong>Do you need experience to become a farm hand?</strong><br />Many entry-level farm hand jobs do not require previous farm experience or a formal educational credential. Employers commonly provide short-term, on-the-job training. Reliability, careful listening, physical readiness, and a willingness to learn can matter more than an agriculture degree for a first job.</p>
+
+<p><strong>How much does a farm hand make?</strong><br />BLS reported a median wage of $17.30 per hour, or $35,980 per year, for agricultural workers in May 2024. Actual pay varies by location, duties, experience, season, overtime rules, and benefits such as housing or meals.</p>
+
+<p><strong>What skills make a good farm hand?</strong><br />Useful skills include reliability, listening, safe tool use, physical stamina, attention to detail, teamwork, basic mechanical ability, animal awareness, and the judgment to ask questions when instructions or conditions are unclear.</p>
+
+<p><strong>Is farm hand work seasonal or year-round?</strong><br />It can be either. Crop and harvest jobs are often seasonal, while dairy, livestock, greenhouse, nursery, maintenance, and diversified farm roles are more likely to continue throughout the year. Every listing should state its approximate dates and expected weekly hours.</p>
+
+<p>A farm hand job is not one single experience. The right role is the one whose work, schedule, pay, training, location, and living arrangement fit your real life. Read closely, ask direct questions, and apply honestly. Farms do not only need people who already know everything; they need people who can learn, work safely, and be counted on.</p>
+`,
+  },
   {
     slug: "farm-labor-market-2026",
     title: "The Farm Labor Market in 2026: 7 Numbers Every Farmer Should Know",
@@ -912,7 +1133,7 @@ export const almanacArticles: AlmanacArticle[] = [
     date: "2026-03-01",
     author: "PlayInDirtJobs",
     readTime: 8,
-    featured: true,
+    featured: false,
     heroImage: {
       src: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1200&h=630&fit=crop",
       alt: "Person working in a green farm field at sunrise",
