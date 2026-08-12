@@ -51,10 +51,10 @@ export const almanacArticles: AlmanacArticle[] = [
     featured: true,
     audience: "worker",
     heroImage: {
-      src: "https://images.unsplash.com/photo-1746014929708-fcb859fd3185?w=1200&h=630&fit=crop&auto=format&q=80",
-      alt: "Two farm workers harvesting leafy greens by hand in a field",
-      credit: "Richard Nyoni",
-      creditUrl: "https://unsplash.com/photos/farmers-harvest-leafy-greens-in-the-field-HzdCcbUDCbo",
+      src: "https://images.unsplash.com/photo-1605289357852-0397ad2db276?w=1200&h=630&fit=crop&auto=format&q=80",
+      alt: "Farm worker in a blue jacket standing beside a tractor and farm equipment",
+      credit: "Jacinto Diego",
+      creditUrl: "https://unsplash.com/photos/man-in-blue-and-black-adidas-jacket-wearing-white-cap-ydWtwxxjvys",
     },
     relatedSlugs: [
       "how-to-get-a-farm-job-with-no-experience",
