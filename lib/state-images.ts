@@ -29,10 +29,10 @@ const STATE_IMAGES: Record<string, StateImage> = {
     creditUrl: "/",
   },
   AZ: {
-    src: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&h=1080&fit=crop",
-    alt: "Arizona desert agricultural landscape",
-    credit: "Braden Jarvis",
-    creditUrl: "https://unsplash.com/@jarvisphoto",
+    src: "/images/arizona-jobs-hero.webp",
+    alt: "Illustrated Arizona farm with cotton, citrus, leafy greens, cattle, irrigation, and desert mountains",
+    credit: "PlayInDirtJobs",
+    creditUrl: "/",
   },
   AR: {
     src: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1920&h=1080&fit=crop",
