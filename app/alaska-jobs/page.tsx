@@ -67,12 +67,11 @@ export default async function AlaskaJobsPage() {
             alt={stateImage.alt}
             fill
             className="object-cover"
-            loading="eager"
-            fetchPriority="high"
-            quality={65}
+            priority
+            unoptimized
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20" />
+          <div className="absolute inset-0 bg-black/65 md:bg-transparent md:bg-gradient-to-r md:from-black/80 md:via-black/55 md:to-black/20" />
           <div className="relative container mx-auto flex min-h-[400px] flex-col justify-end px-4 pb-14 pt-8 md:h-full md:min-h-0 md:pb-14 md:pt-0">
             <Breadcrumbs
               variant="light"
@@ -96,10 +95,10 @@ export default async function AlaskaJobsPage() {
               ))}
             </div>
           </div>
-          {/* Photo Credit */}
+          {/* Illustration Credit */}
           <div className="absolute bottom-3 right-4 text-white/40 text-xs">
-            Photo by{" "}
-            <a href={stateImage.creditUrl} target="_blank" rel="noopener noreferrer" className="underline hover:text-white/60">
+            Illustration by{" "}
+            <a href={stateImage.creditUrl} className="underline hover:text-white/60">
               {stateImage.credit}
             </a>
           </div>
