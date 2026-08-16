@@ -47,10 +47,10 @@ const STATE_IMAGES: Record<string, StateImage> = {
     creditUrl: "https://unsplash.com/@karsten116",
   },
   CO: {
-    src: "https://images.unsplash.com/photo-1516490981167-dc990a242afe?w=1920&h=1080&fit=crop",
-    alt: "Colorado ranch with mountain backdrop",
-    credit: "Dan Meyers",
-    creditUrl: "https://unsplash.com/@dmey503",
+    src: "/images/colorado-jobs-hero.webp",
+    alt: "Illustrated Colorado ranch with cattle, crops, irrigation, and the Rocky Mountains",
+    credit: "PlayInDirtJobs",
+    creditUrl: "/",
   },
   CT: {
     src: "https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?w=1920&h=1080&fit=crop",
@@ -59,10 +59,10 @@ const STATE_IMAGES: Record<string, StateImage> = {
     creditUrl: "https://unsplash.com/@toddquackenbush",
   },
   DE: {
-    src: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1920&h=1080&fit=crop",
-    alt: "Mid-Atlantic farm fields",
-    credit: "Henry Be",
-    creditUrl: "https://unsplash.com/@henry_be",
+    src: "/images/delaware-jobs-hero.webp",
+    alt: "Illustrated Delaware farm with poultry houses, corn, vegetables, and wetlands",
+    credit: "PlayInDirtJobs",
+    creditUrl: "/",
   },
   FL: {
     src: "https://images.unsplash.com/photo-1774831042495-260dc17000e9?w=1920&h=1080&fit=crop",
@@ -215,10 +215,10 @@ const STATE_IMAGES: Record<string, StateImage> = {
     creditUrl: "https://unsplash.com/@dmey503",
   },
   ND: {
-    src: "https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=1920&h=1080&fit=crop",
-    alt: "North Dakota wheat harvest",
-    credit: "Federico Respini",
-    creditUrl: "https://unsplash.com/@federicorespini",
+    src: "/images/north-dakota-jobs-hero.webp",
+    alt: "Illustrated North Dakota harvest with wheat, sunflowers, cattle, and farm equipment",
+    credit: "PlayInDirtJobs",
+    creditUrl: "/",
   },
   OH: {
     src: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=1920&h=1080&fit=crop",
