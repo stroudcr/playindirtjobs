@@ -107,10 +107,10 @@ const STATE_IMAGES: Record<string, StateImage> = {
     creditUrl: "https://unsplash.com/@jakegard",
   },
   KS: {
-    src: "https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=1920&h=1080&fit=crop",
-    alt: "Kansas wheat field under dramatic sky",
-    credit: "Federico Respini",
-    creditUrl: "https://unsplash.com/@federicorespini",
+    src: "/images/kansas-jobs-hero.webp",
+    alt: "Illustrated Kansas specialty-crop farm with greenhouses, orchards, berry fields, and irrigated plots",
+    credit: "PlayInDirtJobs",
+    creditUrl: "/",
   },
   KY: {
     src: "https://images.unsplash.com/photo-1500076656116-558758c991c1?w=1920&h=1080&fit=crop",
@@ -131,10 +131,10 @@ const STATE_IMAGES: Record<string, StateImage> = {
     creditUrl: "https://unsplash.com/@aaronburden",
   },
   MD: {
-    src: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&h=1080&fit=crop",
-    alt: "Maryland Chesapeake Bay farmland",
-    credit: "Federico Respini",
-    creditUrl: "https://unsplash.com/@federicorespini",
+    src: "/images/maryland-jobs-hero.webp",
+    alt: "Illustrated Maryland farm with poultry, dairy cattle, crops, and Chesapeake Bay oyster aquaculture",
+    credit: "PlayInDirtJobs",
+    creditUrl: "/",
   },
   MA: {
     src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&h=1080&fit=crop",
@@ -191,10 +191,10 @@ const STATE_IMAGES: Record<string, StateImage> = {
     creditUrl: "https://unsplash.com/@aaronburden",
   },
   NJ: {
-    src: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1920&h=1080&fit=crop",
-    alt: "New Jersey Garden State farmland",
-    credit: "Henry Be",
-    creditUrl: "https://unsplash.com/@henry_be",
+    src: "/images/new-jersey-jobs-hero.webp",
+    alt: "Illustrated New Jersey farm with berry fields, orchards, greenhouses, and cranberry bogs",
+    credit: "PlayInDirtJobs",
+    creditUrl: "/",
   },
   NM: {
     src: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&h=1080&fit=crop",
