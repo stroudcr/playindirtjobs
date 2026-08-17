@@ -1,6 +1,6 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { HomeClient } from "@/components/HomeClient";
 
 vi.mock("next/navigation", () => ({
@@ -43,6 +43,10 @@ describe("HomeClient job pagination", () => {
     vi.restoreAllMocks();
   });
 
+  afterEach(() => {
+    cleanup();
+  });
+
   it("appends the next batch and reports the full active total", async () => {
     const initialJobs = Array.from({ length: 50 }, (_, index) => makeJob(index + 1));
     const remainingJobs = Array.from({ length: 7 }, (_, index) => ({
@@ -53,7 +57,15 @@ describe("HomeClient job pagination", () => {
       new Response(JSON.stringify({ jobs: remainingJobs, total: 57, hasMore: false }))
     );
 
-    render(<HomeClient initialJobs={initialJobs} initialTotal={57} initialFilters={filters} />);
+    render(
+      <HomeClient
+        initialJobs={initialJobs}
+        initialTotal={57}
+        initialFilters={{ ...filters, search: "farmer" }}
+        initialPage={1}
+        initialOffset={0}
+      />
+    );
 
     expect(screen.getByText(/Showing/)).toHaveTextContent("Showing 50 of 57 active jobs");
     fireEvent.click(screen.getByRole("button", { name: "Load more jobs" }));
@@ -61,10 +73,28 @@ describe("HomeClient job pagination", () => {
     await waitFor(() => {
       expect(screen.getByText(/Showing/)).toHaveTextContent("Showing 57 of 57 active jobs");
     });
-    expect(fetchMock).toHaveBeenCalledWith("/api/jobs?sortBy=latest&offset=50", {
+    expect(fetchMock).toHaveBeenCalledWith("/api/jobs?search=farmer&sortBy=latest&offset=50", {
       signal: undefined,
     });
     expect(screen.getByText("Job 57")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Load more jobs" })).not.toBeInTheDocument();
+  });
+
+  it("renders crawlable previous and next links for unfiltered result pages", () => {
+    const initialJobs = Array.from({ length: 50 }, (_, index) => makeJob(index + 51));
+
+    render(
+      <HomeClient
+        initialJobs={initialJobs}
+        initialTotal={130}
+        initialFilters={filters}
+        initialPage={2}
+        initialOffset={50}
+      />
+    );
+
+    expect(screen.getByRole("link", { name: "Previous jobs" })).toHaveAttribute("href", "/#jobs");
+    expect(screen.getByRole("link", { name: "Next jobs" })).toHaveAttribute("href", "/jobs/page/3#jobs");
+    expect(screen.getByText(/Showing/)).toHaveTextContent("Showing 51–100 of 130 active jobs");
   });
 });

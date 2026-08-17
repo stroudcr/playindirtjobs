@@ -10,7 +10,6 @@ export const revalidate = 3600;
 
 const STATIC_PATHS = [
   "",
-  "/post-job",
   "/employers",
   "/employers/hire-greenhouse-nursery-workers",
   "/employers/hire-orchard-vineyard-workers",
@@ -78,10 +77,12 @@ export async function GET() {
 
   const entries: SitemapEntry[] = [
     ...STATIC_PATHS.map((path) => ({ url: `${baseUrl}${path}` })),
-    ...US_STATES_WITHOUT_DC.map((state) => ({
-      url: `${baseUrl}/${getStateSlug(state.code)}-jobs`,
-      lastModified: stateModificationDates.get(state.code),
-    })),
+    ...US_STATES_WITHOUT_DC
+      .filter((state) => stateModificationDates.has(state.code))
+      .map((state) => ({
+        url: `${baseUrl}/${getStateSlug(state.code)}-jobs`,
+        lastModified: stateModificationDates.get(state.code),
+      })),
     ...almanacArticles.map((article) => ({
       url: `${baseUrl}/almanac/${article.slug}`,
       lastModified: article.date,

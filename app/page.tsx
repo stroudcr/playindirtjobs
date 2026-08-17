@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { Suspense } from "react";
 import type { Prisma } from "@prisma/client";
+import type { Metadata } from "next";
 import { HomeClient } from "@/components/HomeClient";
 import { EmployerCTA } from "@/components/EmployerCTA";
 import { SearchBar } from "@/components/SearchBar";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
-import { PUBLIC_JOBS_PAGE_SIZE } from "@/lib/job-pagination";
+import {
+  getPublicJobsPageOffset,
+  normalizePublicJobsPage,
+  PUBLIC_JOBS_PAGE_SIZE,
+} from "@/lib/job-pagination";
 import { buildPublicJobWhere, normalizeSearchQuery, type PublicJobFilters } from "@/lib/job-search";
+import { getUrl } from "@/lib/metadata";
 import {
   countPublicJobs,
   findPublicJobs,
@@ -31,8 +37,9 @@ function hasDefaultFilters(filters: PublicJobFilters) {
   );
 }
 
-async function getJobs(filters: PublicJobFilters) {
+async function getJobs(filters: PublicJobFilters, page: number) {
   const where = buildPublicJobWhere(filters);
+  const offset = getPublicJobsPageOffset(page);
   let orderBy: Prisma.JobOrderByWithRelationInput = { createdAt: "desc" };
   if (filters.sortBy === "highest-paid") {
     orderBy = { salaryMax: "desc" };
@@ -61,23 +68,59 @@ async function getJobs(filters: PublicJobFilters) {
       createdAt: true,
     },
     take: PUBLIC_JOBS_PAGE_SIZE,
+    skip: offset,
   } satisfies Prisma.JobFindManyArgs;
 
   const countQuery = { where } satisfies Prisma.JobCountArgs;
 
   if (hasDefaultFilters(filters)) {
     const [jobs, total] = await Promise.all([
-      getCachedPublicJobs("home-default-jobs", query),
+      getCachedPublicJobs(`home-default-jobs-page-${page}`, query),
       getCachedPublicJobCount("home-default-count", countQuery),
     ]);
-    return { jobs, total: Math.max(total, jobs.length) };
+    return { jobs, total: Math.max(total, offset + jobs.length) };
   }
 
   const [jobs, total] = await Promise.all([
     findPublicJobs("home-filtered-jobs", query),
     countPublicJobs("home-filtered-count", countQuery),
   ]);
-  return { jobs, total: Math.max(total, jobs.length) };
+  return { jobs, total: Math.max(total, offset + jobs.length) };
+}
+
+function getSingleParam(value: string | string[] | undefined) {
+  return typeof value === "string" ? value : undefined;
+}
+
+function hasSearchFilters(params: Awaited<HomeProps["searchParams"]>) {
+  return ["search", "categories", "jobTypes", "farmTypes", "benefits", "sortBy"]
+    .some((key) => {
+      const value = getSingleParam(params[key]);
+      return key === "sortBy" ? Boolean(value && value !== "latest") : Boolean(value);
+    });
+}
+
+export async function generateMetadata({ searchParams }: HomeProps): Promise<Metadata> {
+  const params = await searchParams;
+  const page = normalizePublicJobsPage(getSingleParam(params.page));
+  const filtered = hasSearchFilters(params);
+
+  if (filtered) {
+    return {
+      alternates: { canonical: getUrl("") },
+      robots: { index: false, follow: true },
+    };
+  }
+
+  if (page > 1) {
+    return {
+      title: `Farm, Ranch & Gardening Jobs – Page ${page}`,
+      description: `Browse page ${page} of active farming, ranch, greenhouse, nursery, and gardening jobs across the United States.`,
+      alternates: { canonical: getUrl(`jobs/page/${page}`) },
+    };
+  }
+
+  return { alternates: { canonical: getUrl("") } };
 }
 
 function SkeletonCard() {
@@ -127,6 +170,7 @@ function LoadingSkeleton() {
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
+  const page = normalizePublicJobsPage(getSingleParam(params.page));
 
   const filters = {
     search: normalizeSearchQuery(typeof params.search === "string" ? params.search : ""),
@@ -137,7 +181,9 @@ export default async function Home({ searchParams }: HomeProps) {
     sortBy: (typeof params.sortBy === "string" ? params.sortBy : "latest") || "latest",
   };
 
-  const { jobs, total } = await getJobs(filters);
+  const effectivePage = hasDefaultFilters(filters) ? page : 1;
+  const offset = getPublicJobsPageOffset(effectivePage);
+  const { jobs, total } = await getJobs(filters, effectivePage);
 
   const serializedJobs = jobs.map(job => ({
     ...job,
@@ -196,7 +242,13 @@ export default async function Home({ searchParams }: HomeProps) {
 
       {/* Main Content */}
       <Suspense fallback={<LoadingSkeleton />}>
-        <HomeClient initialJobs={serializedJobs} initialTotal={total} initialFilters={filters} />
+        <HomeClient
+          initialJobs={serializedJobs}
+          initialTotal={total}
+          initialFilters={filters}
+          initialPage={effectivePage}
+          initialOffset={offset}
+        />
       </Suspense>
 
       <EmployerCTA source="homepage_jobs" />

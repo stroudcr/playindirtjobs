@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { getBaseUrl } from "@/lib/metadata";
 import { createSitemapXml, xmlResponse } from "@/lib/sitemap-xml";
 import { unstable_cache } from "next/cache";
+import { GOOGLE_JOB_POSTING_ELIGIBILITY_WHERE } from "@/lib/google-job-posting";
 
 export const revalidate = 300;
 
@@ -10,6 +11,7 @@ const getJobs = unstable_cache(async () => {
     where: {
       active: true,
       expiresAt: { gte: new Date() },
+      ...GOOGLE_JOB_POSTING_ELIGIBILITY_WHERE,
     },
     select: {
       slug: true,

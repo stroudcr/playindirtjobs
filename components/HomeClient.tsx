@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { JobCard } from "@/components/JobCard";
 import { EmployerCTA } from "@/components/EmployerCTA";
 import { FilterSidebar } from "@/components/FilterSidebar";
 import { MobileFilters } from "@/components/MobileFilters";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
+import { PUBLIC_JOBS_PAGE_SIZE } from "@/lib/job-pagination";
 
 interface Job {
   id: string;
@@ -25,6 +27,8 @@ interface Job {
 interface HomeClientProps {
   initialJobs: Job[];
   initialTotal: number;
+  initialPage: number;
+  initialOffset: number;
   initialFilters: {
     search: string;
     categories: string[];
@@ -35,11 +39,18 @@ interface HomeClientProps {
   };
 }
 
-export function HomeClient({ initialJobs, initialTotal, initialFilters }: HomeClientProps) {
+export function HomeClient({
+  initialJobs,
+  initialTotal,
+  initialFilters,
+  initialPage,
+  initialOffset,
+}: HomeClientProps) {
   const router = useRouter();
 
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [totalJobs, setTotalJobs] = useState(Math.max(initialTotal, initialJobs.length));
+  const [loadedThrough, setLoadedThrough] = useState(initialOffset + initialJobs.length);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState(initialFilters.search);
@@ -110,6 +121,7 @@ export function HomeClient({ initialJobs, initialTotal, initialFilters }: HomeCl
       } else {
         setJobs(nextJobs);
       }
+      setLoadedThrough(offset + nextJobs.length);
       setTotalJobs(Math.max(data.total, offset + nextJobs.length));
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
@@ -165,6 +177,19 @@ export function HomeClient({ initialJobs, initialTotal, initialFilters }: HomeCl
     if (filters.benefits !== undefined) setSelectedBenefits(filters.benefits);
     if (filters.sortBy !== undefined) setSortBy(filters.sortBy);
   };
+
+  const hasActiveFilters = Boolean(
+    searchQuery ||
+    selectedCategories.length ||
+    selectedJobTypes.length ||
+    selectedFarmTypes.length ||
+    selectedBenefits.length ||
+    sortBy !== "latest"
+  );
+  const showCrawlablePagination = !hasInteracted && !hasActiveFilters;
+  const totalPages = Math.max(1, Math.ceil(totalJobs / PUBLIC_JOBS_PAGE_SIZE));
+  const firstVisibleJob = jobs.length > 0 ? initialOffset + 1 : 0;
+  const lastVisibleJob = initialOffset + jobs.length;
 
   return (
     <div id="jobs" className="container mx-auto scroll-mt-24 px-4 py-8">
@@ -313,7 +338,11 @@ export function HomeClient({ initialJobs, initialTotal, initialFilters }: HomeCl
           {!loading && jobs.length > 0 && (
             <div className="space-y-4">
               <p role="status" aria-live="polite" className="text-sm text-forest-light mb-4">
-                Showing <span className="font-semibold text-forest">{jobs.length}</span> of{" "}
+                Showing <span className="font-semibold text-forest">
+                  {showCrawlablePagination && initialOffset > 0
+                    ? `${firstVisibleJob}–${lastVisibleJob}`
+                    : jobs.length}
+                </span> of{" "}
                 <span className="font-semibold text-forest">{totalJobs}</span> active job{totalJobs !== 1 ? "s" : ""}
                 {searchQuery ? <> for <span className="font-semibold text-forest">“{searchQuery}”</span></> : null}
               </p>
@@ -322,11 +351,30 @@ export function HomeClient({ initialJobs, initialTotal, initialFilters }: HomeCl
                   <JobCard key={job.id} job={job} />
                 ))}
               </div>
-              {jobs.length < totalJobs && (
+              {showCrawlablePagination && totalPages > 1 ? (
+                <nav aria-label="Job result pages" className="flex flex-wrap items-center justify-center gap-3 pt-4">
+                  {initialPage > 1 ? (
+                    <Link
+                      href={initialPage === 2 ? "/#jobs" : `/jobs/page/${initialPage - 1}#jobs`}
+                      className="btn border border-primary bg-white text-primary hover:bg-primary/5"
+                    >
+                      Previous jobs
+                    </Link>
+                  ) : null}
+                  <span className="px-3 text-sm text-forest-light">
+                    Page {initialPage} of {totalPages}
+                  </span>
+                  {initialPage < totalPages ? (
+                    <Link href={`/jobs/page/${initialPage + 1}#jobs`} className="btn btn-primary">
+                      Next jobs
+                    </Link>
+                  ) : null}
+                </nav>
+              ) : jobs.length < totalJobs && (
                 <div className="flex justify-center pt-4">
                   <button
                     type="button"
-                    onClick={() => void fetchJobs({ offset: jobs.length })}
+                    onClick={() => void fetchJobs({ offset: loadedThrough })}
                     disabled={loadingMore}
                     className="btn btn-primary min-w-44 justify-center disabled:cursor-wait disabled:opacity-70"
                   >

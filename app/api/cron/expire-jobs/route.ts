@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { db } from "@/lib/db";
 import { notifyGoogleAboutJobs } from "@/lib/google-indexing";
+import { GOOGLE_JOB_POSTING_ELIGIBILITY_WHERE } from "@/lib/google-job-posting";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +32,7 @@ export async function GET(request: NextRequest) {
         active: true,
         expiresAt: { gte: now },
         updatedAt: { gte: recentlyUpdatedSince },
+        ...GOOGLE_JOB_POSTING_ELIGIBILITY_WHERE,
       },
       select: { slug: true },
     }),

@@ -1,11 +1,11 @@
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
-import { notFound, permanentRedirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { MapPin, DollarSign, Briefcase, Calendar, ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { formatSalary, formatDate } from "@/lib/utils";
-import { BENEFITS, FARM_TYPES, getStateSlug, JOB_CATEGORIES, US_STATES_WITHOUT_DC } from "@/lib/constants";
+import { BENEFITS, FARM_TYPES, getStateName, getStateSlug, JOB_CATEGORIES } from "@/lib/constants";
 import type { Metadata } from "next";
 import { ShareButton } from "./share-button";
 import { getUrl, truncateMetaText } from "@/lib/metadata";
@@ -17,6 +17,9 @@ import {
   restoreJobDatesFromCache,
   serializeJobDatesForCache,
 } from "@/lib/job-cache";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { JobCard } from "@/components/JobCard";
+import { isGoogleJobPostingEligible } from "@/lib/google-job-posting";
 
 interface JobPageProps {
   params: Promise<{
@@ -72,6 +75,47 @@ const getJob = cache(async (slug: string) => {
   const job = await getCachedJob(slug);
 
   return job ? restoreJobDatesFromCache(job) : null;
+});
+
+const getRelatedJobs = unstable_cache(async (
+  jobId: string,
+  state: string,
+  categories: string[]
+) => {
+  return db.job.findMany({
+    where: {
+      id: { not: jobId },
+      active: true,
+      expiresAt: { gt: new Date() },
+      OR: [
+        { state },
+        ...(categories.length > 0 ? [{ categories: { hasSome: categories } }] : []),
+      ],
+    },
+    orderBy: [
+      { featured: "desc" },
+      { createdAt: "desc" },
+      { id: "asc" },
+    ],
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      company: true,
+      location: true,
+      salaryMin: true,
+      salaryMax: true,
+      salaryType: true,
+      categories: true,
+      jobType: true,
+      featured: true,
+      createdAt: true,
+    },
+    take: 6,
+  });
+}, ["related-public-jobs"], {
+  revalidate: 300,
+  tags: ["public-jobs"],
 });
 
 function ApplicationCard({
@@ -175,36 +219,24 @@ function EmployerActionCards({
   );
 }
 
-function getLegacyJobRedirect(slug: string): string | null {
-  const state = US_STATES_WITHOUT_DC.find((state) =>
-    slug.includes(getStateSlug(state.code))
-  );
-
-  if (state) {
-    return `/${getStateSlug(state.code)}-jobs`;
+function getCategoryLandingPage(categoryIds: string[], farmTypes: string[], jobTypes: string[]) {
+  if (jobTypes.some((type) => type === "apprenticeship" || type === "internship")) {
+    return { href: "/farm-apprenticeships", label: "Farm Apprenticeships" };
   }
 
-  if (/(apprentice|apprenticeship|internship|intern)/.test(slug)) {
-    return "/farm-apprenticeships";
+  if (farmTypes.some((type) => ["organic", "regenerative", "permaculture", "biodynamic"].includes(type))) {
+    return { href: "/organic-farm-jobs", label: "Organic Farm Jobs" };
   }
 
-  if (/(organic|regenerative|permaculture|biodynamic)/.test(slug)) {
-    return "/organic-farm-jobs";
+  if (categoryIds.some((category) => ["ranch-hand", "livestock-care"].includes(category))) {
+    return { href: "/ranch-jobs", label: "Ranch Jobs" };
   }
 
-  if (/(ranch|livestock|cattle|equine|horse)/.test(slug)) {
-    return "/ranch-jobs";
+  if (categoryIds.some((category) => ["gardener", "nursery-worker"].includes(category))) {
+    return { href: "/gardening-jobs", label: "Gardening Jobs" };
   }
 
-  if (/(garden|gardener|greenhouse|horticulture|nursery|landscape|grower)/.test(slug)) {
-    return "/gardening-jobs";
-  }
-
-  if (/(farm|agriculture|agricultural|harvest|crop|field)/.test(slug)) {
-    return "/farming-jobs";
-  }
-
-  return null;
+  return { href: "/farming-jobs", label: "Farming Jobs" };
 }
 
 function JobTemporarilyUnavailable() {
@@ -315,12 +347,6 @@ export default async function JobPage({ params }: JobPageProps) {
   }
 
   if (!job) {
-    const legacyRedirect = getLegacyJobRedirect(slug);
-
-    if (legacyRedirect) {
-      permanentRedirect(legacyRedirect);
-    }
-
     notFound();
   }
 
@@ -330,6 +356,21 @@ export default async function JobPage({ params }: JobPageProps) {
     .join(" ");
   const isClaimable = job.origin === "IMPORTED" && !job.employerId;
   const applicationDestination = getPublicApplicationDestination(job);
+  const stateName = getStateName(job.state);
+  const stateHref = `/${getStateSlug(job.state)}-jobs`;
+  const categoryLandingPage = getCategoryLandingPage(job.categories, job.farmType, job.jobType);
+  const googleJobPostingEligible = isGoogleJobPostingEligible(job);
+  let relatedJobs: Awaited<ReturnType<typeof getRelatedJobs>> = [];
+
+  try {
+    relatedJobs = await getRelatedJobs(job.id, job.state, job.categories);
+  } catch (error) {
+    if (isTransientPrismaReadError(error)) {
+      logTransientPrismaReadError("related-jobs", error);
+    } else {
+      console.warn("Failed to load related jobs:", error);
+    }
+  }
 
   // JobPosting Schema for Google Jobs
   const jobUrl = getUrl(`jobs/${job.slug}`);
@@ -406,21 +447,22 @@ export default async function JobPage({ params }: JobPageProps) {
   return (
     <>
       {/* JSON-LD Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
-      />
+      {googleJobPostingEligible ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+        />
+      ) : null}
     <main className="min-h-screen bg-earth-cream">
       <TrackJobView slug={job.slug} />
       <div className="container mx-auto px-4 py-4 sm:py-8">
-        {/* Back button */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-forest-light hover:text-primary mb-4 sm:mb-6 transition-colors py-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to jobs
-        </Link>
+        <Breadcrumbs
+          items={[
+            { label: "Jobs", href: "/" },
+            { label: `${stateName} Jobs`, href: stateHref },
+            { label: job.title },
+          ]}
+        />
 
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Apply section - Mobile Only (at top) */}
@@ -461,7 +503,9 @@ export default async function JobPage({ params }: JobPageProps) {
               <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 pt-4 border-t border-border">
                 <div className="flex items-center gap-2 text-sm sm:text-base text-forest-light">
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                  <span className="truncate">{job.location}</span>
+                  <Link href={stateHref} className="truncate hover:text-primary hover:underline">
+                    {job.location}
+                  </Link>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm sm:text-base text-forest-light">
@@ -498,12 +542,13 @@ export default async function JobPage({ params }: JobPageProps) {
                 {job.categories.map((cat) => {
                   const category = JOB_CATEGORIES.find(c => c.id === cat);
                   return category ? (
-                    <span
+                    <Link
                       key={cat}
+                      href={categoryLandingPage.href}
                       className="px-3 py-1.5 bg-primary/10 text-primary font-medium rounded-lg text-sm"
                     >
                       {category.emoji} {category.label}
-                    </span>
+                    </Link>
                   ) : null;
                 })}
                 {job.farmType.map((type) => {
@@ -640,6 +685,54 @@ export default async function JobPage({ params }: JobPageProps) {
             </div>
           </div>
         </div>
+
+        {relatedJobs.length > 0 ? (
+          <section className="mt-10 border-t border-border pt-8" aria-labelledby="related-jobs-heading">
+            <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="mb-1 text-sm font-semibold uppercase tracking-wide text-primary">
+                  Keep exploring
+                </p>
+                <h2 id="related-jobs-heading" className="font-display text-2xl text-forest sm:text-3xl">
+                  Related jobs
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-3 text-sm font-medium">
+                <Link href={stateHref} className="text-primary hover:underline">
+                  All {stateName} jobs
+                </Link>
+                <Link href={categoryLandingPage.href} className="text-primary hover:underline">
+                  {categoryLandingPage.label}
+                </Link>
+              </div>
+            </div>
+            <div className="grid gap-4 lg:grid-cols-2">
+              {relatedJobs.map((relatedJob) => (
+                <JobCard
+                  key={relatedJob.id}
+                  job={{
+                    ...relatedJob,
+                    salaryMin: relatedJob.salaryMin ?? undefined,
+                    salaryMax: relatedJob.salaryMax ?? undefined,
+                    salaryType: relatedJob.salaryType ?? undefined,
+                  }}
+                />
+              ))}
+            </div>
+          </section>
+        ) : (
+          <section className="mt-10 border-t border-border pt-8">
+            <h2 className="font-display text-2xl text-forest">Browse more opportunities</h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link href={stateHref} className="btn border border-primary bg-white text-primary hover:bg-primary/5">
+                {stateName} jobs
+              </Link>
+              <Link href={categoryLandingPage.href} className="btn btn-primary">
+                {categoryLandingPage.label}
+              </Link>
+            </div>
+          </section>
+        )}
       </div>
     </main>
     </>

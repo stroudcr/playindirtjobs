@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 import {
@@ -6,6 +7,7 @@ import {
   requireAdminMutation,
 } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { notifyGoogleAboutJob } from "@/lib/google-indexing";
 
 const reviewSchema = z.object({
   decision: z.enum(["approve", "reject"]),
@@ -34,6 +36,7 @@ export async function POST(
     }
 
     const result = await db.$transaction(async (tx) => {
+      let approvedJobSlug: string | null = null;
       const claim = await tx.listingClaim.findUnique({
         where: { id },
         select: {
@@ -52,7 +55,7 @@ export async function POST(
       if (parsed.data.decision === "approve") {
         const job = await tx.job.findUnique({
           where: { id: claim.jobId },
-          select: { employerId: true, origin: true },
+          select: { slug: true, employerId: true, origin: true },
         });
         if (!job || job.origin !== "IMPORTED") {
           return { kind: "invalid_job" as const };
@@ -76,6 +79,7 @@ export async function POST(
           });
           if (ownership.count !== 1) return { kind: "owned" as const };
         }
+        approvedJobSlug = job.slug;
       }
 
       const reviewed = await tx.listingClaim.update({
@@ -89,7 +93,7 @@ export async function POST(
         select: { id: true, status: true },
       });
 
-      return { kind: "reviewed" as const, claim: reviewed };
+      return { kind: "reviewed" as const, claim: reviewed, jobSlug: approvedJobSlug };
     });
 
     if (result.kind === "not_found") {
@@ -112,6 +116,11 @@ export async function POST(
         { error: "Another employer already manages this listing." },
         { status: 409 }
       );
+    }
+
+    if (result.jobSlug) {
+      revalidateTag("public-jobs");
+      after(() => notifyGoogleAboutJob(result.jobSlug!, "URL_UPDATED"));
     }
 
     return NextResponse.json({ claim: result.claim });

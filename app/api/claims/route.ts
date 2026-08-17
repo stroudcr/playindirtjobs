@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 
 import { verifyClaimDomain } from "@/app/api/claims/domain-verification";
@@ -8,6 +9,7 @@ import {
   requireEmployerMutation,
 } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { notifyGoogleAboutJob } from "@/lib/google-indexing";
 
 const claimSchema = z.object({
   jobId: z.string().cuid(),
@@ -45,6 +47,7 @@ export async function POST(request: NextRequest) {
         where: { id: parsed.data.jobId },
         select: {
           id: true,
+          slug: true,
           origin: true,
           employerId: true,
           companyWebsite: true,
@@ -88,7 +91,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (!verification.autoApprove) {
-        return { kind: "created" as const, claim };
+        return { kind: "created" as const, claim, jobSlug: null };
       }
 
       const ownership = await tx.job.updateMany({
@@ -124,7 +127,7 @@ export async function POST(request: NextRequest) {
         select: { id: true, status: true },
       });
 
-      return { kind: "created" as const, claim: approved };
+      return { kind: "created" as const, claim: approved, jobSlug: job.slug };
     });
 
     if (result.kind === "not_found") {
@@ -144,6 +147,11 @@ export async function POST(request: NextRequest) {
     }
 
     const claim = result.claim;
+    if (result.kind === "created" && result.jobSlug) {
+      revalidateTag("public-jobs");
+      after(() => notifyGoogleAboutJob(result.jobSlug!, "URL_UPDATED"));
+    }
+
     return NextResponse.json(
       {
         claim,

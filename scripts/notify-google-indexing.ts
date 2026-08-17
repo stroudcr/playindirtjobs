@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { isGoogleIndexingConfigured, notifyGoogleAboutJobs } from "../lib/google-indexing";
+import { GOOGLE_JOB_POSTING_ELIGIBILITY_WHERE } from "../lib/google-job-posting";
 
 const prisma = new PrismaClient();
 
@@ -14,6 +15,7 @@ async function main() {
     where: {
       active: true,
       expiresAt: { gte: new Date() },
+      ...GOOGLE_JOB_POSTING_ELIGIBILITY_WHERE,
     },
     select: { slug: true },
     orderBy: { updatedAt: "desc" },

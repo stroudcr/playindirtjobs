@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { normalizePublicJobOffset, PUBLIC_JOBS_PAGE_SIZE } from "@/lib/job-pagination";
+import {
+  getPublicJobsPageOffset,
+  normalizePublicJobOffset,
+  normalizePublicJobsPage,
+  PUBLIC_JOBS_PAGE_SIZE,
+} from "@/lib/job-pagination";
 
 describe("public job pagination", () => {
   it("uses batches of 50 jobs", () => {
@@ -19,5 +24,17 @@ describe("public job pagination", () => {
 
   it("caps unusually large offsets", () => {
     expect(normalizePublicJobOffset("50000")).toBe(10_000);
+  });
+
+  it.each([undefined, "", "0", "-1", "1.5", "not-a-number"])(
+    "normalizes an invalid page of %s to page one",
+    (value) => {
+      expect(normalizePublicJobsPage(value)).toBe(1);
+    }
+  );
+
+  it("converts a result page to a database offset", () => {
+    expect(normalizePublicJobsPage("3")).toBe(3);
+    expect(getPublicJobsPageOffset(3)).toBe(100);
   });
 });
