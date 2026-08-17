@@ -13,6 +13,10 @@ import { isTransientPrismaReadError, logTransientPrismaReadError } from "@/lib/p
 import { TrackedLink } from "@/components/TrackedLink";
 import { getPublicApplicationDestination } from "@/lib/public-application";
 import { TrackJobView } from "@/components/TrackJobView";
+import {
+  restoreJobDatesFromCache,
+  serializeJobDatesForCache,
+} from "@/lib/job-cache";
 
 interface JobPageProps {
   params: Promise<{
@@ -58,13 +62,17 @@ const getCachedJob = unstable_cache(async (slug: string) => {
     },
   });
 
-  return job;
+  return job ? serializeJobDatesForCache(job) : null;
 }, ["public-job"], {
   revalidate: 300,
   tags: ["public-jobs"],
 });
 
-const getJob = cache(getCachedJob);
+const getJob = cache(async (slug: string) => {
+  const job = await getCachedJob(slug);
+
+  return job ? restoreJobDatesFromCache(job) : null;
+});
 
 function ApplicationCard({
   slug,
