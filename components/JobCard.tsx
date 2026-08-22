@@ -1,23 +1,12 @@
+import React from "react";
 import Link from "next/link";
 import { MapPin, DollarSign, Clock } from "lucide-react";
 import { formatSalary, formatDate } from "@/lib/utils";
 import { JOB_CATEGORIES } from "@/lib/constants";
+import type { PublicJobCardDto } from "@/lib/public-job-dto";
 
 interface JobCardProps {
-  job: {
-    id: string;
-    slug: string;
-    title: string;
-    company: string;
-    location: string;
-    salaryMin?: number;
-    salaryMax?: number;
-    salaryType?: string;
-    categories: string[];
-    jobType: string[];
-    featured: boolean;
-    createdAt: Date;
-  };
+  job: PublicJobCardDto;
 }
 
 const AVATAR_COLORS = [

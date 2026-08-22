@@ -14,9 +14,10 @@ import { TrackedLink } from "@/components/TrackedLink";
 import { getPublicApplicationDestination } from "@/lib/public-application";
 import { TrackJobView } from "@/components/TrackJobView";
 import {
-  restoreJobDatesFromCache,
-  serializeJobDatesForCache,
-} from "@/lib/job-cache";
+  PUBLIC_JOB_CARD_SELECT,
+  toPublicJobDto,
+  toPublicJobDtos,
+} from "@/lib/public-job-dto";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JobCard } from "@/components/JobCard";
 import { isGoogleJobPostingEligible } from "@/lib/google-job-posting";
@@ -65,24 +66,20 @@ const getCachedJob = unstable_cache(async (slug: string) => {
     },
   });
 
-  return job ? serializeJobDatesForCache(job) : null;
+  return job ? toPublicJobDto(job) : null;
 }, ["public-job"], {
   revalidate: 300,
   tags: ["public-jobs"],
 });
 
-const getJob = cache(async (slug: string) => {
-  const job = await getCachedJob(slug);
-
-  return job ? restoreJobDatesFromCache(job) : null;
-});
+const getJob = cache(getCachedJob);
 
 const getRelatedJobs = unstable_cache(async (
   jobId: string,
   state: string,
   categories: string[]
 ) => {
-  return db.job.findMany({
+  const jobs = await db.job.findMany({
     where: {
       id: { not: jobId },
       active: true,
@@ -97,22 +94,11 @@ const getRelatedJobs = unstable_cache(async (
       { createdAt: "desc" },
       { id: "asc" },
     ],
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      company: true,
-      location: true,
-      salaryMin: true,
-      salaryMax: true,
-      salaryType: true,
-      categories: true,
-      jobType: true,
-      featured: true,
-      createdAt: true,
-    },
+    select: PUBLIC_JOB_CARD_SELECT,
     take: 6,
   });
+
+  return toPublicJobDtos(jobs);
 }, ["related-public-jobs"], {
   revalidate: 300,
   tags: ["public-jobs"],
@@ -403,8 +389,8 @@ export default async function JobPage({ params }: JobPageProps) {
       "name": job.company,
       "value": job.id
     },
-    "datePosted": job.createdAt.toISOString(),
-    "validThrough": job.expiresAt.toISOString(),
+    "datePosted": job.createdAt,
+    "validThrough": job.expiresAt,
     "employmentType": job.jobType.map(mapEmploymentType),
     "hiringOrganization": {
       "@type": "Organization",
@@ -710,12 +696,7 @@ export default async function JobPage({ params }: JobPageProps) {
               {relatedJobs.map((relatedJob) => (
                 <JobCard
                   key={relatedJob.id}
-                  job={{
-                    ...relatedJob,
-                    salaryMin: relatedJob.salaryMin ?? undefined,
-                    salaryMax: relatedJob.salaryMax ?? undefined,
-                    salaryType: relatedJob.salaryType ?? undefined,
-                  }}
+                  job={relatedJob}
                 />
               ))}
             </div>

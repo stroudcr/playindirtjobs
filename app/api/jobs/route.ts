@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { normalizePublicJobOffset, PUBLIC_JOBS_PAGE_SIZE } from "@/lib/job-pagination";
 import { buildPublicJobWhere, normalizeSearchQuery } from "@/lib/job-search";
 import { countPublicJobs, findPublicJobs } from "@/lib/public-jobs";
+import { PUBLIC_JOB_CARD_SELECT } from "@/lib/public-job-dto";
 
 export async function GET(request: NextRequest) {
   try {
@@ -44,19 +45,7 @@ export async function GET(request: NextRequest) {
           orderBy,
           { id: "asc" },
         ],
-        select: {
-          id: true,
-          slug: true,
-          title: true,
-          company: true,
-          location: true,
-          salaryMin: true,
-          salaryMax: true,
-          categories: true,
-          jobType: true,
-          featured: true,
-          createdAt: true,
-        },
+        select: PUBLIC_JOB_CARD_SELECT,
         skip: offset,
         take: PUBLIC_JOBS_PAGE_SIZE,
       }),

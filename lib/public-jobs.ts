@@ -3,6 +3,10 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import type { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
+import {
+  toPublicJobDtos,
+  type PublicJobDto,
+} from "@/lib/public-job-dto";
 
 const TRANSIENT_PRISMA_CODES = new Set(["P1001", "P2024"]);
 export const PUBLIC_JOBS_REVALIDATE_SECONDS = 300;
@@ -44,9 +48,9 @@ export function logTransientPrismaReadError(context: string, error: unknown) {
 
 async function runPublicJobFindMany<T extends Prisma.JobFindManyArgs>(
   args: T
-): Promise<Prisma.JobGetPayload<T>[]> {
+): Promise<PublicJobDto<Prisma.JobGetPayload<T>>[]> {
   const jobs = await db.job.findMany(args as Prisma.JobFindManyArgs);
-  return jobs as Prisma.JobGetPayload<T>[];
+  return toPublicJobDtos(jobs as Prisma.JobGetPayload<T>[]);
 }
 
 async function runPublicJobCount(args: Prisma.JobCountArgs) {
@@ -56,7 +60,7 @@ async function runPublicJobCount(args: Prisma.JobCountArgs) {
 export async function findPublicJobs<T extends Prisma.JobFindManyArgs>(
   context: string,
   args: T
-): Promise<Prisma.JobGetPayload<T>[]> {
+): Promise<PublicJobDto<Prisma.JobGetPayload<T>>[]> {
   try {
     return await runPublicJobFindMany(args);
   } catch (error) {
@@ -102,7 +106,7 @@ export function getCachedPublicJobs<T extends Prisma.JobFindManyArgs>(
   return getJobs().catch((error) => {
     if (isTransientPrismaReadError(error)) {
       logTransientPrismaReadError(context, error);
-      return [] as Prisma.JobGetPayload<T>[];
+      return [] as PublicJobDto<Prisma.JobGetPayload<T>>[];
     }
 
     throw error;

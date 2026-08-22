@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EmployerCTA } from "@/components/EmployerCTA";
 import { Beef } from "lucide-react";
 import { getUrl } from "@/lib/metadata";
+import { PUBLIC_JOB_CARD_SELECT } from "@/lib/public-job-dto";
 
 export const revalidate = 300;
 
@@ -42,6 +43,7 @@ export default async function RanchJobsPage() {
     },
     take: 20,
     orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
+    select: PUBLIC_JOB_CARD_SELECT,
   });
 
   const collectionSchema = {
@@ -80,16 +82,7 @@ export default async function RanchJobsPage() {
         <h2 className="text-2xl font-display text-forest mb-6">{jobs.length} Ranch Jobs Available</h2>
         <div className="grid gap-4 max-w-4xl">
           {jobs.map((job) => (
-            <JobCard
-              key={job.id}
-              job={{
-                ...job,
-                salaryMin: job.salaryMin ?? undefined,
-                salaryMax: job.salaryMax ?? undefined,
-                salaryType: job.salaryType ?? undefined,
-                createdAt: new Date(job.createdAt),
-              }}
-            />
+            <JobCard key={job.id} job={job} />
           ))}
         </div>
       </section>

@@ -636,7 +636,7 @@ export default function ManageJobPage() {
 
         {/* Footer Info */}
         <div className="mt-8 text-center text-sm text-forest-light">
-          <p>Posted {formatDate(new Date(job.createdAt))} • Last updated {formatDate(new Date(job.updatedAt))}</p>
+          <p>Posted {formatDate(job.createdAt)} • Last updated {formatDate(job.updatedAt)}</p>
           <p className="mt-2">Keep this link secure - it&apos;s your only way to manage this posting</p>
         </div>
       </div>

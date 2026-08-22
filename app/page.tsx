@@ -19,6 +19,7 @@ import {
   getCachedPublicJobCount,
   getCachedPublicJobs,
 } from "@/lib/public-jobs";
+import { PUBLIC_JOB_CARD_SELECT } from "@/lib/public-job-dto";
 
 export const dynamic = "force-dynamic";
 
@@ -54,19 +55,7 @@ async function getJobs(filters: PublicJobFilters, page: number) {
       orderBy,
       { id: "asc" },
     ],
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      company: true,
-      location: true,
-      salaryMin: true,
-      salaryMax: true,
-      categories: true,
-      jobType: true,
-      featured: true,
-      createdAt: true,
-    },
+    select: PUBLIC_JOB_CARD_SELECT,
     take: PUBLIC_JOBS_PAGE_SIZE,
     skip: offset,
   } satisfies Prisma.JobFindManyArgs;
@@ -185,13 +174,6 @@ export default async function Home({ searchParams }: HomeProps) {
   const offset = getPublicJobsPageOffset(effectivePage);
   const { jobs, total } = await getJobs(filters, effectivePage);
 
-  const serializedJobs = jobs.map(job => ({
-    ...job,
-    salaryMin: job.salaryMin ?? undefined,
-    salaryMax: job.salaryMax ?? undefined,
-    createdAt: new Date(job.createdAt),
-  }));
-
   return (
     <main className="min-h-screen bg-earth-cream">
       {/* Hero Section */}
@@ -243,7 +225,7 @@ export default async function Home({ searchParams }: HomeProps) {
       {/* Main Content */}
       <Suspense fallback={<LoadingSkeleton />}>
         <HomeClient
-          initialJobs={serializedJobs}
+          initialJobs={jobs}
           initialTotal={total}
           initialFilters={filters}
           initialPage={effectivePage}

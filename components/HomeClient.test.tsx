@@ -34,7 +34,10 @@ function makeJob(id: number) {
     categories: ["farm-hand"],
     jobType: ["full-time"],
     featured: false,
-    createdAt: new Date("2026-08-01T12:00:00Z"),
+    salaryMin: null,
+    salaryMax: null,
+    salaryType: null,
+    createdAt: "2026-08-01T12:00:00.000Z",
   };
 }
 
@@ -49,10 +52,7 @@ describe("HomeClient job pagination", () => {
 
   it("appends the next batch and reports the full active total", async () => {
     const initialJobs = Array.from({ length: 50 }, (_, index) => makeJob(index + 1));
-    const remainingJobs = Array.from({ length: 7 }, (_, index) => ({
-      ...makeJob(index + 51),
-      createdAt: new Date("2026-08-01T12:00:00Z").toISOString(),
-    }));
+    const remainingJobs = Array.from({ length: 7 }, (_, index) => makeJob(index + 51));
     const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
       new Response(JSON.stringify({ jobs: remainingJobs, total: 57, hasMore: false }))
     );

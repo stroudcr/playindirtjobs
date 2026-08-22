@@ -5,7 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatSalary(min?: number, max?: number, type: string = "annual"): string {
+export function formatSalary(
+  min?: number | null,
+  max?: number | null,
+  type: string | null = "annual"
+): string {
   if (!min && !max) return "Competitive";
 
   const suffix = type === "hourly" ? "/hr" : "";
@@ -16,9 +20,15 @@ export function formatSalary(min?: number, max?: number, type: string = "annual"
   return "Competitive";
 }
 
-export function formatDate(date: Date): string {
+export function formatDate(date: string): string {
+  const timestamp = Date.parse(date);
+  if (!Number.isFinite(timestamp)) {
+    console.error("[format-date] Invalid ISO date", { date });
+    return "Recently";
+  }
+
   const now = new Date();
-  const diff = now.getTime() - date.getTime();
+  const diff = now.getTime() - timestamp;
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
   if (days === 0) return "Today";

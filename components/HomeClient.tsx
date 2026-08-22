@@ -9,23 +9,13 @@ import { FilterSidebar } from "@/components/FilterSidebar";
 import { MobileFilters } from "@/components/MobileFilters";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
 import { PUBLIC_JOBS_PAGE_SIZE } from "@/lib/job-pagination";
-
-interface Job {
-  id: string;
-  slug: string;
-  title: string;
-  company: string;
-  location: string;
-  salaryMin?: number;
-  salaryMax?: number;
-  categories: string[];
-  jobType: string[];
-  featured: boolean;
-  createdAt: Date;
-}
+import {
+  isPublicJobCardDto,
+  type PublicJobCardDto,
+} from "@/lib/public-job-dto";
 
 interface HomeClientProps {
-  initialJobs: Job[];
+  initialJobs: PublicJobCardDto[];
   initialTotal: number;
   initialPage: number;
   initialOffset: number;
@@ -48,7 +38,7 @@ export function HomeClient({
 }: HomeClientProps) {
   const router = useRouter();
 
-  const [jobs, setJobs] = useState<Job[]>(initialJobs);
+  const [jobs, setJobs] = useState<PublicJobCardDto[]>(initialJobs);
   const [totalJobs, setTotalJobs] = useState(Math.max(initialTotal, initialJobs.length));
   const [loadedThrough, setLoadedThrough] = useState(initialOffset + initialJobs.length);
   const [loading, setLoading] = useState(false);
@@ -99,30 +89,35 @@ export function HomeClient({
       const response = await fetch(`/api/jobs?${params.toString()}`, { signal });
       if (!response.ok) throw new Error(`Job search failed with status ${response.status}`);
 
-      const data = await response.json();
-      if (!Array.isArray(data.jobs)) throw new Error("Job search returned an invalid response");
-      if (!Number.isSafeInteger(data.total) || data.total < 0) {
+      const data: unknown = await response.json();
+      if (!data || typeof data !== "object") {
+        throw new Error("Job search returned an invalid response");
+      }
+
+      const { jobs: rawJobs, total } = data as Record<string, unknown>;
+      if (!Array.isArray(rawJobs)) throw new Error("Job search returned an invalid response");
+      if (!rawJobs.every(isPublicJobCardDto)) {
+        throw new Error("Job search returned invalid job data");
+      }
+      if (typeof total !== "number" || !Number.isSafeInteger(total) || total < 0) {
         throw new Error("Job search returned an invalid total");
       }
 
-      const nextJobs = data.jobs.map((job: Job & { createdAt: string }) => ({
-        ...job,
-        createdAt: new Date(job.createdAt),
-      }));
+      const nextJobs: PublicJobCardDto[] = rawJobs;
 
       if (appending) {
         setJobs((currentJobs) => {
           const existingIds = new Set(currentJobs.map((job) => job.id));
           return [
             ...currentJobs,
-            ...nextJobs.filter((job: Job) => !existingIds.has(job.id)),
+            ...nextJobs.filter((job) => !existingIds.has(job.id)),
           ];
         });
       } else {
         setJobs(nextJobs);
       }
       setLoadedThrough(offset + nextJobs.length);
-      setTotalJobs(Math.max(data.total, offset + nextJobs.length));
+      setTotalJobs(Math.max(total, offset + nextJobs.length));
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Error fetching jobs:", error);

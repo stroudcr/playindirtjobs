@@ -7,6 +7,7 @@ import { EmailSubscribe } from "@/components/EmailSubscribe";
 import { JobCard } from "@/components/JobCard";
 import { getUrl } from "@/lib/metadata";
 import { getCachedPublicJobs } from "@/lib/public-jobs";
+import { PUBLIC_JOB_CARD_SELECT } from "@/lib/public-job-dto";
 import { getStateContent } from "@/lib/state-content";
 import { getStateImage } from "@/lib/state-images";
 
@@ -64,6 +65,7 @@ export async function StateJobsPage({ stateCode, stateSlug }: StateJobsPageProps
       { createdAt: "desc" },
       { id: "asc" },
     ],
+    select: PUBLIC_JOB_CARD_SELECT,
   });
 
   return (
@@ -122,16 +124,7 @@ export async function StateJobsPage({ stateCode, stateSlug }: StateJobsPageProps
             {jobs.length > 0 ? (
               <div className="grid gap-4 animate-stagger">
                 {jobs.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    job={{
-                      ...job,
-                      salaryMin: job.salaryMin ?? undefined,
-                      salaryMax: job.salaryMax ?? undefined,
-                      salaryType: job.salaryType ?? undefined,
-                      createdAt: new Date(job.createdAt),
-                    }}
-                  />
+                  <JobCard key={job.id} job={job} />
                 ))}
               </div>
             ) : (
