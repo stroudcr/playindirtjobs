@@ -39,6 +39,316 @@ export function formatAlmanacDate(
 
 export const almanacArticles: AlmanacArticle[] = [
   {
+    slug: "how-to-get-a-ranch-job",
+    title: "How to Get a Ranch Job: A Step-by-Step Guide for Beginners",
+    category: "Getting Started",
+    excerpt: "A practical guide to ranch work for beginners, including common jobs, skills, pay, housing, resumes, interviews, safety, and how to get hired without ranch experience.",
+    metaTitle: "How to Get a Ranch Job With No Experience | PlayInDirtJobs",
+    metaDescription: "Learn how to get a ranch job with no experience, what ranch hands do, the skills employers want, pay, housing, resumes, interviews, and where to apply.",
+    date: "2026-08-24",
+    author: "PlayInDirtJobs",
+    readTime: 14,
+    featured: true,
+    audience: "worker",
+    heroImage: {
+      src: "https://images.unsplash.com/photo-1650397306390-86caaefce1a3?w=1200&h=630&fit=crop&auto=format&q=80",
+      alt: "Ranch hands on horseback moving cattle across an open American ranch",
+      credit: "Bailey Alexander",
+      creditUrl: "https://unsplash.com/photos/a-group-of-people-on-horses-herding-cattle-in-a-field-UsIH5HIHvbE",
+    },
+    relatedSlugs: [
+      "farm-hand-job-description",
+      "farm-jobs-with-housing",
+      "how-much-do-farm-jobs-pay",
+    ],
+    cta: {
+      heading: "Ready to find your first ranch job?",
+      body: "Browse ranch hand, livestock, horse, grazing, equipment, and other ranch jobs from employers across the United States.",
+      href: "/ranch-jobs",
+      label: "Browse Ranch Jobs",
+    },
+    faq: [
+      {
+        question: "Can you get a ranch job with no experience?",
+        answer: "Yes. Many entry-level agricultural workers learn on the job, and the Bureau of Labor Statistics says most agricultural worker positions require no formal educational credential. Beginners have the best chance when they show reliability, realistic expectations, physical readiness, safe judgment, and transferable experience with animals, tools, vehicles, maintenance, or outdoor work.",
+      },
+      {
+        question: "Do you have to know how to ride a horse to work on a ranch?",
+        answer: "No. Some ranch hand, wrangler, and range jobs require strong riding and livestock-handling experience, but many ranches move cattle with trucks, ATVs, or on foot. Other jobs focus on feeding, fencing, equipment, irrigation, records, calving support, maintenance, or guest services. Read each listing instead of assuming every ranch job is horseback work.",
+      },
+      {
+        question: "How much do ranch hands make?",
+        answer: "In May 2025, the U.S. Bureau of Labor Statistics reported a median wage of $17.63 per hour and a mean annual wage of $39,260 for farmworkers who care for farm, ranch, and aquacultural animals. Actual ranch hand pay varies by location, experience, duties, schedule, season, and benefits such as housing.",
+      },
+      {
+        question: "What should you put on a resume for a ranch job?",
+        answer: "Lead with evidence of reliability and the skills the ranch needs. Include animal care, fencing, construction, landscaping, mechanics, welding, driving, equipment, recordkeeping, outdoor labor, early schedules, and safety training. Use specific examples and never claim riding, cattle, medical, or machinery experience you do not have.",
+      },
+      {
+        question: "Where can you find ranch jobs with housing?",
+        answer: "Search dedicated agricultural job boards and use terms such as ranch hand with housing, live-in ranch hand, cow-calf ranch hand, seasonal ranch hand, range rider, and wrangler. Confirm whether housing is private or shared, what it costs, which utilities are included, whether transportation is needed, and what happens to housing when employment ends.",
+      },
+      {
+        question: "Are ranch jobs seasonal or year-round?",
+        answer: "Both exist. Calving, grazing, branding, haying, hunting, and guest-ranch seasons can create temporary jobs, while livestock care, feeding, maintenance, and larger operations may employ workers year-round. Ask for expected start and end dates, weekly hours, days off, and busy-season changes before accepting an offer.",
+      },
+    ],
+    content: `
+<p>You do not need to grow up on a ranch to work on one. You do need a realistic picture of the job, proof that you can be trusted, and a willingness to learn safely. Ranches hire people to care for animals, repair fences, maintain water systems, operate equipment, keep records, move cattle, put up hay, clean facilities, and handle dozens of other jobs that do not look much like a movie cowboy scene.</p>
+
+<p>This guide explains how to get a ranch job step by step, including what ranch hands actually do, which jobs welcome beginners, what skills employers look for, how much ranch work pays, how to evaluate housing, and how to write an application that gives a rancher a reason to call you.</p>
+
+<h2>What Does a Ranch Hand Do?</h2>
+
+<p>A <strong>ranch hand</strong> is a worker who helps with the daily care of livestock, land, buildings, vehicles, equipment, and ranch operations. The exact job depends on the animals, acreage, climate, production system, season, and size of the crew.</p>
+
+<p>The federal <a href="https://www.onetonline.org/link/details/45-2093.00">O*NET profile for farm and ranch animal workers</a>, updated in 2026, includes job titles such as ranch hand, cowboy, herdsman, livestock handler, farm hand, vaccinator, and wrangler. It describes duties that may include feeding, watering, herding, weighing, catching, loading, examining, and treating animals; assisting with births; keeping records; and cleaning animal areas.</p>
+
+<p>On a cattle ranch, a normal week might include:</p>
+
+<ul>
+<li>Checking cattle, water, mineral, feed, fences, gates, and pasture conditions.</li>
+<li>Watching for illness, injury, calving problems, unusual behavior, or missing animals.</li>
+<li>Moving livestock on foot, horseback, by ATV, or with trucks and trailers.</li>
+<li>Feeding hay or supplements and maintaining bunks, troughs, tanks, pumps, and pipelines.</li>
+<li>Repairing barbed-wire, woven-wire, electric, or pipe fence.</li>
+<li>Helping process, sort, weigh, tag, vaccinate, or load animals under supervision.</li>
+<li>Operating, cleaning, fueling, greasing, and inspecting tractors, skid steers, pickups, trailers, mowers, or hay equipment after training.</li>
+<li>Cleaning pens, barns, corrals, chutes, tack, tools, and work areas.</li>
+<li>Recording treatments, births, deaths, pasture moves, feed, inventory, or completed work.</li>
+<li>Haying, irrigating, controlling weeds, maintaining roads, or preparing for winter.</li>
+</ul>
+
+<p>Not every ranch uses horses, and not every ranch hand works cattle. Sheep and goat ranches, bison operations, horse ranches, dairies, grazing operations, guest ranches, and diversified farms all use different skills. The job description matters more than the word <em>ranch</em> in the title.</p>
+
+<h2>Types of Ranch Jobs to Search For</h2>
+
+<p>Searching only for “cowboy” will hide many realistic entry points. Use several job titles and read the duties carefully.</p>
+
+<h3>General Ranch Hand</h3>
+
+<p>This is the broadest role. A general ranch hand may switch between feeding, checking livestock, fencing, maintenance, equipment, hay, irrigation, and cleanup. Small ranches often value practical range: the person who can notice a sick calf, repair a leaking tank, organize a shop, and ask before using an unfamiliar machine.</p>
+
+<h3>Livestock or Cattle Hand</h3>
+
+<p>These jobs focus more heavily on animal care. Employers may want experience identifying illness, moving cattle calmly, using a chute, assisting during calving, maintaining treatment records, or hauling livestock. An entry-level worker may begin with feeding, cleaning, observation, and supervised handling.</p>
+
+<h3>Wrangler, Horse Hand, or Stable Hand</h3>
+
+<p>Horse-centered jobs may involve feeding, watering, grooming, mucking stalls, catching and saddling horses, cleaning tack, maintaining facilities, and helping guests or riders. A wrangler job that leads trail rides is not a beginner riding position: employers may expect confident riding, guest service, first aid, and the judgment to manage horses and people outdoors.</p>
+
+<h3>Seasonal Ranch Hand or Range Rider</h3>
+
+<p>Seasonal work may follow calving, turnout, branding, grazing, haying, hunting, or winter feeding. Range jobs can be remote and independent, with long distances between animals, supplies, housing, and medical help. Confirm the transportation, communication, schedule, terrain, weather, and experience requirements before treating a remote role as an easy way in.</p>
+
+<h3>Ranch Maintenance or Equipment Hand</h3>
+
+<p>Some ranches need fencing, welding, carpentry, mechanics, irrigation, landscaping, road work, or equipment operation as much as they need riding. Construction, public works, military, warehouse, landscaping, and mechanical experience can transfer well to these positions.</p>
+
+<h3>Guest Ranch Jobs</h3>
+
+<p>Guest ranches also hire cooks, housekeepers, servers, maintenance workers, front-desk staff, guides, and activity staff. These roles can introduce you to ranch life, but hospitality work is not automatically livestock training. Apply for the job you can do now and ask what opportunities, if any, exist to learn other parts of the operation.</p>
+
+<h2>Can You Get a Ranch Job With No Experience?</h2>
+
+<p>Yes, but “no ranch experience” should not mean “no evidence that I can handle responsibility.” The <a href="https://www.bls.gov/ooh/farming-fishing-and-forestry/agricultural-workers.htm">U.S. Bureau of Labor Statistics</a> says most agricultural workers need no formal educational credential and typically receive on-the-job training. Many receive up to one month of short-term training, while equipment operators may need more preparation.</p>
+
+<p>That does not mean every ranch job is entry level. A ranch cannot safely teach advanced horse handling, heavy equipment, livestock medicine, trailer driving, and independent calving work in a single morning. Look for listings that say <em>entry level</em>, <em>will train</em>, <em>assistant</em>, <em>seasonal hand</em>, or <em>general ranch hand</em>. Avoid roles that expect one person to work alone with unfamiliar animals or machinery from day one.</p>
+
+<p>A beginner is easier to hire when the employer can see four things:</p>
+
+<ol>
+<li><strong>You understand the schedule.</strong> Animals may need care before sunrise, during bad weather, on weekends, and on holidays.</li>
+<li><strong>You tell the truth about your ability.</strong> Saying “I have not done that; show me the safe process” is more valuable than bluffing around livestock or equipment.</li>
+<li><strong>You have transferable proof.</strong> Work in construction, landscaping, animal shelters, stables, warehouses, kitchens, maintenance, delivery, or the military can demonstrate reliability and useful habits.</li>
+<li><strong>You are applying to learn the actual job.</strong> Employers can tell the difference between someone interested in livestock work and someone interested only in wearing a hat or riding a horse.</li>
+</ol>
+
+<h2>Skills Ranch Employers Look For</h2>
+
+<p>O*NET emphasizes monitoring, physical work, problem-solving, vehicle and equipment operation, communication, recordkeeping, inspection, and maintenance. In ordinary language, good ranch hands tend to be dependable observers.</p>
+
+<ul>
+<li><strong>Reliability:</strong> Show up when expected, finish routine care, and communicate early when there is a problem.</li>
+<li><strong>Animal awareness:</strong> Notice changes in movement, appetite, breathing, manure, behavior, body condition, or group patterns without making a diagnosis you are not qualified to make.</li>
+<li><strong>Calm stockmanship:</strong> Pay attention to animal behavior and follow the ranch's handling system instead of adding noise, speed, or pressure.</li>
+<li><strong>Mechanical sense:</strong> Inspect tools and equipment, follow maintenance checklists, and stop when a machine sounds, smells, or feels wrong.</li>
+<li><strong>Physical readiness:</strong> Walk uneven ground, lift and carry safely, work with your hands, and function outdoors without treating exhaustion as a contest.</li>
+<li><strong>Communication:</strong> Repeat critical instructions, report what you observed, keep accurate notes, and ask when conditions change.</li>
+<li><strong>Housekeeping:</strong> Return tools, close gates, clean facilities, dispose of sharps correctly, and leave vehicles ready for the next person.</li>
+<li><strong>Judgment:</strong> Know when to continue, when to slow down, and when to call a supervisor.</li>
+</ul>
+
+<p>Horse experience helps only when the job uses horses. A clean driving record, trailer experience, welding, small-engine repair, Spanish, low-stress livestock handling, or basic computer recordkeeping may be more useful on a particular ranch. Match your application to the posted work.</p>
+
+<h2>How to Build Ranch Experience Before You Apply</h2>
+
+<p>You do not have to buy livestock or enroll in a four-year degree to become a stronger beginner. Choose experience that produces a reference and teaches safe habits.</p>
+
+<ol>
+<li><strong>Work or volunteer with supervised animal care.</strong> A stable, therapeutic riding program, livestock show, veterinary facility, animal shelter, university farm, or local producer may offer relevant experience. Routine feeding, cleaning, observation, and following biosecurity rules count.</li>
+<li><strong>Take an agriculture or livestock course.</strong> Cooperative Extension offices, community colleges, vocational programs, and producer groups offer local training. Course availability and requirements vary by State.</li>
+<li><strong>Learn cattle-care fundamentals.</strong> <a href="https://www.bqa.org/beef-quality-assurance-certification/online-certifications">Beef Quality Assurance online training</a> covers cattle health, stockmanship, emergency planning, meat quality, transportation, biosecurity, and loading. Certification can show initiative, but it does not replace supervised experience or authorize medical work.</li>
+<li><strong>Build a practical skill.</strong> Fencing, welding, carpentry, mechanics, irrigation, trailer backing, chainsaw safety, and equipment maintenance can make a beginner useful beyond animal chores.</li>
+<li><strong>Prepare for emergencies.</strong> First aid and CPR training can be helpful, especially for remote work. Ask each employer which certifications the job requires.</li>
+<li><strong>Get a reference who has seen you work.</strong> A supervisor who can confirm attendance, safe judgment, and willingness to learn carries more weight than a friend who knows you like animals.</li>
+</ol>
+
+<h2>How to Write a Resume for a Ranch Job</h2>
+
+<p>A ranch resume can be one page. Its job is to prove that your background matches the work, not to tell your entire life story.</p>
+
+<h3>Start With a Practical Summary</h3>
+
+<blockquote>
+<p>Reliable outdoor worker with two years of landscaping experience, a clean driving record, basic fence and small-engine repair skills, and a history of 6:00 AM starts. Seeking an entry-level cattle ranch position with hands-on training.</p>
+</blockquote>
+
+<p>That summary gives an employer facts to test. “Hardworking animal lover seeking adventure” does not.</p>
+
+<h3>Turn Transferable Work Into Evidence</h3>
+
+<ul>
+<li>Instead of <em>worked outside</em>, write: “Completed full-day landscaping routes in heat, rain, and cold while maintaining tools and reporting hazards.”</li>
+<li>Instead of <em>good with animals</em>, write: “Fed, cleaned, and recorded daily observations for 20 shelter animals under staff protocols.”</li>
+<li>Instead of <em>mechanically inclined</em>, write: “Performed routine oil, filter, belt, and tire checks on mowers and utility equipment.”</li>
+<li>Instead of <em>reliable</em>, write: “Opened a warehouse at 5:30 AM and completed daily vehicle and inventory checklists.”</li>
+</ul>
+
+<p>List relevant licenses and training with dates. Include the class of driver's license, but do not put sensitive identification numbers on a resume. Be exact about equipment: “drove a zero-turn mower” is not “operated heavy equipment.” Be equally precise about horse and cattle experience.</p>
+
+<h2>Where to Find Ranch Jobs</h2>
+
+<p>Start with a dedicated agricultural job board because the listings are easier to compare by location and work type. Browse current <a href="/ranch-jobs">ranch jobs on PlayInDirtJobs</a>, then set a <a href="/job-alerts">job alert</a> so you can apply when a suitable role appears.</p>
+
+<p>Search several phrases:</p>
+
+<ul>
+<li>Entry-level ranch hand</li>
+<li>Ranch jobs with no experience</li>
+<li>Ranch hand with housing</li>
+<li>Cow-calf ranch hand</li>
+<li>Livestock assistant or cattle hand</li>
+<li>Seasonal ranch hand</li>
+<li>Ranch maintenance hand</li>
+<li>Range rider</li>
+<li>Stable hand or wrangler</li>
+<li>Guest ranch jobs</li>
+</ul>
+
+<p>Also check Cooperative Extension networks, State cattle associations, agricultural colleges, local livestock groups, ranch websites, community boards, and people you met through real training or work. Never pay someone merely to apply for a normal job, and verify the employer before sending personal documents.</p>
+
+<p>Location flexibility widens the search, but do not apply nationwide without understanding the cost. Compare travel, vehicle needs, housing, nearest services, internet or cell coverage, climate, and whether your driver's license or certifications transfer.</p>
+
+<h2>How to Apply for a Ranch Job</h2>
+
+<ol>
+<li><strong>Read every duty.</strong> Separate required experience from preferred experience. If you lack a true safety requirement, apply for a different role rather than hoping it will not matter.</li>
+<li><strong>Follow the instructions.</strong> If the listing asks for a resume, references, availability, and a short note, send all four in the requested format.</li>
+<li><strong>Name the exact job.</strong> State why that ranch, livestock system, season, or duty fits your background.</li>
+<li><strong>Confirm availability.</strong> Give an honest start date, end date if applicable, and any schedule limitation. Do not promise a full season if you already know you will leave early.</li>
+<li><strong>Address your experience gap.</strong> Explain what you have done, what you have not done, and why you are prepared to learn.</li>
+<li><strong>Provide reachable references.</strong> Ask permission first and tell references which job you are pursuing.</li>
+<li><strong>Follow up once.</strong> A short message after five to seven business days is reasonable unless the listing gives another timeline.</li>
+</ol>
+
+<blockquote>
+<p>I am applying for the entry-level ranch hand position. I have not worked on a cattle ranch, but I have two years of outdoor maintenance experience, early-start availability, a clean driving record, and basic fence and small-engine repair skills. I am comfortable with physical work and careful about asking before using unfamiliar equipment. I can work the full September-through-March term and would welcome supervised livestock training.</p>
+</blockquote>
+
+<h2>Ranch Job Interview Questions to Prepare For</h2>
+
+<p>An interview may happen by phone or video because ranches are remote. Some employers may also use a paid working interview or skills demonstration. Confirm whether trial work is paid, what you will do, and what safety instruction will be provided.</p>
+
+<p>Be ready to answer:</p>
+
+<ul>
+<li>Why do you want this ranch job rather than outdoor work in general?</li>
+<li>Which animals, vehicles, tools, or equipment have you actually used?</li>
+<li>Can you describe a time you noticed a problem before it became worse?</li>
+<li>How do you respond when instructions are unclear?</li>
+<li>What early-morning, weekend, holiday, or bad-weather work have you done?</li>
+<li>Can you perform the listed physical duties with or without reasonable accommodation?</li>
+<li>How long can you commit to the role?</li>
+<li>What would a previous supervisor say about your attendance and safety?</li>
+</ul>
+
+<p>You should interview the ranch too. Ask what a normal day looks like, who trains new workers, how performance is measured, which duties are independent, how days off work, what happens during calving or severe weather, and why the position is open.</p>
+
+<h2>How Much Do Ranch Hands Make?</h2>
+
+<p>The latest national benchmark is the May 2025 <a href="https://www.bls.gov/news.release/ocwage.t01.htm">BLS Occupational Employment and Wage Statistics release</a>. For farmworkers who care for farm, ranch, and aquacultural animals, BLS reported a <strong>median wage of $17.63 per hour</strong> and a <strong>mean annual wage of $39,260</strong>.</p>
+
+<p>Those figures are national estimates, not a promise for a particular ranch. Pay changes with the State, local labor market, experience, animal responsibility, equipment skill, housing, schedule, and whether the job is seasonal or year-round. Compare the whole offer, but do not let vague promises of “free housing” replace a clear wage and written terms. Our guide to <a href="/almanac/how-much-do-farm-jobs-pay">farm job pay</a> explains how to compare hourly wages and non-cash benefits.</p>
+
+<p>Agricultural wage and overtime rules are complicated. Federal law includes exemptions that can apply to agricultural work, and State law may provide additional protection. The <a href="https://www.dol.gov/agencies/whd/compliance-assistance/toolkits/agriculture">U.S. Department of Labor agriculture toolkit</a> says workers must be paid the wages promised and should receive written information about wages and working conditions in a language they understand. Before accepting, ask how hours are tracked, when payday occurs, which deductions apply, and which overtime rules cover the position.</p>
+
+<h2>How to Evaluate a Ranch Job With Housing</h2>
+
+<p>Housing can make remote ranch work possible, but “provided” does not always mean free, private, furnished, or available year-round. Get the details before traveling.</p>
+
+<ul>
+<li>Is the housing private, family, or shared? Who else lives there?</li>
+<li>What rent, deposit, utilities, internet, laundry, or meal costs are deducted?</li>
+<li>Is it furnished, and what should you bring?</li>
+<li>How far is it from the worksite, groceries, medical care, and town?</li>
+<li>Do you need your own vehicle? Is transportation ever provided?</li>
+<li>What are the rules for partners, children, pets, guests, smoking, and firearms?</li>
+<li>When can you move in, and how quickly must you leave when the job ends?</li>
+<li>What backup heat, water, power, and communication exist during severe weather?</li>
+</ul>
+
+<p>Use the complete <a href="/almanac/farm-jobs-with-housing">farm jobs with housing checklist</a> before accepting a live-in role. The Department of Labor also states that housing or transportation covered and provided by an agricultural employer must be safe. Which federal or State requirements apply depends on the employment arrangement.</p>
+
+<h2>Ranch Safety and Job Red Flags</h2>
+
+<p>Ranch work combines large animals, vehicles, weather, terrain, chemicals, dust, sharps, and remote locations. The <a href="https://www.osha.gov/agricultural-operations/hazards">OSHA agricultural hazards guide</a> covers animal-acquired infections, machinery, heat, noise, respiratory hazards, sanitation, tractors, ATVs, and other risks. BLS also warns that agricultural workers can be bitten, kicked, or stung and seriously injured by farm machinery.</p>
+
+<p>Ask who provides training and personal protective equipment, how workers communicate in remote areas, where first-aid supplies are kept, how injuries are reported, and what the emergency plan is. Do not operate an unfamiliar tractor, ATV, power take-off, chute, firearm, chainsaw, or livestock trailer merely because someone calls the task “common sense.”</p>
+
+<p>Pause before accepting when you see:</p>
+
+<ul>
+<li>No verifiable ranch name, location, supervisor, or written job duties.</li>
+<li>No clear wage, pay schedule, expected hours, or employment dates.</li>
+<li>A request to send money, buy gift cards, cash a check, or pay a recruiter for a normal application.</li>
+<li>Housing that cannot be described, shown, or discussed in detail.</li>
+<li>Pressure to relocate immediately without a written offer.</li>
+<li>Promises that everyone is “family” used to avoid questions about pay, time off, or boundaries.</li>
+<li>Being expected to work alone with animals, weapons, chemicals, or machines you have not been trained to handle.</li>
+<li>An employer who discourages accurate time records, safety questions, or medical care.</li>
+</ul>
+
+<h2>A 30-Day Plan to Get Your First Ranch Job</h2>
+
+<ol>
+<li><strong>Days 1–3:</strong> Choose two realistic job types and three regions. Decide whether housing, year-round work, or a fixed season is essential.</li>
+<li><strong>Days 4–7:</strong> Write a one-page resume, gather two work references, and list your exact animal, driving, tool, equipment, maintenance, and outdoor experience.</li>
+<li><strong>Week 2:</strong> Complete one relevant course or supervised experience, such as BQA, first aid, a local livestock workshop, or regular animal-care shifts.</li>
+<li><strong>Week 3:</strong> Create job alerts and apply to well-matched roles. Tailor the first paragraph and skill order for each listing.</li>
+<li><strong>Week 4:</strong> Follow up once, prepare interview examples, calculate relocation costs, and use a written checklist to compare pay, schedule, housing, training, and safety.</li>
+</ol>
+
+<p>Quality matters more than sending the same application to fifty ranches. Five honest applications that match your ability, availability, and goals are more useful than fifty messages that say only, “I have always wanted to be a cowboy.”</p>
+
+<h2>Frequently Asked Questions About Getting a Ranch Job</h2>
+
+<p><strong>Can you get a ranch job with no experience?</strong><br />Yes. Many entry-level agricultural workers learn on the job, and BLS says most agricultural worker positions require no formal educational credential. Your best evidence is reliability, realistic expectations, physical readiness, safe judgment, and transferable experience with animals, tools, vehicles, maintenance, or outdoor work.</p>
+
+<p><strong>Do you have to know how to ride a horse to work on a ranch?</strong><br />No. Some ranch hand, wrangler, and range jobs require strong riding experience, but many ranches move cattle with trucks, ATVs, or on foot. Other jobs focus on feeding, fencing, equipment, irrigation, records, calving support, maintenance, or guest services.</p>
+
+<p><strong>How much do ranch hands make?</strong><br />BLS reported a median of $17.63 per hour and a mean annual wage of $39,260 for farm, ranch, and aquacultural animal workers in May 2025. Actual pay varies by location, experience, duties, schedule, season, and benefits such as housing.</p>
+
+<p><strong>What should you put on a ranch job resume?</strong><br />Lead with reliability and the skills the ranch needs. Include animal care, fencing, construction, landscaping, mechanics, welding, driving, equipment, recordkeeping, outdoor labor, early schedules, and safety training. Use specific examples and never inflate your experience.</p>
+
+<p><strong>Where can you find ranch jobs with housing?</strong><br />Search agricultural job boards using phrases such as <em>ranch hand with housing</em>, <em>live-in ranch hand</em>, <em>cow-calf ranch hand</em>, <em>seasonal ranch hand</em>, <em>range rider</em>, and <em>wrangler</em>. Confirm cost, privacy, utilities, transportation, and move-out rules before you accept.</p>
+
+<p><strong>Are ranch jobs seasonal or year-round?</strong><br />Both exist. Calving, grazing, branding, haying, hunting, and guest-ranch seasons can create temporary jobs, while livestock care, feeding, maintenance, and larger operations may employ workers year-round. Ask for dates, expected hours, days off, and busy-season changes.</p>
+
+<p>Your first ranch job does not have to be your perfect lifelong role. It needs to be legitimate, safe, fairly explained, and close enough to your current ability that you can learn without putting yourself, your co-workers, or the animals at risk. Show what you can already be trusted to do, tell the truth about what you need to learn, and apply where the ranch's real work fits your real strengths.</p>
+`,
+  },
+  {
     slug: "farm-hand-job-description",
     title: "Farm Hand Job Description: Duties, Skills, Pay, and How to Get Hired",
     category: "Getting Started",
@@ -48,7 +358,7 @@ export const almanacArticles: AlmanacArticle[] = [
     date: "2026-08-11",
     author: "PlayInDirtJobs",
     readTime: 12,
-    featured: true,
+    featured: false,
     audience: "worker",
     heroImage: {
       src: "https://images.unsplash.com/photo-1605289357852-0397ad2db276?w=1200&h=630&fit=crop&auto=format&q=80",
@@ -57,6 +367,7 @@ export const almanacArticles: AlmanacArticle[] = [
       creditUrl: "https://unsplash.com/photos/man-in-blue-and-black-adidas-jacket-wearing-white-cap-ydWtwxxjvys",
     },
     relatedSlugs: [
+      "how-to-get-a-ranch-job",
       "how-to-get-a-farm-job-with-no-experience",
       "what-to-expect-your-first-week-on-a-farm",
       "how-much-do-farm-jobs-pay",
