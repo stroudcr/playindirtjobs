@@ -22,7 +22,6 @@ export interface ImportedJobFields {
   salaryType?: "annual" | "hourly";
   jobType?: string[];
   companyWebsite?: string;
-  applyUrl?: string;
 }
 
 interface SafeResponse {
@@ -228,7 +227,7 @@ function objectValue(value: unknown) {
   return value && typeof value === "object" ? (value as Record<string, unknown>) : undefined;
 }
 
-function extractStructuredJob(html: string, finalUrl: URL): ImportedJobFields | undefined {
+function extractStructuredJob(html: string): ImportedJobFields | undefined {
   const scripts = html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi);
   for (const match of scripts) {
     try {
@@ -267,7 +266,6 @@ function extractStructuredJob(html: string, finalUrl: URL): ImportedJobFields | 
           .map((type) => jobTypeMap[String(type).toLowerCase()])
           .filter((type): type is string => Boolean(type)),
         companyWebsite: organization?.sameAs ? String(organization.sameAs) : undefined,
-        applyUrl: finalUrl.toString(),
       };
     } catch {
       // Continue to the next structured-data block.
@@ -291,7 +289,9 @@ function extractMeta(html: string, name: string) {
 
 export async function importJobFromUrl(url: string): Promise<{ fields: ImportedJobFields; sourceUrl: string }> {
   const response = await safeFetch(url);
-  const structured = extractStructuredJob(response.body, response.finalUrl);
+  // The source page is provenance, not an employer-chosen application destination.
+  // Keep it outside fields so imports also preserve an existing application URL.
+  const structured = extractStructuredJob(response.body);
   if (structured) return { fields: structured, sourceUrl: response.finalUrl.toString() };
 
   const title = extractMeta(response.body, "og:title") ?? cleanText(response.body.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1], 100);
@@ -303,7 +303,6 @@ export async function importJobFromUrl(url: string): Promise<{ fields: ImportedJ
     fields: {
       title,
       description,
-      applyUrl: response.finalUrl.toString(),
     },
     sourceUrl: response.finalUrl.toString(),
   };
