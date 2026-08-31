@@ -7,7 +7,18 @@ const jobTypeIds = new Set<string>(JOB_TYPES.map((item) => item.id));
 const farmTypeIds = new Set<string>(FARM_TYPES.map((item) => item.id));
 const stateCodes = new Set<string>(US_STATES.map((item) => item.code));
 
-const optionalUrl = z.union([z.string().url("Enter a complete URL beginning with http:// or https://"), z.literal(""), z.null()]).optional();
+const optionalUrl = z
+  .union([z.string().url("Enter a complete URL beginning with http:// or https://"), z.literal(""), z.null()])
+  .refine((value) => {
+    if (!value) return true;
+    try {
+      const url = new URL(value);
+      return (url.protocol === "http:" || url.protocol === "https:") && !url.username && !url.password;
+    } catch {
+      return false;
+    }
+  }, "Enter a complete HTTP or HTTPS URL without an embedded username or password")
+  .optional();
 const optionalEmail = z.union([z.string().email("Enter a valid email address"), z.literal(""), z.null()]).optional();
 
 const sharedJobFields = {

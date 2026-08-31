@@ -67,16 +67,20 @@ export async function PATCH(
     ? mergedData.managementEmail.trim().toLowerCase()
     : undefined;
 
+  const updateData: Prisma.JobDraftUpdateInput = {
+    email: managementEmail || draft.email,
+    plan: parsed.data.plan,
+    currentStep: parsed.data.currentStep,
+    recoveryOptIn: parsed.data.recoveryOptIn,
+    importUrl: parsed.data.importUrl,
+  };
+  if (parsed.data.data) {
+    updateData.data = mergedData as Prisma.InputJsonValue;
+  }
+
   const updated = await db.jobDraft.update({
     where: { id: draft.id },
-    data: {
-      data: mergedData as Prisma.InputJsonValue,
-      email: managementEmail || draft.email,
-      plan: parsed.data.plan,
-      currentStep: parsed.data.currentStep,
-      recoveryOptIn: parsed.data.recoveryOptIn,
-      importUrl: parsed.data.importUrl,
-    },
+    data: updateData,
   });
 
   if (parsed.data.currentStep && parsed.data.currentStep !== draft.currentStep) {

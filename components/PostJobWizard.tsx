@@ -23,31 +23,14 @@ import {
   TAGS,
   US_STATES,
 } from "@/lib/constants";
+import {
+  DEFAULT_WIZARD_DATA,
+  normalizeDraftData,
+  type WizardData,
+  type WizardDataInput,
+} from "@/lib/job-draft-data";
 
 type Plan = "basic" | "featured";
-
-interface WizardData {
-  title: string;
-  company: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  remote: boolean;
-  description: string;
-  salaryMin: string;
-  salaryMax: string;
-  salaryType: "annual" | "hourly";
-  jobType: string[];
-  farmType: string[];
-  categories: string[];
-  tags: string[];
-  benefits: string[];
-  managementEmail: string;
-  companyWebsite: string;
-  companyLogo: string;
-  applyUrl: string;
-  applyEmail: string;
-}
 
 interface DraftResponse {
   draft: {
@@ -58,29 +41,6 @@ interface DraftResponse {
     recoveryOptIn: boolean;
   };
 }
-
-const DEFAULT_DATA: WizardData = {
-  title: "",
-  company: "",
-  city: "",
-  state: "",
-  postalCode: "",
-  remote: false,
-  description: "",
-  salaryMin: "",
-  salaryMax: "",
-  salaryType: "annual",
-  jobType: [],
-  farmType: [],
-  categories: [],
-  tags: [],
-  benefits: [],
-  managementEmail: "",
-  companyWebsite: "",
-  companyLogo: "",
-  applyUrl: "",
-  applyEmail: "",
-};
 
 const STEPS = [
   { number: 1, title: "Role & location" },
@@ -100,14 +60,6 @@ const ATTRIBUTION_KEYS = [
   "source",
 ] as const;
 
-function normalizeDraftData(data: Partial<WizardData>): Partial<WizardData> {
-  return {
-    ...data,
-    salaryMin: data.salaryMin == null ? "" : String(data.salaryMin),
-    salaryMax: data.salaryMax == null ? "" : String(data.salaryMax),
-  };
-}
-
 function emailLooksValid(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
@@ -116,7 +68,11 @@ function urlLooksValid(value: string) {
   if (!value) return true;
   try {
     const parsed = new URL(value);
-    return parsed.protocol === "https:" || parsed.protocol === "http:";
+    return (
+      (parsed.protocol === "https:" || parsed.protocol === "http:") &&
+      !parsed.username &&
+      !parsed.password
+    );
   } catch {
     return false;
   }
@@ -137,8 +93,10 @@ export function PostJobWizard() {
   const searchParams = useSearchParams();
   const initialized = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const saveQueue = useRef<Promise<boolean>>(Promise.resolve(true));
+  const pendingSaves = useRef(0);
   const [draftId, setDraftId] = useState<string | null>(null);
-  const [data, setData] = useState<WizardData>(DEFAULT_DATA);
+  const [data, setData] = useState<WizardData>(DEFAULT_WIZARD_DATA);
   const [plan, setPlan] = useState<Plan>(searchParams.get("plan") === "featured" ? "featured" : "basic");
   const [step, setStep] = useState(1);
   const [recoveryOptIn, setRecoveryOptIn] = useState(false);
@@ -172,6 +130,7 @@ export function PostJobWizard() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 plan,
+                explicitPlan: searchParams.has("plan"),
                 attribution: {
                   ...attribution,
                   landingPath: `${window.location.pathname}${window.location.search}`.slice(0, 1_000),
@@ -185,7 +144,7 @@ export function PostJobWizard() {
         }
 
         setDraftId(body.draft.id);
-        setData({ ...DEFAULT_DATA, ...normalizeDraftData(body.draft.data) });
+        setData({ ...DEFAULT_WIZARD_DATA, ...normalizeDraftData(body.draft.data) });
         setPlan(body.draft.plan);
         setStep(Math.min(4, Math.max(1, body.draft.currentStep || 1)));
         setRecoveryOptIn(Boolean(body.draft.recoveryOptIn));
@@ -200,32 +159,42 @@ export function PostJobWizard() {
   }, [plan, searchParams]);
 
   const saveDraft = useCallback(
-    async (overrides?: { nextStep?: number; nextPlan?: Plan }) => {
-      if (!draftId) return false;
+    (overrides?: { nextStep?: number; nextPlan?: Plan }) => {
+      if (!draftId) return Promise.resolve(false);
+      const snapshot = {
+        data,
+        plan: overrides?.nextPlan ?? plan,
+        currentStep: overrides?.nextStep ?? step,
+        recoveryOptIn,
+      };
+      pendingSaves.current += 1;
       setSaving(true);
       setSaved(false);
-      try {
-        const response = await fetch(`/api/drafts/${encodeURIComponent(draftId)}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            data,
-            plan: overrides?.nextPlan ?? plan,
-            currentStep: overrides?.nextStep ?? step,
-            recoveryOptIn,
-          }),
-        });
-        const body = await readResponseBody<{ error?: string }>(response);
-        if (!response.ok) throw new Error(body.error || "Unable to save your draft.");
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2_000);
-        return true;
-      } catch (saveError) {
-        setError(saveError instanceof Error ? saveError.message : "Unable to save your draft.");
-        return false;
-      } finally {
-        setSaving(false);
-      }
+
+      const performSave = async () => {
+        try {
+          const response = await fetch(`/api/drafts/${encodeURIComponent(draftId)}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(snapshot),
+          });
+          const body = await readResponseBody<{ error?: string }>(response);
+          if (!response.ok) throw new Error(body.error || "Unable to save your draft.");
+          setSaved(true);
+          setTimeout(() => setSaved(false), 2_000);
+          return true;
+        } catch (saveError) {
+          setError(saveError instanceof Error ? saveError.message : "Unable to save your draft.");
+          return false;
+        } finally {
+          pendingSaves.current -= 1;
+          if (pendingSaves.current === 0) setSaving(false);
+        }
+      };
+
+      const queuedSave = saveQueue.current.then(performSave, performSave);
+      saveQueue.current = queuedSave;
+      return queuedSave;
     },
     [data, draftId, plan, recoveryOptIn, step]
   );
@@ -262,8 +231,12 @@ export function PostJobWizard() {
   const stepError = useMemo(() => {
     if (step === 1) {
       if (data.title.trim().length < 5) return "Add a descriptive job title.";
+      if (data.title.trim().length > 100) return "Keep the job title to 100 characters or fewer.";
       if (data.company.trim().length < 2) return "Add your farm or company name.";
-      if (data.city.trim().length < 2 || !data.state) return "Add the job city and state.";
+      if (data.company.trim().length > 100) return "Keep the farm or company name to 100 characters or fewer.";
+      if (data.city.trim().length < 2 || data.city.trim().length > 100 || !US_STATES.some((state) => state.code === data.state)) {
+        return "Add a valid job city and state.";
+      }
       if (!data.categories.length || !data.jobType.length || !data.farmType.length) {
         return "Choose at least one category, job type, and operation type.";
       }
@@ -272,13 +245,21 @@ export function PostJobWizard() {
       if (data.description.trim().length < 100) return "Write at least 100 characters about the role.";
       const minimum = data.salaryMin ? Number(data.salaryMin) : undefined;
       const maximum = data.salaryMax ? Number(data.salaryMax) : undefined;
+      if (
+        (minimum != null && (!Number.isSafeInteger(minimum) || minimum < 0)) ||
+        (maximum != null && (!Number.isSafeInteger(maximum) || maximum < 0))
+      ) {
+        return "Enter compensation as whole, positive dollar amounts.";
+      }
       if (minimum != null && maximum != null && minimum > maximum) return "Minimum compensation cannot exceed the maximum.";
     }
     if (step === 3) {
       if (!emailLooksValid(data.managementEmail)) return "Add a valid private management email.";
       if (!data.applyUrl && !data.applyEmail) return "Add a public application URL or application email.";
       if (data.applyEmail && !emailLooksValid(data.applyEmail)) return "Add a valid public application email.";
-      if (!urlLooksValid(data.applyUrl) || !urlLooksValid(data.companyWebsite)) return "Enter complete URLs beginning with http:// or https://.";
+      if (!urlLooksValid(data.applyUrl) || !urlLooksValid(data.companyWebsite) || !urlLooksValid(data.companyLogo)) {
+        return "Enter complete URLs without embedded usernames or passwords.";
+      }
     }
     return null;
   }, [data, step]);
@@ -289,8 +270,9 @@ export function PostJobWizard() {
       return;
     }
     setError(null);
+    const savedStep = await saveDraft({ nextStep });
+    if (!savedStep) return;
     setStep(nextStep);
-    await saveDraft({ nextStep });
     if (nextStep === 4 && draftId) {
       void fetch("/api/funnel-events", {
         method: "POST",
@@ -299,6 +281,7 @@ export function PostJobWizard() {
       });
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => document.getElementById(`step-${nextStep}-title`)?.focus(), 0);
   };
 
   const handleImport = async () => {
@@ -313,13 +296,22 @@ export function PostJobWizard() {
       const response = await fetch("/api/job-import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: importUrl }),
+        body: JSON.stringify({ url: importUrl, draftId }),
       });
-      const body = await readResponseBody<{ error?: string; fields?: Partial<WizardData>; sourceUrl?: string }>(response);
+      const body = await readResponseBody<{
+        error?: string;
+        fields?: WizardDataInput;
+        sourceUrl?: string;
+        extraction?: "structured" | "metadata";
+        warnings?: string[];
+      }>(response);
       if (!response.ok) throw new Error(body.error || "Unable to import this job.");
       const imported = normalizeDraftData(body.fields ?? {});
       setData((current) => ({ ...current, ...imported }));
-      setImportNotice("We filled the details we could find. Review every field before payment.");
+      setImportNotice(
+        body.warnings?.join(" ") ||
+        "We filled the details we could verify. Review every field and the full listing preview before payment."
+      );
       if (draftId) {
         void fetch(`/api/drafts/${encodeURIComponent(draftId)}`, {
           method: "PATCH",
@@ -364,14 +356,25 @@ export function PostJobWizard() {
     setError(null);
     try {
       const savedDraft = await saveDraft({ nextStep: 4 });
-      if (!savedDraft) return;
+      if (!savedDraft) {
+        setSubmitting(false);
+        return;
+      }
       const response = await fetch("/api/create-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ draftId }),
       });
-      const body = await readResponseBody<{ error?: string; url?: string }>(response);
-      if (!response.ok || !body.url) throw new Error(body.error || "Unable to open secure checkout.");
+      const body = await readResponseBody<{
+        error?: string;
+        url?: string;
+        details?: { fieldErrors?: Record<string, string[]>; formErrors?: string[] };
+      }>(response);
+      if (!response.ok || !body.url) {
+        const fieldMessage = Object.values(body.details?.fieldErrors ?? {}).flat().find(Boolean);
+        const formMessage = body.details?.formErrors?.find(Boolean);
+        throw new Error(fieldMessage || formMessage || body.error || "Unable to open secure checkout.");
+      }
       window.location.assign(body.url);
     } catch (checkoutError) {
       setError(checkoutError instanceof Error ? checkoutError.message : "Unable to open secure checkout.");
@@ -453,11 +456,11 @@ export function PostJobWizard() {
         ) : null}
 
         {step === 1 ? (
-          <section className="card p-5 sm:p-8" aria-labelledby="step-one-title">
+          <section className="card p-5 sm:p-8" aria-labelledby="step-1-title">
             <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
               <div>
                 <p className="text-sm font-semibold text-primary">Step 1 of 4</p>
-                <h2 id="step-one-title" className="mt-1 text-2xl font-display text-forest">Role and location</h2>
+                <h2 id="step-1-title" tabIndex={-1} className="mt-1 w-fit rounded-sm text-2xl font-display text-forest focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-emerald-700">Role and location</h2>
               </div>
               <div className="w-full rounded-lg border border-border bg-earth-cream/40 p-4 sm:max-w-md">
                 <label htmlFor="import-url" className="text-sm font-semibold text-forest">Already posted elsewhere?</label>
@@ -468,19 +471,19 @@ export function PostJobWizard() {
                     Import
                   </button>
                 </div>
-                {importNotice ? <p className="mt-2 text-xs text-primary">{importNotice}</p> : null}
+                {importNotice ? <p className="mt-2 text-xs leading-relaxed text-emerald-700">{importNotice}</p> : null}
               </div>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
               <Field label="Job title" required className="sm:col-span-2">
-                <input value={data.title} onChange={(event) => setField("title", event.target.value)} className="input" placeholder="Seasonal greenhouse grower" />
+                <input value={data.title} onChange={(event) => setField("title", event.target.value)} className="input" placeholder="Seasonal greenhouse grower" maxLength={100} />
               </Field>
               <Field label="Farm or company name" required className="sm:col-span-2">
-                <input value={data.company} onChange={(event) => setField("company", event.target.value)} className="input" placeholder="Green Valley Nursery" />
+                <input value={data.company} onChange={(event) => setField("company", event.target.value)} className="input" placeholder="Green Valley Nursery" maxLength={100} />
               </Field>
               <Field label="City" required>
-                <input value={data.city} onChange={(event) => setField("city", event.target.value)} className="input" />
+                <input value={data.city} onChange={(event) => setField("city", event.target.value)} className="input" maxLength={100} />
               </Field>
               <Field label="State" required>
                 <select value={data.state} onChange={(event) => setField("state", event.target.value)} className="input">
@@ -504,9 +507,9 @@ export function PostJobWizard() {
         ) : null}
 
         {step === 2 ? (
-          <section className="card p-5 sm:p-8" aria-labelledby="step-two-title">
+          <section className="card p-5 sm:p-8" aria-labelledby="step-2-title">
             <p className="text-sm font-semibold text-primary">Step 2 of 4</p>
-            <h2 id="step-two-title" className="mt-1 text-2xl font-display text-forest">Description, pay and benefits</h2>
+            <h2 id="step-2-title" tabIndex={-1} className="mt-1 w-fit rounded-sm text-2xl font-display text-forest focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-emerald-700">Description, pay and benefits</h2>
             <div className="mt-6 space-y-6">
               <Field label="Job description" required help={`${data.description.length}/5,000 characters — include responsibilities, schedule, qualifications and what makes the workplace distinctive.`}>
                 <textarea value={data.description} onChange={(event) => setField("description", event.target.value)} className="input min-h-64 resize-y" maxLength={5_000} />
@@ -524,10 +527,10 @@ export function PostJobWizard() {
               </fieldset>
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Minimum compensation">
-                  <input type="number" min="0" value={data.salaryMin} onChange={(event) => setField("salaryMin", event.target.value)} className="input" />
+                  <input type="number" min="0" step="1" value={data.salaryMin} onChange={(event) => setField("salaryMin", event.target.value)} className="input" />
                 </Field>
                 <Field label="Maximum compensation">
-                  <input type="number" min="0" value={data.salaryMax} onChange={(event) => setField("salaryMax", event.target.value)} className="input" />
+                  <input type="number" min="0" step="1" value={data.salaryMax} onChange={(event) => setField("salaryMax", event.target.value)} className="input" />
                 </Field>
               </div>
             </div>
@@ -537,9 +540,9 @@ export function PostJobWizard() {
         ) : null}
 
         {step === 3 ? (
-          <section className="card p-5 sm:p-8" aria-labelledby="step-three-title">
+          <section className="card p-5 sm:p-8" aria-labelledby="step-3-title">
             <p className="text-sm font-semibold text-primary">Step 3 of 4</p>
-            <h2 id="step-three-title" className="mt-1 text-2xl font-display text-forest">Employer and application details</h2>
+            <h2 id="step-3-title" tabIndex={-1} className="mt-1 w-fit rounded-sm text-2xl font-display text-forest focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-emerald-700">Employer and application details</h2>
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
               <Field label="Private management email" required help="Used for receipts, secure sign-in and listing management. It is never shown publicly." className="sm:col-span-2">
                 <input type="email" value={data.managementEmail} onChange={(event) => setField("managementEmail", event.target.value)} className="input" autoComplete="email" />
@@ -574,10 +577,10 @@ export function PostJobWizard() {
         ) : null}
 
         {step === 4 ? (
-          <section aria-labelledby="step-four-title">
+          <section aria-labelledby="step-4-title">
             <div className="mb-6">
               <p className="text-sm font-semibold text-primary">Step 4 of 4</p>
-              <h2 id="step-four-title" className="mt-1 text-2xl font-display text-forest">Review and choose placement</h2>
+              <h2 id="step-4-title" tabIndex={-1} className="mt-1 w-fit rounded-sm text-2xl font-display text-forest focus:outline focus:outline-2 focus:outline-offset-4 focus:outline-emerald-700">Review and choose placement</h2>
             </div>
             <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr]">
               <div className="space-y-5">
@@ -585,10 +588,10 @@ export function PostJobWizard() {
                 <div className="card p-5 text-sm text-forest-light">
                   <h3 className="mb-3 text-lg font-display text-forest">Before payment</h3>
                   <dl className="grid gap-2 sm:grid-cols-2">
-                    <div><dt className="font-semibold text-forest">Applications</dt><dd>{data.applyUrl || data.applyEmail}</dd></div>
-                    <div><dt className="font-semibold text-forest">Management</dt><dd>{data.managementEmail} (private)</dd></div>
-                    <div><dt className="font-semibold text-forest">Duration</dt><dd>60 days</dd></div>
-                    <div><dt className="font-semibold text-forest">Renewal</dt><dd>Manual only</dd></div>
+                    <div className="min-w-0"><dt className="font-semibold text-forest">Applications</dt><dd className="break-all">{data.applyUrl || data.applyEmail}</dd></div>
+                    <div className="min-w-0"><dt className="font-semibold text-forest">Management</dt><dd className="break-all">{data.managementEmail} (private)</dd></div>
+                    <div className="min-w-0"><dt className="font-semibold text-forest">Duration</dt><dd>60 days</dd></div>
+                    <div className="min-w-0"><dt className="font-semibold text-forest">Renewal</dt><dd>Manual only</dd></div>
                   </dl>
                 </div>
               </div>

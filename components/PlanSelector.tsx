@@ -44,7 +44,7 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
         {plans.map((plan) => (
           <label
             key={plan.id}
-            className={`cursor-pointer rounded-lg border-2 p-4 transition-all ${
+            className={`block w-full cursor-pointer rounded-lg border-2 p-4 transition-all ${
               selected === plan.id
                 ? "border-primary bg-primary/5"
                 : "border-border hover:border-primary/50"
@@ -64,14 +64,14 @@ export function PlanSelector({ selected, onChange }: PlanSelectorProps) {
                   <div>
                     <p className="font-semibold text-forest">{plan.name}</p>
                     {plan.badge && (
-                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary mt-1">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                      <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-700" />
                         {plan.badge}
                       </span>
                     )}
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-primary">
+                    <p className="text-2xl font-bold text-emerald-700">
                       ${(plan.price / 100).toFixed(0)}
                     </p>
                   </div>

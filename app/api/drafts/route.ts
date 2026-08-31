@@ -29,6 +29,7 @@ const attributionSchema = z
 
 const createDraftSchema = z.object({
   plan: z.enum(["basic", "featured"]).default("basic"),
+  explicitPlan: z.boolean().default(false),
   attribution: attributionSchema.optional(),
 });
 
@@ -60,14 +61,15 @@ export async function POST(request: NextRequest) {
 
   const existing = await getAccessibleDraft(request);
   if (existing) {
-    const updated =
-      existing.plan === parsed.data.plan
-        ? existing
-        : await db.jobDraft.update({
-            where: { id: existing.id },
-            data: { plan: parsed.data.plan },
-          });
-    return NextResponse.json({ draft: serializeDraft(updated) });
+    // Plain /post-job visits resume the current choice. A pricing/CTA link with
+    // an explicit plan is itself a plan-selection action and should win.
+    const resumed = parsed.data.explicitPlan && existing.plan !== parsed.data.plan
+      ? await db.jobDraft.update({
+          where: { id: existing.id },
+          data: { plan: parsed.data.plan },
+        })
+      : existing;
+    return NextResponse.json({ draft: serializeDraft(resumed) });
   }
 
   const { token, tokenHash } = createDraftAccess();
