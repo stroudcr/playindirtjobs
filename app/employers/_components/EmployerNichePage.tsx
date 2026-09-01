@@ -9,8 +9,8 @@ import {
   Sprout,
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { EmployerPostLink } from "@/components/EmployerPostLink";
 import { TrackPageView } from "@/components/TrackPageView";
-import { TrackedLink } from "@/components/TrackedLink";
 import { getUrl } from "@/lib/metadata";
 import { employerNicheList, type EmployerNicheConfig } from "../content";
 
@@ -24,10 +24,6 @@ const postingSteps = [
   ["Choose applications", "Send candidates to your application email or website."],
   ["Preview and pay", "Select Basic or Featured, review the listing, and complete checkout."],
 ] as const;
-
-function postHref(config: EmployerNicheConfig, plan: "basic" | "featured", placement: string) {
-  return `/post-job?plan=${plan}&source=${config.source}_${placement}`;
-}
 
 function JsonLd({ config }: { config: EmployerNicheConfig }) {
   const pageUrl = getUrl(config.slug);
@@ -124,23 +120,23 @@ export function EmployerNichePage({ config }: EmployerNichePageProps) {
                   {config.heroBody}
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <TrackedLink
-                    href={postHref(config, "basic", "hero")}
-                    eventName="employer_cta_click"
-                    eventParams={{ source: config.source, placement: "hero", plan: "basic" }}
+                  <EmployerPostLink
+                    source={`${config.source}_hero`}
+                    plan="basic"
+                    eventParams={{ placement: "hero", source_group: config.source }}
                     className="btn btn-primary justify-center sm:justify-start"
                   >
                     Post a job for $15
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </TrackedLink>
-                  <TrackedLink
-                    href={postHref(config, "featured", "hero")}
-                    eventName="employer_cta_click"
-                    eventParams={{ source: config.source, placement: "hero", plan: "featured" }}
+                  </EmployerPostLink>
+                  <EmployerPostLink
+                    source={`${config.source}_hero`}
+                    plan="featured"
+                    eventParams={{ placement: "hero", source_group: config.source }}
                     className="btn btn-outline justify-center sm:justify-start"
                   >
                     Choose Featured — $25
-                  </TrackedLink>
+                  </EmployerPostLink>
                 </div>
                 <p className="mt-4 text-sm text-forest-light">
                   One payment. Both plans stay active for 60 days. No automatic renewal.
@@ -280,22 +276,22 @@ export function EmployerNichePage({ config }: EmployerNichePageProps) {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <TrackedLink
-                href={postHref(config, "basic", "pricing")}
-                eventName="employer_cta_click"
-                eventParams={{ source: config.source, placement: "pricing", plan: "basic" }}
+              <EmployerPostLink
+                source={`${config.source}_pricing`}
+                plan="basic"
+                eventParams={{ placement: "pricing", source_group: config.source }}
                 className="btn justify-center bg-white text-forest hover:bg-earth-sand"
               >
                 Choose Basic — $15
-              </TrackedLink>
-              <TrackedLink
-                href={postHref(config, "featured", "pricing")}
-                eventName="employer_cta_click"
-                eventParams={{ source: config.source, placement: "pricing", plan: "featured" }}
+              </EmployerPostLink>
+              <EmployerPostLink
+                source={`${config.source}_pricing`}
+                plan="featured"
+                eventParams={{ placement: "pricing", source_group: config.source }}
                 className="btn justify-center border border-white/35 text-white hover:bg-white/10"
               >
                 Choose Featured — $25
-              </TrackedLink>
+              </EmployerPostLink>
             </div>
           </div>
         </div>
@@ -343,15 +339,15 @@ export function EmployerNichePage({ config }: EmployerNichePageProps) {
             <p className="mx-auto mt-3 max-w-2xl text-forest-light">
               Start a 60-day listing and choose the application destination that works for your operation.
             </p>
-            <TrackedLink
-              href={postHref(config, "basic", "final")}
-              eventName="employer_cta_click"
-              eventParams={{ source: config.source, placement: "final", plan: "basic" }}
+            <EmployerPostLink
+              source={`${config.source}_final`}
+              plan="basic"
+              eventParams={{ placement: "final", source_group: config.source }}
               className="btn btn-primary mt-7 justify-center"
             >
               Start a Basic listing — $15
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </TrackedLink>
+            </EmployerPostLink>
           </div>
         </div>
       </section>

@@ -76,7 +76,12 @@ export default async function OrganicFarmJobsPage() {
           ))}
         </div>
       </section>
-      <EmployerCTA source="organic_farm_jobs" />
+      <EmployerCTA
+        source="organic_farm_jobs"
+        placement="category_job_results"
+        heading="Hiring for an organic or regenerative farm?"
+        body="Reach people looking for sustainable agriculture, harvest, greenhouse, and field work. A 60-day listing starts at $15."
+      />
     </main>
     </>
   );

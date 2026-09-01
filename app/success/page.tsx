@@ -1,11 +1,48 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
+import { inject as injectVercelAnalytics } from "@vercel/analytics";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AlertTriangle, CheckCircle, Loader2 } from "lucide-react";
 
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { trackPurchaseOnce } from "@/lib/analytics";
+import { sanitizeSuccessAnalyticsEvent } from "@/lib/analytics-paths";
+import {
+  isCommerceAnalyticsPayload,
+  type CommerceAnalyticsPayload,
+} from "@/lib/commerce-analytics";
+
 type CheckoutState = "loading" | "invalid" | "pending" | "processing" | "published" | "recovery" | "canceled" | "refunded";
+
+function PurchaseConversionAnalytics({ payload }: { payload: CommerceAnalyticsPayload }) {
+  useEffect(() => {
+    injectVercelAnalytics({
+      beforeSend: sanitizeSuccessAnalyticsEvent,
+      disableAutoTrack: true,
+      framework: "next",
+    });
+    let attempts = 0;
+    let timer: number | undefined;
+
+    const send = () => {
+      const delivery = trackPurchaseOnce(payload);
+      if (delivery.ga !== "pending" || attempts >= 99) return;
+      attempts += 1;
+      timer = window.setTimeout(send, 100);
+    };
+    send();
+
+    return () => {
+      if (timer) window.clearTimeout(timer);
+    };
+  }, [payload]);
+
+  return (
+    <GoogleAnalytics sendPageView={false} loadStrategy="afterInteractive" />
+  );
+}
 
 function SuccessContent() {
   const searchParams = useSearchParams();
@@ -13,6 +50,7 @@ function SuccessContent() {
   const [state, setState] = useState<CheckoutState>(sessionId ? "loading" : "invalid");
   const [jobSlug, setJobSlug] = useState<string | null>(null);
   const [message, setMessage] = useState("");
+  const [purchaseAnalytics, setPurchaseAnalytics] = useState<CommerceAnalyticsPayload | null>(null);
 
   useEffect(() => {
     if (!sessionId) return;
@@ -31,6 +69,9 @@ function SuccessContent() {
         setMessage(body.message || "");
         if (nextState === "published") {
           setJobSlug(body.job?.slug || null);
+          if (isCommerceAnalyticsPayload(body.analytics)) {
+            setPurchaseAnalytics(body.analytics);
+          }
           return;
         }
         if (["invalid", "recovery", "canceled", "refunded"].includes(nextState)) return;
@@ -59,8 +100,10 @@ function SuccessContent() {
   const published = state === "published";
 
   return (
-    <main className="flex min-h-screen items-center bg-earth-cream py-12">
-      <div className="container mx-auto max-w-2xl px-4 text-center">
+    <>
+      {purchaseAnalytics ? <PurchaseConversionAnalytics payload={purchaseAnalytics} /> : null}
+      <main className="flex min-h-screen items-center bg-earth-cream py-12">
+        <div className="container mx-auto max-w-2xl px-4 text-center">
         {waiting ? <Loader2 className="mx-auto h-16 w-16 animate-spin text-primary" /> : published ? <CheckCircle className="mx-auto h-20 w-20 text-primary" /> : <AlertTriangle className="mx-auto h-16 w-16 text-amber-600" />}
         <h1 className="mt-6 text-4xl font-display text-forest sm:text-5xl">
           {published ? "Your job is live" : waiting ? "Confirming your posting" : state === "invalid" ? "Checkout confirmation missing" : "Your posting needs attention"}
@@ -87,8 +130,9 @@ function SuccessContent() {
           </Link>
         </div>
         {!published && !waiting ? <p className="mt-5 text-sm text-forest-light">If Stripe charged the payment, do not submit it again. The recovery record lets us safely retry publication.</p> : null}
-      </div>
-    </main>
+        </div>
+      </main>
+    </>
   );
 }
 

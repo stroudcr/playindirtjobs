@@ -1,6 +1,6 @@
 "use client";
 
-import type { AnchorHTMLAttributes, MouseEvent } from "react";
+import React, { type AnchorHTMLAttributes, type MouseEvent } from "react";
 import {
   trackAnalyticsEvent,
   type AnalyticsEventParams,

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { EmployerPostLink } from "./EmployerPostLink";
 import { MobileNav } from "./MobileNav";
-import { TrackedLink } from "./TrackedLink";
 
 export function Header() {
   return (
@@ -47,26 +47,24 @@ export function Header() {
               For Employers
             </Link>
             <div className="w-px h-6 bg-border mx-2" />
-            <TrackedLink
-              href="/post-job?plan=basic&source=header"
-              eventName="employer_cta_click"
-              eventParams={{ source: "header", placement: "desktop", plan: "basic" }}
+            <EmployerPostLink
+              source="header"
+              eventParams={{ placement: "desktop" }}
               className="btn btn-primary text-sm px-4"
             >
               Post a Job
-            </TrackedLink>
+            </EmployerPostLink>
           </nav>
 
           {/* Mobile */}
           <div className="flex md:hidden items-center gap-2">
-            <TrackedLink
-              href="/post-job?plan=basic&source=header_mobile"
-              eventName="employer_cta_click"
-              eventParams={{ source: "header", placement: "mobile", plan: "basic" }}
+            <EmployerPostLink
+              source="header_mobile"
+              eventParams={{ placement: "mobile" }}
               className="btn btn-primary text-xs px-3"
             >
               Post Job
-            </TrackedLink>
+            </EmployerPostLink>
             <MobileNav />
           </div>
         </div>

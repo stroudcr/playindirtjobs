@@ -233,7 +233,12 @@ export default async function Home({ searchParams }: HomeProps) {
         />
       </Suspense>
 
-      <EmployerCTA source="homepage_jobs" />
+      <EmployerCTA
+        source="homepage_jobs"
+        placement="homepage_job_results"
+        heading="Hiring for a farm, ranch, nursery, or garden role?"
+        body="Reach people already looking for hands-on agricultural work. A 60-day nationwide listing starts at $15."
+      />
 
       {/* Browse by Category Section */}
       <section id="categories" className="bg-gray-50 border-y border-border py-12">

@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EmployerLeadForm } from "@/components/EmployerLeadForm";
+import { EmployerPostLink } from "@/components/EmployerPostLink";
 import { TrackPageView } from "@/components/TrackPageView";
-import { TrackedLink } from "@/components/TrackedLink";
 import { PRICING } from "@/lib/constants";
 import { db } from "@/lib/db";
 import { getUrl } from "@/lib/metadata";
@@ -247,15 +247,15 @@ export default async function EmployersPage() {
                   Post farm, greenhouse, nursery, orchard, vineyard, ranch, and CSA roles on a nationwide agriculture job board. Choose one 60-day listing with one payment.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <TrackedLink
-                    href="/post-job?plan=basic&source=employers_hub_hero"
-                    eventName="employer_cta_click"
-                    eventParams={{ source: "employers_hub", placement: "hero", plan: "basic" }}
+                  <EmployerPostLink
+                    source="employers_hub_hero"
+                    plan="basic"
+                    eventParams={{ placement: "hero", source_group: "employers_hub" }}
                     className="btn btn-primary justify-center sm:justify-start"
                   >
                     Post a job for ${basicPrice}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </TrackedLink>
+                  </EmployerPostLink>
                   <Link href="/pricing?source=employers_hub_hero" className="btn btn-outline justify-center sm:justify-start">
                     Compare plans
                   </Link>
@@ -437,14 +437,14 @@ export default async function EmployersPage() {
                   <li className="flex gap-3"><Check className="h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />Standard result placement</li>
                   <li className="flex gap-3"><Check className="h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />Your application email address or URL</li>
                 </ul>
-                <TrackedLink
-                  href="/post-job?plan=basic&source=employers_hub_pricing"
-                  eventName="employer_cta_click"
-                  eventParams={{ source: "employers_hub", placement: "pricing", plan: "basic" }}
+                <EmployerPostLink
+                  source="employers_hub_pricing"
+                  plan="basic"
+                  eventParams={{ placement: "pricing", source_group: "employers_hub" }}
                   className="btn btn-primary mt-8 w-full justify-center"
                 >
                   Choose Basic — ${basicPrice}
-                </TrackedLink>
+                </EmployerPostLink>
               </article>
 
               <article className="rounded-lg border border-primary-light/40 bg-white p-7 text-forest shadow-soft-xl sm:p-8">
@@ -460,14 +460,14 @@ export default async function EmployersPage() {
                   <li className="flex gap-3"><Check className="h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />Featured label and highlighted listing</li>
                   <li className="flex gap-3"><Check className="h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />Displayed ahead of Basic listings in results</li>
                 </ul>
-                <TrackedLink
-                  href="/post-job?plan=featured&source=employers_hub_pricing"
-                  eventName="employer_cta_click"
-                  eventParams={{ source: "employers_hub", placement: "pricing", plan: "featured" }}
+                <EmployerPostLink
+                  source="employers_hub_pricing"
+                  plan="featured"
+                  eventParams={{ placement: "pricing", source_group: "employers_hub" }}
                   className="btn btn-primary mt-8 w-full justify-center"
                 >
                   Choose Featured — ${featuredPrice}
-                </TrackedLink>
+                </EmployerPostLink>
               </article>
             </div>
             <p className="mt-6 text-center text-sm text-white/65">
@@ -500,15 +500,15 @@ export default async function EmployersPage() {
             <p className="mt-3 max-w-2xl leading-relaxed text-forest-light">
               Start one Basic listing for $15, or tell us about several roles, seasonal staffing, or an industry partnership.
             </p>
-            <TrackedLink
-              href="/post-job?plan=basic&source=employers_hub_final"
-              eventName="employer_cta_click"
-              eventParams={{ source: "employers_hub", placement: "final", plan: "basic" }}
+            <EmployerPostLink
+              source="employers_hub_final"
+              plan="basic"
+              eventParams={{ placement: "final", source_group: "employers_hub" }}
               className="btn btn-primary mt-6 justify-center"
             >
               Start one listing
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </TrackedLink>
+            </EmployerPostLink>
           </div>
           <EmployerLeadForm source="employers_hub" />
         </div>

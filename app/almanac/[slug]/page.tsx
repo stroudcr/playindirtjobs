@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
 import { ArticleCard } from "@/components/ArticleCard";
+import { EmployerPostLink } from "@/components/EmployerPostLink";
 import { Calendar, Clock, User, ArrowRight } from "lucide-react";
 import { getUrl, truncateMetaText } from "@/lib/metadata";
 import {
@@ -100,6 +101,18 @@ export default async function AlmanacArticlePage({
     href: "/",
     label: "Browse Jobs",
   };
+  const showNoApplicantsEmployerCta =
+    article.slug === "why-farm-job-posting-isnt-getting-applicants";
+  const employerCtaMarker = "<h2>A Farm Job Posting Checklist</h2>";
+  const employerCtaIndex = showNoApplicantsEmployerCta
+    ? article.content.indexOf(employerCtaMarker)
+    : -1;
+  const articleBeforeEmployerCta =
+    employerCtaIndex >= 0
+      ? article.content.slice(0, employerCtaIndex)
+      : article.content;
+  const articleAfterEmployerCta =
+    employerCtaIndex >= 0 ? article.content.slice(employerCtaIndex) : null;
 
   const blogPostingSchema = {
     "@context": "https://schema.org",
@@ -228,10 +241,50 @@ export default async function AlmanacArticlePage({
       <section className="container mx-auto px-4 py-10 md:py-14">
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-10">
           {/* Article Body */}
-          <article
-            className="almanac-article min-w-0 flex-1 max-w-3xl"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
+          <div className="min-w-0 flex-1 max-w-3xl">
+            {articleAfterEmployerCta ? (
+              <article>
+                <div
+                  className="almanac-article"
+                  dangerouslySetInnerHTML={{ __html: articleBeforeEmployerCta }}
+                />
+                <aside
+                  className="my-10 rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8"
+                  aria-label="Put the farm job posting checklist to work"
+                >
+                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+                    Put the checklist to work
+                  </p>
+                  <h2 className="mt-2 font-display text-2xl text-forest">
+                    Turn your clearer job description into a live listing
+                  </h2>
+                  <p className="mt-3 max-w-2xl text-base leading-7 text-forest-light">
+                    Publish one farm, garden, nursery, or ranch job for 60 days. Plans start at $15 with no subscription.
+                  </p>
+                  <EmployerPostLink
+                    source="almanac_no_applicants_inline"
+                    eventParams={{
+                      article_slug: article.slug,
+                      placement: "article_inline",
+                    }}
+                    className="btn btn-primary mt-5 justify-center"
+                  >
+                    Build your job post
+                    <ArrowRight className="h-4 w-4" />
+                  </EmployerPostLink>
+                </aside>
+                <div
+                  className="almanac-article"
+                  dangerouslySetInnerHTML={{ __html: articleAfterEmployerCta }}
+                />
+              </article>
+            ) : (
+              <article
+                className="almanac-article"
+                dangerouslySetInnerHTML={{ __html: article.content }}
+              />
+            )}
+          </div>
 
           {/* Sidebar */}
           <aside className="lg:w-72 flex-shrink-0 space-y-6">
@@ -294,10 +347,24 @@ export default async function AlmanacArticlePage({
             <p className="text-forest-light mb-6">
               {cta.body}
             </p>
-            <Link href={cta.href} className="btn btn-primary">
-              {cta.label}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            {cta.source && cta.href === "/post-job" ? (
+              <EmployerPostLink
+                source={cta.source}
+                eventParams={{
+                  article_slug: article.slug,
+                  placement: "article_final",
+                }}
+                className="btn btn-primary"
+              >
+                {cta.label}
+                <ArrowRight className="w-4 h-4" />
+              </EmployerPostLink>
+            ) : (
+              <Link href={cta.href} className="btn btn-primary">
+                {cta.label}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
         </div>
       </section>

@@ -1,9 +1,15 @@
-import Script from 'next/script';
+import Script from "next/script";
 
-export function GoogleAnalytics() {
-  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+export function GoogleAnalytics({
+  sendPageView = true,
+  loadStrategy = "lazyOnload",
+}: {
+  sendPageView?: boolean;
+  loadStrategy?: "afterInteractive" | "lazyOnload";
+}) {
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-  if (!GA_MEASUREMENT_ID) {
+  if (!measurementId || !/^G-[A-Z0-9]+$/i.test(measurementId)) {
     return null;
   }
 
@@ -17,13 +23,13 @@ export function GoogleAnalytics() {
             window.dataLayer = window.dataLayer || [];
             window.gtag = function gtag(){window.dataLayer.push(arguments);}
             window.gtag('js', new Date());
-            window.gtag('config', '${GA_MEASUREMENT_ID}');
+            window.gtag('config', ${JSON.stringify(measurementId)}, { send_page_view: ${sendPageView} });
           `,
         }}
       />
       <Script
-        strategy="lazyOnload"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy={loadStrategy}
+        src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`}
       />
     </>
   );

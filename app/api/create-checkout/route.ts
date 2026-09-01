@@ -3,6 +3,7 @@ import type { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 import { PRICING } from "@/lib/constants";
+import { createCommerceAnalyticsPayload } from "@/lib/commerce-analytics";
 import { db } from "@/lib/db";
 import { getAccessibleDraft } from "@/lib/draft-access";
 import { stripe } from "@/lib/stripe";
@@ -117,6 +118,13 @@ export async function POST(request: NextRequest) {
       kind,
     },
   });
+  const checkoutAnalytics = createCommerceAnalyticsPayload({
+    transactionId: purchase.id,
+    amountInCents: amount,
+    currency: purchase.currency,
+    plan,
+    kind,
+  });
 
   const checkoutIntent = {
     purchaseId: purchase.id,
@@ -133,7 +141,10 @@ export async function POST(request: NextRequest) {
       const currentSession = await stripe.checkout.sessions.retrieve(purchase.stripeCheckoutSessionId);
       const matchesCurrentSelection = checkoutSessionMatchesIntent(currentSession, checkoutIntent);
       if (currentSession.status === "open" && matchesCurrentSelection && currentSession.url) {
-        return NextResponse.json({ url: currentSession.url, sessionId: currentSession.id });
+        return NextResponse.json({
+          url: currentSession.url,
+          sessionId: currentSession.id,
+        });
       }
       // A submitted Checkout Session may still be waiting on an asynchronous
       // payment method. Never open another payable session while that is pending.
@@ -276,7 +287,10 @@ export async function POST(request: NextRequest) {
         select: { status: true, stripeCheckoutSessionId: true },
       });
       if (current?.stripeCheckoutSessionId === session.id) {
-        return NextResponse.json({ url: session.url, sessionId: session.id });
+        return NextResponse.json({
+          url: session.url,
+          sessionId: session.id,
+        });
       }
       if (session.status === "open") {
         await stripe.checkout.sessions.expire(session.id).catch(() => undefined);
@@ -290,7 +304,11 @@ export async function POST(request: NextRequest) {
       throw new Error("A different checkout attempt became active. Please try again.");
     }
 
-    return NextResponse.json({ url: session.url, sessionId: session.id });
+    return NextResponse.json({
+      url: session.url,
+      sessionId: session.id,
+      analytics: checkoutAnalytics,
+    });
   } catch (error) {
     console.error("Checkout creation failed:", error);
     if (createdSession?.status === "open") {

@@ -8,9 +8,7 @@ import {
   getAccessibleDraft,
   setDraftAccessCookie,
 } from "@/lib/draft-access";
-
-const ANONYMOUS_ID_COOKIE = "pidj_anon_id";
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+import { sanitizePostingLandingPath } from "@/lib/posting-funnel-events";
 
 const attributionSchema = z
   .object({
@@ -74,9 +72,13 @@ export async function POST(request: NextRequest) {
 
   const { token, tokenHash } = createDraftAccess();
   const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1_000);
-  const attribution = parsed.data.attribution ?? {};
-  const cookieAnonymousId = request.cookies.get(ANONYMOUS_ID_COOKIE)?.value;
-  const anonymousId = cookieAnonymousId && UUID.test(cookieAnonymousId) ? cookieAnonymousId : undefined;
+  const submittedAttribution = parsed.data.attribution ?? {};
+  const { landingPath: submittedLandingPath, ...attributionWithoutLandingPath } = submittedAttribution;
+  const sanitizedLandingPath = sanitizePostingLandingPath(submittedLandingPath);
+  const attribution = {
+    ...attributionWithoutLandingPath,
+    ...(sanitizedLandingPath ? { landingPath: sanitizedLandingPath } : {}),
+  };
   const draft = await db.jobDraft.create({
     data: {
       accessTokenHash: tokenHash,
@@ -84,23 +86,6 @@ export async function POST(request: NextRequest) {
       plan: parsed.data.plan,
       attribution: jsonValue(attribution),
       expiresAt,
-    },
-  });
-
-  await db.funnelEvent.create({
-    data: {
-      eventName: "posting_started",
-      draftId: draft.id,
-      anonymousId,
-      source: attribution.utm_source ?? attribution.source,
-      landingPath: attribution.landingPath,
-      referrerHost: attribution.referrerHost,
-      properties: jsonValue({
-        medium: attribution.utm_medium,
-        campaign: attribution.utm_campaign,
-        content: attribution.utm_content,
-        term: attribution.utm_term,
-      }),
     },
   });
 

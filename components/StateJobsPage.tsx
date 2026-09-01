@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { ArrowRight, MapPin } from "lucide-react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { EmailSubscribe } from "@/components/EmailSubscribe";
+import { EmployerCTA } from "@/components/EmployerCTA";
 import { JobCard } from "@/components/JobCard";
 import { getUrl } from "@/lib/metadata";
 import { getCachedPublicJobs } from "@/lib/public-jobs";
@@ -135,6 +136,16 @@ export async function StateJobsPage({ stateCode, stateSlug }: StateJobsPageProps
                 <Link href="/#jobs" className="btn btn-primary">Browse all jobs</Link>
               </div>
             )}
+
+            <div className="mt-8">
+              <EmployerCTA
+                source={`state_jobs_${stateSlug}`}
+                placement="state_job_results"
+                heading={`Need to hire in ${stateContent.name}?`}
+                body={`Reach people looking for farm, ranch, greenhouse, and horticulture work in ${stateContent.name}. Post for 60 days from $15.`}
+                compact
+              />
+            </div>
           </div>
 
           <aside className="flex-shrink-0 lg:w-80">

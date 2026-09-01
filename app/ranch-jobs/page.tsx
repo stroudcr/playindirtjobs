@@ -86,7 +86,12 @@ export default async function RanchJobsPage() {
           ))}
         </div>
       </section>
-      <EmployerCTA source="ranch_jobs" />
+      <EmployerCTA
+        source="ranch_jobs"
+        placement="category_job_results"
+        heading="Hiring ranch hands or livestock staff?"
+        body="Reach people looking for ranch, animal care, grazing, and equipment work. A 60-day listing starts at $15."
+      />
     </main>
     </>
   );

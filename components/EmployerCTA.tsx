@@ -1,8 +1,27 @@
+import React from "react";
 import { ArrowRight, BriefcaseBusiness } from "lucide-react";
 
-import { TrackedLink } from "@/components/TrackedLink";
+import { EmployerPostLink } from "@/components/EmployerPostLink";
 
-export function EmployerCTA({ source = "jobs_browse", compact = false }: { source?: string; compact?: boolean }) {
+export function EmployerCTA({
+  source = "jobs_browse",
+  compact = false,
+  heading = "Hiring for work like this?",
+  body = "Post one nationwide agricultural listing for 60 days, starting at $15.",
+  buttonLabel = "Post a job",
+  placement,
+  headingLevel = 2,
+}: {
+  source?: string;
+  compact?: boolean;
+  heading?: string;
+  body?: string;
+  buttonLabel?: string;
+  placement?: string;
+  headingLevel?: 2 | 3;
+}) {
+  const Heading = headingLevel === 3 ? "h3" : "h2";
+
   return (
     <aside
       className={compact ? "overflow-hidden rounded-2xl border border-primary/20 bg-white shadow-soft-lg" : "border-y border-primary/20 bg-primary/5 py-8"}
@@ -18,20 +37,19 @@ export function EmployerCTA({ source = "jobs_browse", compact = false }: { sourc
             <BriefcaseBusiness className={compact ? "h-5 w-5" : "h-6 w-6"} aria-hidden="true" />
           </span>
           <div className="min-w-0">
-            <h2 className={`${compact ? "text-xl leading-tight" : "text-2xl"} font-display text-forest`}>Hiring for work like this?</h2>
+            <Heading className={`${compact ? "text-xl leading-tight" : "text-2xl"} font-display text-forest`}>{heading}</Heading>
             <p className={`${compact ? "mt-1.5 max-w-xs leading-6" : "mt-1"} text-sm text-forest-light`}>
-              Post one nationwide agricultural listing for 60 days, starting at $15.
+              {body}
             </p>
           </div>
         </div>
-        <TrackedLink
-          href={`/post-job?plan=basic&source=${encodeURIComponent(source)}`}
-          eventName="employer_cta_click"
-          eventParams={{ source, placement: compact ? "empty_state" : "jobs_browse" }}
+        <EmployerPostLink
+          source={source}
+          eventParams={{ placement: placement ?? (compact ? "empty_state" : "jobs_browse") }}
           className={`btn btn-primary shrink-0 justify-center ${compact ? "w-full sm:w-auto" : ""}`}
         >
-          Post a job <ArrowRight className="h-4 w-4" />
-        </TrackedLink>
+          {buttonLabel} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </EmployerPostLink>
       </div>
     </aside>
   );

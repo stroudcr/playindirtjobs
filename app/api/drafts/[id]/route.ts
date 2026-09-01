@@ -83,14 +83,25 @@ export async function PATCH(
     data: updateData,
   });
 
-  if (parsed.data.currentStep && parsed.data.currentStep !== draft.currentStep) {
-    await db.funnelEvent.create({
-      data: {
-        eventName: "posting_step_completed",
-        draftId: draft.id,
-        properties: { completedStep: Math.min(draft.currentStep, parsed.data.currentStep - 1), nextStep: parsed.data.currentStep },
-      },
+  if (parsed.data.currentStep && parsed.data.currentStep > draft.currentStep) {
+    const priorCompletions = await db.funnelEvent.findMany({
+      where: { draftId: draft.id, eventName: "posting_step_completed" },
+      select: { properties: true },
     });
+    const alreadyRecorded = priorCompletions.some((event) => {
+      const properties = event.properties;
+      return properties && typeof properties === "object" && !Array.isArray(properties)
+        && properties.nextStep === parsed.data.currentStep;
+    });
+    if (!alreadyRecorded) {
+      await db.funnelEvent.create({
+        data: {
+          eventName: "posting_step_completed",
+          draftId: draft.id,
+          properties: { completedStep: draft.currentStep, nextStep: parsed.data.currentStep },
+        },
+      });
+    }
   }
 
   return NextResponse.json({ draft: publicDraft(updated) });

@@ -137,7 +137,12 @@ export default async function FarmingJobsPage() {
           )}
         </section>
 
-        <EmployerCTA source="farming_jobs" />
+        <EmployerCTA
+          source="farming_jobs"
+          placement="category_job_results"
+          heading="Hiring farm workers?"
+          body="Reach people looking for farm crew, equipment, harvest, and management work. A 60-day listing starts at $15."
+        />
 
         {/* SEO Content */}
         <section className="bg-white border-t border-border py-12">

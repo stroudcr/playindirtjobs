@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, Check, CreditCard, FileCheck, MapPin } from "lucide-react";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { TrackedLink } from "@/components/TrackedLink";
+import { EmployerPostLink } from "@/components/EmployerPostLink";
 import { PRICING } from "@/lib/constants";
 import { getUrl } from "@/lib/metadata";
 
@@ -173,15 +173,15 @@ export default function PricingPage() {
               <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Application email address or application URL</span></li>
               <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Edit or deactivate during the active period</span></li>
             </ul>
-            <TrackedLink
-              href="/post-job?plan=basic&source=pricing_basic"
-              eventName="employer_cta_click"
-              eventParams={{ source: "pricing", placement: "plan_card", plan: "basic" }}
+            <EmployerPostLink
+              source="pricing_basic"
+              plan="basic"
+              eventParams={{ placement: "plan_card", source_group: "pricing" }}
               className="btn btn-primary mt-9 w-full justify-center"
             >
               Choose Basic — ${basicPrice}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </TrackedLink>
+            </EmployerPostLink>
           </article>
 
           <article className="card flex flex-col overflow-hidden border-2 border-primary/40 p-7 sm:p-9">
@@ -202,15 +202,15 @@ export default function PricingPage() {
               <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Displayed ahead of Basic listings in job result lists</span></li>
               <li className="flex items-start gap-3"><Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" /><span>Active for the same 60-day period</span></li>
             </ul>
-            <TrackedLink
-              href="/post-job?plan=featured&source=pricing_featured"
-              eventName="employer_cta_click"
-              eventParams={{ source: "pricing", placement: "plan_card", plan: "featured" }}
+            <EmployerPostLink
+              source="pricing_featured"
+              plan="featured"
+              eventParams={{ placement: "plan_card", source_group: "pricing" }}
               className="btn btn-primary mt-9 w-full justify-center"
             >
               Choose Featured — ${featuredPrice}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </TrackedLink>
+            </EmployerPostLink>
           </article>
         </div>
 
@@ -274,15 +274,15 @@ export default function PricingPage() {
             <h2 className="font-display text-3xl">Ready to post this opening?</h2>
             <p className="mt-3 text-white/75">Start a Basic listing for ${basicPrice} and review everything before checkout.</p>
           </div>
-          <TrackedLink
-            href="/post-job?plan=basic&source=pricing_final"
-            eventName="employer_cta_click"
-            eventParams={{ source: "pricing", placement: "final", plan: "basic" }}
+          <EmployerPostLink
+            source="pricing_final"
+            plan="basic"
+            eventParams={{ placement: "final", source_group: "pricing" }}
             className="btn flex-shrink-0 justify-center bg-white text-forest hover:bg-earth-sand"
           >
             Start a listing
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </TrackedLink>
+          </EmployerPostLink>
         </div>
       </section>
     </main>

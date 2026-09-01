@@ -11,6 +11,7 @@ import { ShareButton } from "./share-button";
 import { getUrl, truncateMetaText } from "@/lib/metadata";
 import { isTransientPrismaReadError, logTransientPrismaReadError } from "@/lib/public-jobs";
 import { TrackedLink } from "@/components/TrackedLink";
+import { EmployerPostLink } from "@/components/EmployerPostLink";
 import { getPublicApplicationDestination } from "@/lib/public-application";
 import { TrackJobView } from "@/components/TrackJobView";
 import {
@@ -187,19 +188,18 @@ function EmployerActionCards({
 
       <div className={`card border-primary/20 bg-primary/5 ${cardPadding}`}>
         <h3 className={`${headingSize} font-display text-forest`}>
-          Hiring for an agricultural role?
+          Hiring for a role like this?
         </h3>
         <p className="mb-4 text-sm leading-relaxed text-forest-light">
-          Reach people actively looking for farm, ranch, greenhouse, and horticulture work.
+          Create a 60-day listing for your farm or agricultural business, starting at $15.
         </p>
-        <TrackedLink
-          href="/employers?utm_source=job_detail&utm_medium=referral&utm_campaign=employer_cta"
-          eventName="employer_cta_click"
+        <EmployerPostLink
+          source="job_detail"
           eventParams={{ job_slug: slug, placement: "job_detail" }}
           className="btn btn-primary w-full justify-center"
         >
           Post a job
-        </TrackedLink>
+        </EmployerPostLink>
       </div>
     </>
   );

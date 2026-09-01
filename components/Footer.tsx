@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { X as XIcon } from "lucide-react";
-import { TrackedLink } from "./TrackedLink";
+import { EmployerPostLink } from "./EmployerPostLink";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -87,14 +87,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <TrackedLink
-                  href="/post-job?plan=basic&source=footer"
-                  eventName="employer_cta_click"
-                  eventParams={{ source: "footer", placement: "employer_links", plan: "basic" }}
+                <EmployerPostLink
+                  source="footer"
+                  eventParams={{ placement: "employer_links" }}
                   className="hover:text-primary transition-colors"
                 >
                   Post a Job
-                </TrackedLink>
+                </EmployerPostLink>
               </li>
               <li>
                 <Link href="/pricing" className="hover:text-primary transition-colors">

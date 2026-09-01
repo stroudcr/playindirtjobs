@@ -76,7 +76,12 @@ export default async function FarmApprenticeshipsPage() {
           ))}
         </div>
       </section>
-      <EmployerCTA source="farm_apprenticeships" />
+      <EmployerCTA
+        source="farm_apprenticeships"
+        placement="category_job_results"
+        heading="Offering a farm apprenticeship?"
+        body="Reach people looking for hands-on agricultural training and a place to grow their skills. A 60-day listing starts at $15."
+      />
     </main>
     </>
   );

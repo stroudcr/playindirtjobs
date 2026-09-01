@@ -3,7 +3,15 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { AdminGrowthOperations } from "@/components/AdminGrowthOperations";
+import {
+  EMPLOYER_ACTIVITY_EVENTS,
+  summarizeEmployerActivity,
+} from "@/lib/admin-analytics";
 import { AuthenticationError, requireAdminSession } from "@/lib/auth";
+import {
+  formatKnownRevenue,
+  reconcilePaidCustomerActivity,
+} from "@/lib/customer-reporting";
 import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -18,19 +26,72 @@ export default async function AdminPage() {
   }
 
   const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1_000);
-  const [events, revenue, leads, messages, pendingClaims, paidCount] = await Promise.all([
+  const [
+    events,
+    employerActivityEvents,
+    normalizedPurchases,
+    legacyPaidJobs,
+    leads,
+    messages,
+    pendingClaims,
+  ] = await Promise.all([
     db.funnelEvent.groupBy({
       by: ["eventName"],
       where: { createdAt: { gte: since } },
       _count: { _all: true },
       orderBy: { _count: { eventName: "desc" } },
     }),
-    db.purchase.aggregate({ where: { status: "PAID", paidAt: { gte: since } }, _sum: { amount: true } }),
+    db.funnelEvent.findMany({
+      where: {
+        createdAt: { gte: since },
+        eventName: { in: [...EMPLOYER_ACTIVITY_EVENTS] },
+      },
+      select: { eventName: true, anonymousId: true, properties: true },
+    }),
+    db.purchase.findMany({
+      select: {
+        id: true,
+        status: true,
+        jobId: true,
+        employerId: true,
+        amount: true,
+        currency: true,
+        stripePaymentIntentId: true,
+        paidAt: true,
+        createdAt: true,
+        employer: { select: { email: true } },
+      },
+    }),
+    db.job.findMany({
+      where: { origin: "EMPLOYER", stripePaymentId: { not: null } },
+      select: {
+        id: true,
+        employerId: true,
+        managementEmail: true,
+        companyEmail: true,
+        stripePaymentId: true,
+        publishedAt: true,
+        createdAt: true,
+      },
+    }),
     db.employerLead.findMany({ orderBy: { createdAt: "desc" }, take: 50 }),
     db.outreachMessage.findMany({ include: { lead: { select: { company: true, name: true } } }, orderBy: { createdAt: "desc" }, take: 50 }),
     db.listingClaim.count({ where: { status: "PENDING" } }),
-    db.purchase.count({ where: { status: "PAID", paidAt: { gte: since } } }),
   ]);
+  const purchasesForReport = normalizedPurchases.map((purchase) => ({
+    ...purchase,
+    employerEmail: purchase.employer?.email ?? null,
+  }));
+  const recentCustomerReport = reconcilePaidCustomerActivity(
+    purchasesForReport,
+    legacyPaidJobs,
+    { since }
+  );
+  const lifetimeCustomerReport = reconcilePaidCustomerActivity(
+    purchasesForReport,
+    legacyPaidJobs
+  );
+  const employerActivity = summarizeEmployerActivity(employerActivityEvents);
 
   return (
     <main className="min-h-screen bg-earth-cream py-10">
@@ -47,11 +108,64 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        <section className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Thirty-day results">
-          <Metric label="Paid postings" value={String(paidCount)} />
-          <Metric label="Posting revenue" value={`$${((revenue._sum.amount ?? 0) / 100).toFixed(0)}`} />
-          <Metric label="Employer leads" value={String(leads.length)} note="Most recent 50 shown" />
+        <section className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Thirty-day results">
+          <Metric
+            label="Paid postings · 30 days"
+            value={String(recentCustomerReport.paidPostings)}
+            note={`${recentCustomerReport.normalizedPaidPostings} purchase ledger + ${recentCustomerReport.legacyPaidPostings} unmatched legacy`}
+          />
+          <Metric
+            label="Gross paid revenue · 30 days"
+            value={formatKnownRevenue(recentCustomerReport.knownRevenueByCurrency)}
+            note={recentCustomerReport.legacyRevenueUnknown
+              ? `${recentCustomerReport.legacyRevenueUnknown} legacy transaction value${recentCustomerReport.legacyRevenueUnknown === 1 ? " is" : "s are"} unavailable`
+              : "All counted transaction values are known"}
+          />
+          <Metric
+            label="Paying employers · 30 days"
+            value={String(recentCustomerReport.payingEmployers)}
+            note="Distinct reconciled buyer identities"
+          />
+          <Metric label="Recent employer leads" value={String(leads.length)} note="Most recent 50 shown" />
           <Metric label="Pending claims" value={String(pendingClaims)} />
+          <Metric
+            label="Lifetime paid records"
+            value={String(lifetimeCustomerReport.paidPostings)}
+            note={`${lifetimeCustomerReport.payingEmployers} employers · ${formatKnownRevenue(lifetimeCustomerReport.knownRevenueByCurrency)} known gross revenue`}
+          />
+        </section>
+
+        <section className="card mt-6 p-5 sm:p-6">
+          <h2 className="text-xl font-display text-forest">Qualified U.S. employer activity · last 30 days</h2>
+          <p className="mt-2 max-w-4xl text-sm leading-relaxed text-forest-light">
+            Distinct anonymous visitors are grouped using Vercel’s country header. Obvious bot and prefetch signatures are rejected before storage, but this remains a directional quality signal—not perfect human detection. Older events without a country remain unknown.
+          </p>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[620px] text-left text-sm">
+              <thead className="border-b border-forest/15 text-xs uppercase tracking-wide text-forest-light">
+                <tr>
+                  <th className="px-3 py-3 font-semibold">Employer action</th>
+                  <th className="px-3 py-3 text-right font-semibold">U.S.</th>
+                  <th className="px-3 py-3 text-right font-semibold">Non-U.S.</th>
+                  <th className="px-3 py-3 text-right font-semibold">Unknown</th>
+                  <th className="px-3 py-3 text-right font-semibold">All accepted</th>
+                </tr>
+              </thead>
+              <tbody>
+                {employerActivity.map((activity) => (
+                  <tr key={activity.eventName} className="border-b border-forest/10 last:border-0">
+                    <td className="px-3 py-3 font-medium text-forest">
+                      {activity.eventName === "employer_landing_view" ? "Employer landings" : "Employer CTA clickers"}
+                    </td>
+                    <td className="px-3 py-3 text-right font-semibold text-forest">{activity.us}</td>
+                    <td className="px-3 py-3 text-right text-forest-light">{activity.nonUs}</td>
+                    <td className="px-3 py-3 text-right text-forest-light">{activity.unknown}</td>
+                    <td className="px-3 py-3 text-right text-forest-light">{activity.total}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section className="card mt-6 p-5 sm:p-6">

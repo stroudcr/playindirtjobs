@@ -324,7 +324,14 @@ export function HomeClient({
                 Clear all filters
               </button>
               <div className="mx-auto mt-10 max-w-2xl text-left">
-                <EmployerCTA source="search_empty_state" compact />
+                <EmployerCTA
+                  source="search_empty_state"
+                  placement="search_empty_state"
+                  heading="Hiring for a role not shown here?"
+                  body="Post the opportunity for 60 days and help the right agricultural worker find it. Plans start at $15."
+                  compact
+                  headingLevel={3}
+                />
               </div>
             </div>
           )}

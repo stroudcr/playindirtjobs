@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, DM_Serif_Display } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SiteAnalytics } from "@/components/SiteAnalytics";
+import { AnalyticsPrivacyGuard } from "@/components/AnalyticsPrivacyGuard";
 import { getUrl } from "@/lib/metadata";
 
 const inter = Inter({
@@ -121,6 +121,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
+        <AnalyticsPrivacyGuard />
       </head>
       <body className={`${inter.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>
         <Header />
@@ -128,7 +129,6 @@ export default function RootLayout({
         <Footer />
         <SiteAnalytics />
       </body>
-      <GoogleAnalytics gaId="G-NQVPNM5VC1" />
     </html>
   );
 }

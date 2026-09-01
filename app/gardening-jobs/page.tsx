@@ -86,7 +86,12 @@ export default async function GardeningJobsPage() {
           ))}
         </div>
       </section>
-      <EmployerCTA source="gardening_jobs" />
+      <EmployerCTA
+        source="gardening_jobs"
+        placement="category_job_results"
+        heading="Hiring gardeners or nursery staff?"
+        body="Reach people looking for gardening, landscaping, greenhouse, and nursery work. A 60-day listing starts at $15."
+      />
     </main>
     </>
   );

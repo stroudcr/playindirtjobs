@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+import { createCommerceAnalyticsPayload } from "@/lib/commerce-analytics";
 import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 
@@ -48,7 +49,17 @@ export async function GET(request: NextRequest) {
 
   if (purchase.status === "PAID" && purchase.job?.active) {
     return NextResponse.json(
-      { state: "published", job: { slug: purchase.job.slug } },
+      {
+        state: "published",
+        job: { slug: purchase.job.slug },
+        analytics: createCommerceAnalyticsPayload({
+          transactionId: purchase.id,
+          amountInCents: purchase.amount,
+          currency: purchase.currency,
+          plan: purchase.plan,
+          kind: purchase.kind,
+        }),
+      },
       { headers: { "Cache-Control": "no-store" } }
     );
   }

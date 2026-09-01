@@ -23,6 +23,7 @@ export interface AlmanacArticle {
     body: string;
     href: string;
     label: string;
+    source?: string;
   };
   faq?: {
     question: string;
@@ -965,6 +966,7 @@ export const almanacArticles: AlmanacArticle[] = [
       body: "Post your farm, garden, nursery, or ranch job on PlayInDirtJobs and reach people already looking for hands-on agricultural work.",
       href: "/post-job",
       label: "Post a Job",
+      source: "almanac_no_applicants_final",
     },
     content: `
 <p>You wrote the job post. You need help before the busy season hits. The work is real, the position matters, and your farm, nursery, ranch, greenhouse, garden center, vineyard, orchard, or market garden cannot run short-handed forever. Then the listing goes live and almost nothing happens.</p>
@@ -1182,7 +1184,7 @@ export const almanacArticles: AlmanacArticle[] = [
 
 <p>A strong agricultural job post is specific about pay, schedule, duties, physical demands, housing, training, and the kind of workplace you run. That clarity builds trust before the interview. It also helps you spend less time sorting through poor-fit applicants and more time talking with people who understand the work.</p>
 
-<p>When your listing is ready, <a href="/post-job">post your farm, garden, nursery, or ranch job on PlayInDirtJobs</a> and put it in front of people already looking for hands-on agricultural work.</p>
+<p>When your listing is ready, the next step is to put it in front of people already looking for hands-on agricultural work.</p>
 `,
   },
   {

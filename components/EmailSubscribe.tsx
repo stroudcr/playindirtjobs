@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Mail, Loader2, CheckCircle } from "lucide-react";
 import { TrackedLink } from "@/components/TrackedLink";
 
@@ -101,9 +101,9 @@ export function EmailSubscribe() {
       <div className="mt-5 border-t border-primary/15 pt-4 text-sm text-forest-light">
         <p className="font-semibold text-forest">Know an operation that is hiring?</p>
         <TrackedLink
-          href="/employers?utm_source=state_jobs&utm_medium=referral&utm_campaign=job_seeker_referral"
+          href="/employers?source=job_alert_sidebar"
           eventName="employer_cta_click"
-          eventParams={{ source: "state_jobs", placement: "job_alert_sidebar" }}
+          eventParams={{ source: "job_alert_sidebar", placement: "job_alert_sidebar" }}
           className="mt-2 inline-flex font-semibold text-primary hover:underline"
         >
           Share our employer posting guide →
