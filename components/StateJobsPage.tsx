@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { Fragment, Suspense } from "react";
+import { RelatedWorkshops } from "@/components/RelatedWorkshops";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowRight, MapPin } from "lucide-react";
@@ -124,8 +126,10 @@ export async function StateJobsPage({ stateCode, stateSlug }: StateJobsPageProps
 
             {jobs.length > 0 ? (
               <div className="grid gap-4 animate-stagger">
-                {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                {jobs.map((job, index) => (
+                  <Fragment key={job.id}><JobCard job={job} />
+                    {index === Math.min(5, jobs.length - 1) ? <div className="lg:hidden"><Suspense fallback={null}><RelatedWorkshops state={stateCode} source="state_jobs" compact /></Suspense></div> : null}
+                  </Fragment>
                 ))}
               </div>
             ) : (
@@ -151,6 +155,7 @@ export async function StateJobsPage({ stateCode, stateSlug }: StateJobsPageProps
           <aside className="flex-shrink-0 lg:w-80">
             <div className="lg:sticky lg:top-24">
               <EmailSubscribe />
+              <div className="hidden lg:block"><Suspense fallback={null}><RelatedWorkshops state={stateCode} source="state_jobs" compact /></Suspense></div>
             </div>
           </aside>
         </div>

@@ -13,6 +13,7 @@ import {
 } from "@/lib/stripe-checkout";
 import { slugify } from "@/lib/utils";
 import { postingSchema } from "@/lib/validations";
+import { processWorkshopStripeEvent } from "@/lib/workshop-payments";
 
 export const runtime = "nodejs";
 
@@ -395,6 +396,15 @@ export async function POST(request: NextRequest) {
   if (eventRecord.processedAt) return NextResponse.json({ received: true, duplicate: true });
 
   try {
+    if (await processWorkshopStripeEvent(event)) {
+      revalidateTag("public-workshops");
+      const orderId = (event.data.object as unknown as { metadata?: Record<string, string> }).metadata?.workshopOrderId;
+      if (orderId) after(async () => {
+        const outbox = await db.emailOutbox.findUnique({ where: { deduplicationKey: `${orderId}:workshop-receipt` }, select: { id: true } });
+        if (outbox) await processEmailOutboxItem(outbox.id).catch(error => console.error("Workshop receipt queued for retry", error instanceof Error ? error.message : "Delivery failed"));
+      });
+      return NextResponse.json({ received: true });
+    }
     switch (event.type) {
       case "checkout.session.completed":
       case "checkout.session.async_payment_succeeded":

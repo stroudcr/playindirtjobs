@@ -35,7 +35,7 @@ export async function sendEmployerMessageEmail({
     ? `<a href="${escapeEmailHtml(actionUrl)}" style="display:inline-block;background:#10b981;color:#fff;padding:14px 24px;border-radius:6px;text-decoration:none;font-weight:700">${escapeEmailHtml(actionLabel)}</a>`
     : "";
 
-  await resend.emails.send({
+  const result = await resend.emails.send({
     from: FROM_EMAIL,
     to,
     subject,
@@ -52,6 +52,7 @@ export async function sendEmployerMessageEmail({
         <div style="background:#f3f4f6;padding:16px;text-align:center;color:#78716c;font-size:12px;border-radius:0 0 8px 8px">PlayInDirtJobs · One-time transactional message</div>
       </div>`,
   });
+  if (result.error) throw new Error(result.error.message);
 }
 
 export async function sendOutreachEmail({

@@ -203,7 +203,7 @@ async function fetchOnce(url: URL): Promise<SafeResponse & { redirect?: URL }> {
   });
 }
 
-async function safeFetch(initialUrl: string) {
+export async function safeFetchPublicPage(initialUrl: string) {
   let current = new URL(initialUrl);
   for (let redirectCount = 0; redirectCount <= MAX_REDIRECTS; redirectCount += 1) {
     const response = await fetchOnce(current);
@@ -493,7 +493,7 @@ function descriptionLooksTruncated(description: string) {
 }
 
 export async function importJobFromUrl(url: string): Promise<ImportedJobResult> {
-  const response = await safeFetch(url);
+  const response = await safeFetchPublicPage(url);
   // The source page is provenance, not an employer-chosen application destination.
   // Keep it outside fields so imports also preserve an existing application URL.
   const sourceUrl = safeSourceUrl(response.finalUrl);

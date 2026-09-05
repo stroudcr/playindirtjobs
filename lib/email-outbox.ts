@@ -64,7 +64,7 @@ async function deliver(template: string, recipient: string, rawPayload: unknown)
     return;
   }
 
-  if (["DRAFT_RECOVERY", "EXPIRY_REMINDER", "APPLICATION_CONTACT_REQUIRED"].includes(template)) {
+  if (["DRAFT_RECOVERY", "EXPIRY_REMINDER", "APPLICATION_CONTACT_REQUIRED", "WORKSHOP_MESSAGE"].includes(template)) {
     await sendEmployerMessageEmail({
       to: recipient,
       subject: text(payload, "subject"),

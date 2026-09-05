@@ -24,7 +24,7 @@ export default function PrivacyPage() {
           <div className="prose prose-forest max-w-none">
             <p className="text-forest-light mb-6">
               <strong>Effective Date:</strong> January 1, 2025<br />
-              <strong>Last Updated:</strong> July 13, 2026
+              <strong>Last Updated:</strong> September 5, 2026
             </p>
 
             <p className="text-forest-light mb-6">
@@ -153,6 +153,7 @@ export default function PrivacyPage() {
               <p className="text-forest-light mb-4">
                 Job posting information (company name, job details, location, salary range, and the application method selected by the employer) is publicly displayed. The private management email and payment information are not displayed. A public application email is displayed only when the employer chooses email as the application method.
               </p>
+              <p className="text-forest-light mb-4">Workshop listings publicly display the course information, organizer, instructor, schedule, venue, tuition and registration link. Management email addresses, private edit links and payment records are not public. Workshop drafts are saved on your device for up to 30 days and are submitted to us when you start checkout. We send service emails about payment, review, management and listing performance. Anonymous workshop activity is deduplicated using a session identifier and includes placement, date and coarse country information; we report referrals, not attendee enrollment. Registration on an organizer’s website is governed by that organizer’s privacy policy.</p>
 
               <h3 className="text-xl font-semibold text-forest mb-3">B. Service Providers</h3>
               <p className="text-forest-light mb-4">

@@ -1,3 +1,5 @@
+import { RelatedWorkshops } from "@/components/RelatedWorkshops";
+import { topicsForJob } from "@/lib/workshop-types";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
@@ -672,6 +674,7 @@ export default async function JobPage({ params }: JobPageProps) {
           </div>
         </div>
 
+        <RelatedWorkshops state={job.state} topics={topicsForJob(job.categories)} source="job_detail" />
         {relatedJobs.length > 0 ? (
           <section className="mt-10 border-t border-border pt-8" aria-labelledby="related-jobs-heading">
             <div className="mb-5 flex flex-wrap items-end justify-between gap-3">

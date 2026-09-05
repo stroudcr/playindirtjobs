@@ -10,6 +10,7 @@ export function GET() {
     createSitemapIndexXml([
       `${baseUrl}/sitemaps/jobs.xml`,
       `${baseUrl}/sitemaps/pages.xml`,
+      `${baseUrl}/sitemaps/workshops.xml`,
     ])
   );
 }

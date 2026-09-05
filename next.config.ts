@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       "/employer/:path*",
       "/manage/:path*",
       "/success",
+      "/success/:path*",
       "/unsubscribe",
       "/jobs/:slug/claim",
     ].map((source) => ({ source, headers: privatePageHeaders }));

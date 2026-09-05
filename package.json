@@ -12,6 +12,7 @@
     "test:e2e": "playwright test",
     "postinstall": "prisma generate",
     "db:seed": "tsx prisma/seed.ts",
+    "workshops:seed": "node --env-file=.env --import tsx scripts/seed-workshops.ts",
     "jobs:import": "node --env-file=.env --import tsx scripts/import-jsearch-jobs.ts",
     "jobs:notify-google": "node --env-file=.env --import tsx scripts/notify-google-indexing.ts"
   },

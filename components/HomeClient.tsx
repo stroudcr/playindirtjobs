@@ -15,6 +15,7 @@ import {
 } from "@/lib/public-job-dto";
 
 interface HomeClientProps {
+  learningModule?: React.ReactNode;
   initialJobs: PublicJobCardDto[];
   initialTotal: number;
   initialPage: number;
@@ -35,6 +36,7 @@ export function HomeClient({
   initialFilters,
   initialPage,
   initialOffset,
+  learningModule,
 }: HomeClientProps) {
   const router = useRouter();
 
@@ -349,8 +351,11 @@ export function HomeClient({
                 {searchQuery ? <> for <span className="font-semibold text-forest">“{searchQuery}”</span></> : null}
               </p>
               <div className="grid gap-4 animate-stagger">
-                {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                {jobs.map((job, index) => (
+                  <React.Fragment key={job.id}>
+                    <JobCard job={job} />
+                    {!hasActiveFilters && index === Math.min(5, jobs.length - 1) ? learningModule : null}
+                  </React.Fragment>
                 ))}
               </div>
               {showCrawlablePagination && totalPages > 1 ? (

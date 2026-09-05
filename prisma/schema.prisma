@@ -416,3 +416,82 @@ model SuppressionEntry {
 
   @@index([createdAt])
 }
+
+// Training is intentionally separate from employment listings and job purchases.
+model Workshop {
+  id                   String   @id @default(cuid())
+  slug                 String   @unique
+  title                String
+  organization         String
+  instructor           String   @default("")
+  summary              String
+  description          String   @db.Text
+  outcomes             String[]
+  audience             String
+  prerequisites        String   @default("")
+  topic                String
+  format               String
+  level                String
+  city                 String   @default("")
+  state                String   @default("")
+  venue                String   @default("")
+  address              String   @default("")
+  postalCode           String   @default("")
+  startAt              DateTime?
+  endAt                DateTime?
+  timeZone             String   @default("America/New_York")
+  scheduleNotes        String   @default("")
+  registrationClosesAt DateTime?
+  tuitionCents         Int
+  priceNotes           String   @default("")
+  registrationUrl      String
+  organizerWebsite     String   @default("")
+  managementEmail      String?
+  editToken            String   @unique
+  status               String   @default("DRAFT")
+  origin               String   @default("PAID")
+  sourceUrl            String?
+  verifiedAt           DateTime?
+  publishedAt          DateTime?
+  promotionEndsAt      DateTime?
+  expiresAt            DateTime?
+  reviewNote           String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  order                WorkshopOrder?
+  events               WorkshopEvent[]
+
+  @@index([status, expiresAt])
+  @@index([topic, format, state])
+}
+
+model WorkshopOrder {
+  id                      String   @id @default(cuid())
+  workshopId              String   @unique
+  workshop                Workshop @relation(fields: [workshopId], references: [id], onDelete: Restrict)
+  status                  String   @default("PENDING")
+  amount                  Int      @default(1500)
+  currency                String   @default("usd")
+  attempt                 Int      @default(1)
+  snapshot                Json
+  stripeCheckoutSessionId String?  @unique
+  stripePaymentIntentId   String?  @unique
+  paidAt                  DateTime?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model WorkshopEvent {
+  id          String    @id
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id], onDelete: Cascade)
+  eventName   String
+  source      String
+  country     String?
+  createdAt   DateTime  @default(now())
+
+  @@index([workshopId, eventName, createdAt])
+  @@index([createdAt])
+}

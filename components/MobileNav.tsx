@@ -29,6 +29,7 @@ export function MobileNav() {
               >
                 Browse Jobs
               </Link>
+              <Link href="/workshops" onClick={() => setIsOpen(false)} className="px-4 py-3 text-sm font-medium text-forest hover:text-primary hover:bg-gray-50 rounded-lg transition-colors">Workshops &amp; Training</Link>
               <Link
                 href="/job-alerts"
                 onClick={() => setIsOpen(false)}

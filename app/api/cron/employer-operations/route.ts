@@ -3,6 +3,8 @@ import type { Prisma } from "@prisma/client";
 
 import { db } from "@/lib/db";
 import { processPendingEmailOutbox } from "@/lib/email-outbox";
+import { prepareWorkshopReports } from "@/lib/workshop-operations";
+import { revalidateTag } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -119,6 +121,8 @@ export async function GET(request: NextRequest) {
     });
   }
 
+  const workshops = await prepareWorkshopReports();
+  if (workshops.expired) revalidateTag("public-workshops");
   const delivery = await processPendingEmailOutbox(50);
   return NextResponse.json({
     queued: {
@@ -127,5 +131,6 @@ export async function GET(request: NextRequest) {
       draftRecovery: recoveryDrafts.length,
     },
     delivery,
+    workshops,
   });
 }

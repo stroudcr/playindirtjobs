@@ -107,6 +107,8 @@ export function Footer() {
           <div>
             <h4 className="font-display text-forest mb-4">Resources</h4>
             <ul className="space-y-2 text-sm text-forest-light">
+              <li><Link href="/workshops" className="hover:text-primary transition-colors">Workshops &amp; Training</Link></li>
+              <li><Link href="/post-workshop" className="hover:text-primary transition-colors">List a Workshop</Link></li>
               <li>
                 <Link href="/about" className="hover:text-primary transition-colors">
                   About

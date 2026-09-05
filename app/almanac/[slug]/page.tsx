@@ -1,3 +1,4 @@
+import { RelatedWorkshops } from "@/components/RelatedWorkshops";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -320,6 +321,7 @@ export default async function AlmanacArticlePage({
       </section>
 
       {/* Related Articles Grid (bottom) */}
+      <div className="container mx-auto px-4"><RelatedWorkshops topics={slug.includes("soil") ? ["soil"] : slug.includes("ranch") ? ["livestock"] : ["growing", "equipment"]} source="almanac" /></div>
       {relatedArticles.length > 0 && (
         <section className="bg-white border-t border-border py-12">
           <div className="container mx-auto px-4">

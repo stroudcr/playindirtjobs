@@ -43,7 +43,7 @@ export default function TermsPage() {
           <div className="prose prose-forest max-w-none">
             <p className="text-forest-light mb-6">
               <strong>Effective Date:</strong> January 1, 2025<br />
-              <strong>Last Updated:</strong> July 13, 2026
+              <strong>Last Updated:</strong> September 5, 2026
             </p>
 
             {/* Table of Contents */}
@@ -157,6 +157,12 @@ export default function TermsPage() {
               </p>
             </section>
 
+            <section id="workshops" className="mb-8 scroll-mt-24">
+              <h2 className="text-2xl font-bold text-forest mb-4">Workshop and Training Listings</h2>
+              <p className="text-forest-light mb-4">A workshop listing costs $15 USD as a one-time promotional fee. Promotion begins after approval and lasts up to 60 days, ending sooner when registration closes or the course begins. Self-paced courses receive up to 60 days. Renewal and listings for additional sessions require a new purchase; there is no automatic renewal.</p>
+              <p className="text-forest-light mb-4">You must be authorized to promote the course and provide accurate organizer, schedule, location, tuition and registration information. Submissions and material edits are reviewed before publication. Rejected submissions receive a refund of the listing fee. After publication, listing fees are generally non-refundable; contact us about technical publication problems. Placement is based on relevance and availability, and does not guarantee views, referrals or enrollments.</p>
+              <p className="text-forest-light mb-4">The course organizer handles enrollment, tuition payments, course delivery, attendance, schedule changes, cancellations and attendee refunds. PlayInDirtJobs provides the listing and referral service. A complimentary listing means we waived the organizer’s first listing fee; it does not mean the course is free or imply a partnership. Gifted listings do not renew automatically.</p>
+            </section>
             <section id="payment" className="mb-8">
               <h2 className="text-2xl font-bold text-forest mb-4">7. Payment Terms</h2>
               <p className="text-forest-light mb-4">

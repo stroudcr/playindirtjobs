@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import type { Prisma } from "@prisma/client";
 import type { Metadata } from "next";
 import { HomeClient } from "@/components/HomeClient";
+import { RelatedWorkshops } from "@/components/RelatedWorkshops";
 import { EmployerCTA } from "@/components/EmployerCTA";
 import { SearchBar } from "@/components/SearchBar";
 import { US_STATES_WITHOUT_DC, getStateSlug } from "@/lib/constants";
@@ -225,6 +226,7 @@ export default async function Home({ searchParams }: HomeProps) {
       {/* Main Content */}
       <Suspense fallback={<LoadingSkeleton />}>
         <HomeClient
+          learningModule={<Suspense fallback={null}><RelatedWorkshops source="home" /></Suspense>}
           initialJobs={jobs}
           initialTotal={total}
           initialFilters={filters}

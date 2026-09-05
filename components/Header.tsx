@@ -28,6 +28,7 @@ export function Header() {
             >
               Browse Jobs
             </Link>
+            <Link href="/workshops" className="text-sm font-medium text-forest hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-gray-50">Workshops</Link>
             <Link
               href="/job-alerts"
               className="text-sm font-medium text-forest hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-gray-50"

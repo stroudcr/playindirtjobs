@@ -103,6 +103,7 @@ export default async function AdminPage() {
             <p className="mt-2 text-forest-light">Human-approved outreach, claims, leads and a 30-day funnel view.</p>
           </div>
           <div className="flex gap-3">
+            <Link href="/admin/workshops" className="btn btn-outline">Workshops</Link>
             <Link href="/admin/claims" className="btn btn-outline">Claims ({pendingClaims})</Link>
             <a href="/api/admin/leads/export" className="btn btn-outline">Export CSV</a>
           </div>

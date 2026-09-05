@@ -8,6 +8,7 @@ const DISALLOWED_PATHS = [
   '/manage/',
   '/post-job/preview',
   '/success',
+  '/post-workshop',
   '/unsubscribe',
 ]
 

@@ -30,6 +30,7 @@ const STATIC_PATHS = [
   "/terms",
   "/privacy",
   "/almanac",
+  "/workshops",
 ];
 
 const getStateModificationRows = unstable_cache(async () => {
