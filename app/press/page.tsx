@@ -237,10 +237,10 @@ export default function PressPage() {
                   For interviews, press releases, partnership opportunities, or general media questions, please contact:
                 </p>
                 <a
-                  href="mailto:playindirtjobs@welldiem.com"
+                  href="mailto:info@playindirtjobs.com"
                   className="text-primary hover:text-primary-dark font-semibold text-lg"
                 >
-                  playindirtjobs@welldiem.com
+                  info@playindirtjobs.com
                 </a>
                 <p className="text-sm text-forest-light mt-4">
                   We typically respond to media inquiries within 24-48 hours.

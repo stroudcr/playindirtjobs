@@ -28,6 +28,12 @@ export function Footer() {
             <p className="text-sm text-forest-light max-w-xs">
               Connecting people with farming, gardening, and ranching opportunities.
             </p>
+            <a
+              href="mailto:info@playindirtjobs.com"
+              className="inline-block mt-3 text-sm text-forest-light hover:text-primary transition-colors"
+            >
+              info@playindirtjobs.com
+            </a>
           </div>
           <div className="flex gap-3">
             <a

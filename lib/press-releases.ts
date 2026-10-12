@@ -25,7 +25,7 @@ export const pressReleases: PressRelease[] = [
     contact: {
       name: "Chad Stroud",
       title: "Founder",
-      email: "playindirtjobs@welldiem.com",
+      email: "info@playindirtjobs.com",
       website: "www.playindirtjobs.com"
     },
     content: `

@@ -47,10 +47,10 @@ export default function ContactPage() {
             </h2>
 
             <a
-              href="mailto:playindirtjobs@welldiem.com"
-              className="text-2xl md:text-3xl text-primary hover:text-primary-dark transition-colors font-semibold inline-block mb-8"
+              href="mailto:info@playindirtjobs.com"
+              className="text-xl sm:text-2xl md:text-3xl break-all text-primary hover:text-primary-dark transition-colors font-semibold inline-block mb-8"
             >
-              playindirtjobs@welldiem.com
+              info@playindirtjobs.com
             </a>
 
             <div className="border-t border-border pt-8 mt-8">
